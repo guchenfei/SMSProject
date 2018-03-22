@@ -60,41 +60,36 @@
 	<div class="loginbody">
 		<span class="systemlogo"></span>
 		<div class="loginbox">
-			<form action="${APP_PATH}/login" method="post">
-				<ul>
-					<li>
-						<input name="email" type="text" class="loginuser" value=""
-							placeholder="请输入您的邮箱账号" onclick="JavaScript:this.value=''" />
-					</li>
-					<li>
-						<input name="password" type="text" class="loginpwd" value=""
-							placeholder="请输入您的密码" onclick="JavaScript:this.value=''" />
-					</li>
+		<form action="${APP_PATH}/login" method="post">
+			<ul>
+				<li>
+					<input name="email" type="text" class="loginuser" value=""
+						placeholder="请输入您的邮箱账号" onclick="JavaScript:this.value=''" />
+				</li>
+				<li>
+					<input name="password" type="text" class="loginpwd" value=""
+						placeholder="请输入您的密码" onclick="JavaScript:this.value=''" />
+				</li>
 
-					<li>
-						<input name="checkCode" type="text"
-							style="height: 18px; border: 1px; solid; border-color: #000;"
-							placeholder="请输入验证码" />
-						<img id="checkCode" src="${APP_PATH}/checkCode.png" width="98"
-							height="18" onclick="onCheckCode()" />
-						<font style="color: red; font-weight: bold;">${msg}</font>
-					</li>
-
-					<li>
-						<input name="" type="submit" class="loginbtn" value="登录" />
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						<input name="" type="reset" class="loginbtn" value="重置" />
-						<span style="color: red; font-weight: bold;">${msg}</span>
-					</li>
-				</ul>
+				<li>
+					<input name="checkCode" type="text" style="height: 18px;border: 1px;solid;border-color:#000;" placeholder="请输入验证码"/>
+					<img id="checkCode" src="${APP_PATH}/checkCode.png" width="98" height="18" onclick="onCheckCode()"/>
+					<font style="color: red; font-weight: bold;">${msg}</font>
+				</li>
+				
+				<li>
+					<input name="" type="submit" class="loginbtn" value="登录"/>
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<input name="" type="reset" class="loginbtn" value="重置" />
+				</li>
+			</ul>
 			</form>
 		</div>
 	</div>
 	<div class="loginbm">版权2018，仅供本公司所有</div>
 	<script type="text/javascript">
-		function onCheckCode() {
-			document.getElementById("checkCode").src = "${APP_PATH}/checkCode.png?"
-					+ Math.random();
+	function onCheckCode() {
+		document.getElementById("checkCode").src= "${APP_PATH}/checkCode.png?"+ Math.random();
 		}
 	</script>
 </body>

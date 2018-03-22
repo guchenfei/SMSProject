@@ -46,19 +46,19 @@
 		<dd>
 			<div class="title">
 				<span>
-					<img src="images/leftico01.png" />
+					<img src="${APP_PATH }/static/images/leftico01.png" />
 				</span>
 				管理分公司
 			</div>
 			<ul class="menuson">
 				<li class="active">
 					<cite></cite>
-					<a href="right.html" target="rightFrame">分公司管理员管理</a>
+					<a href="./braManMan" target="rightFrame">分公司管理员管理</a>
 					<i></i>
 				</li>
 				<li>
 					<cite></cite>
-					<a href="right1.html" target="rightFrame">分公司业务员管理</a>
+					<a href="./braSalMan" target="rightFrame">分公司业务员管理</a>
 					<i></i>
 				</li>
 			</ul>
@@ -67,19 +67,19 @@
 		<dd>
 			<div class="title">
 				<span>
-					<img src="images/leftico02.png" />
+					<img src="${APP_PATH }/static/images/leftico02.png" />
 				</span>
 				通讯录
 			</div>
 			<ul class="menuson">
 				<li>
 					<cite></cite>
-					<a href="right3.html" target="rightFrame">总公司通讯录</a>
+					<a href="./HQContacts" target="rightFrame">总公司通讯录</a>
 					<i></i>
 				</li>
 				<li>
 					<cite></cite>
-					<a href="right4.html" target="rightFrame">分公司通讯录</a>
+					<a href="./braContacts" target="rightFrame">分公司通讯录</a>
 					<i></i>
 				</li>
 			</ul>
@@ -88,19 +88,19 @@
 		<dd>
 			<div class="title">
 				<span>
-					<img src="images/leftico03.png" />
+					<img src="${APP_PATH }/static/images/leftico03.png" />
 				</span>
 				短信群发
 			</div>
 			<ul class="menuson">
 				<li>
 					<cite></cite>
-					<a href="massSMS.html" target="rightFrame">通知群发</a>
+					<a href="./massSMS" target="rightFrame">通知群发</a>
 					<i></i>
 				</li>
 				<li>
 					<cite></cite>
-					<a href="massSMSFestival.html" target="rightFrame">节日慰问</a>
+					<a href="./massSMSFestival" target="rightFrame">节日慰问</a>
 					<i></i>
 				</li>
 			</ul>
@@ -109,7 +109,7 @@
 		<dd>
 			<div class="title">
 				<span>
-					<img src="images/leftico04.png" />
+					<img src="${APP_PATH }/static/images/leftico04.png" />
 				</span>
 				统计查询
 			</div>
