@@ -1,83 +1,117 @@
 package com.gcf.sms.bean;
 
 public class Contacts {
-    private Integer contactId;
+	private Integer contactId;
 
-    private String conname;
+	private String conname;
 
-    private Integer consex;
+	private Integer consex;
 
-    private String conbirthday;
+	private String conbirthday;
 
-    private String conphonenum;
+	private String conphonenum;
 
-    private String conaddress;
+	private String conaddress;
 
-    private String conemail;
+	private String conemail;
 
-    private Integer concompany;
+	private Integer concompany;
+	// 希望查询联系人的时候他所属的公司也是查询好的
+	private Company company;
 
-    public Integer getContactId() {
-        return contactId;
-    }
+	@Override
+	public String toString() {
+		return "Contacts [contactId=" + contactId + ", conname=" + conname + ", consex=" + consex + ", conbirthday="
+				+ conbirthday + ", conphonenum=" + conphonenum + ", conaddress=" + conaddress + ", conemail=" + conemail
+				+ ", concompany=" + concompany + "]";
+	}
 
-    public void setContactId(Integer contactId) {
-        this.contactId = contactId;
-    }
+	public Contacts(Integer contactId, String conname, Integer consex, String conbirthday, String conphonenum,
+			String conaddress, String conemail, Integer concompany) {
+		super();
+		this.contactId = contactId;
+		this.conname = conname;
+		this.consex = consex;
+		this.conbirthday = conbirthday;
+		this.conphonenum = conphonenum;
+		this.conaddress = conaddress;
+		this.conemail = conemail;
+		this.concompany = concompany;
+	}
 
-    public String getConname() {
-        return conname;
-    }
+	public Contacts() {
+		super();
+	}
 
-    public void setConname(String conname) {
-        this.conname = conname == null ? null : conname.trim();
-    }
+	public Company getCompany() {
+		return company;
+	}
 
-    public Integer getConsex() {
-        return consex;
-    }
+	public void setCompany(Company company) {
+		this.company = company;
+	}
 
-    public void setConsex(Integer consex) {
-        this.consex = consex;
-    }
+	public Integer getContactId() {
+		return contactId;
+	}
 
-    public String getConbirthday() {
-        return conbirthday;
-    }
+	public void setContactId(Integer contactId) {
+		this.contactId = contactId;
+	}
 
-    public void setConbirthday(String conbirthday) {
-        this.conbirthday = conbirthday == null ? null : conbirthday.trim();
-    }
+	public String getConname() {
+		return conname;
+	}
 
-    public String getConphonenum() {
-        return conphonenum;
-    }
+	public void setConname(String conname) {
+		this.conname = conname == null ? null : conname.trim();
+	}
 
-    public void setConphonenum(String conphonenum) {
-        this.conphonenum = conphonenum == null ? null : conphonenum.trim();
-    }
+	public Integer getConsex() {
+		return consex;
+	}
 
-    public String getConaddress() {
-        return conaddress;
-    }
+	public void setConsex(Integer consex) {
+		this.consex = consex;
+	}
 
-    public void setConaddress(String conaddress) {
-        this.conaddress = conaddress == null ? null : conaddress.trim();
-    }
+	public String getConbirthday() {
+		return conbirthday;
+	}
 
-    public String getConemail() {
-        return conemail;
-    }
+	public void setConbirthday(String conbirthday) {
+		this.conbirthday = conbirthday == null ? null : conbirthday.trim();
+	}
 
-    public void setConemail(String conemail) {
-        this.conemail = conemail == null ? null : conemail.trim();
-    }
+	public String getConphonenum() {
+		return conphonenum;
+	}
 
-    public Integer getConcompany() {
-        return concompany;
-    }
+	public void setConphonenum(String conphonenum) {
+		this.conphonenum = conphonenum == null ? null : conphonenum.trim();
+	}
 
-    public void setConcompany(Integer concompany) {
-        this.concompany = concompany;
-    }
+	public String getConaddress() {
+		return conaddress;
+	}
+
+	public void setConaddress(String conaddress) {
+		this.conaddress = conaddress == null ? null : conaddress.trim();
+	}
+
+	public String getConemail() {
+		return conemail;
+	}
+
+	public void setConemail(String conemail) {
+		this.conemail = conemail == null ? null : conemail.trim();
+	}
+
+	public Integer getConcompany() {
+		return concompany;
+	}
+
+	public void setConcompany(Integer concompany) {
+		this.concompany = concompany;
+	}
 }

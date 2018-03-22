@@ -21,7 +21,39 @@ public class Admin {
 
 	private Integer cpyId;
 
-	//希望查询用户的时候所属公司也能查出来
+	public Admin(Integer adminId, String username, String userpass, Integer usersex, String userbirthday,
+			String userpnum, String useraddress, String useremail, Integer usertype, Integer cpyId) {
+		super();
+		this.adminId = adminId;
+		this.username = username;
+		this.userpass = userpass;
+		this.usersex = usersex;
+		this.userbirthday = userbirthday;
+		this.userpnum = userpnum;
+		this.useraddress = useraddress;
+		this.useremail = useremail;
+		this.usertype = usertype;
+		this.cpyId = cpyId;
+	}
+
+	@Override
+	public String toString() {
+		return "Admin [adminId=" + adminId + ", username=" + username + ", userpass=" + userpass + ", usersex="
+				+ usersex + ", userbirthday=" + userbirthday + ", userpnum=" + userpnum + ", useraddress=" + useraddress
+				+ ", useremail=" + useremail + ", usertype=" + usertype + ", cpyId=" + cpyId + ", getCompany()="
+				+ getCompany() + ", getAdminId()=" + getAdminId() + ", getUsername()=" + getUsername()
+				+ ", getUserpass()=" + getUserpass() + ", getUsersex()=" + getUsersex() + ", getUserbirthday()="
+				+ getUserbirthday() + ", getUserpnum()=" + getUserpnum() + ", getUseraddress()=" + getUseraddress()
+				+ ", getUseremail()=" + getUseremail() + ", getUsertype()=" + getUsertype() + ", getCpyId()="
+				+ getCpyId() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()="
+				+ super.toString() + "]";
+	}
+
+	public Admin() {
+		super();
+	}
+
+	// 希望查询用户的时候所属公司也能查出来
 	private Company company;
 
 	public Company getCompany() {

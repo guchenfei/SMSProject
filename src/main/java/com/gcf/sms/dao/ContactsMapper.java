@@ -19,6 +19,10 @@ public interface ContactsMapper {
     List<Contacts> selectByExample(ContactsExample example);
 
     Contacts selectByPrimaryKey(Integer contactId);
+    
+    List<Contacts> selectByExampleWithCpy(ContactsExample example);
+
+    Contacts selectByPrimaryKeyWithCpy(Integer contactId);
 
     int updateByExampleSelective(@Param("record") Contacts record, @Param("example") ContactsExample example);
 
