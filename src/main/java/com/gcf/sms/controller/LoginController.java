@@ -9,6 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sound.midi.VoiceStatus;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -62,6 +63,7 @@ public class LoginController {
 
 		// 判断输入框是否为空
 		if ("".equals(email) || "".equals(password) || "".equals(checkCode)) {
+			request.setAttribute("msg", "输入框不能为空！");
 			// 提示输入框不能为空,并返回登录界面
             return "index";
 		} else if (checkCode == "" || !session.getAttribute("code").toString().equalsIgnoreCase(checkCode)) {
@@ -73,10 +75,12 @@ public class LoginController {
 			List<Admin> admins = loginService.findUserByEmail(email);
 			if (admins == null || admins.size() == 0) {
 				// 该系统没有该用户，重新登录，可以弹窗提示
+				request.setAttribute("msg", "该用户不存在,核查后登录！");
                return "index";
 			} else if (admins.get(0).getUserpass().equals(password)) {
 				// 验证成功根据不同角色进入主界面
 				int type = admins.get(0).getUsertype();
+				session.setAttribute("UserName", admins.get(0).getUsername());
 				// 权限角色：0表示超级管理员，1表示普通管理员，2表示业务员
 				switch (type) {
 				case 0:
@@ -91,6 +95,16 @@ public class LoginController {
 				}
 			}
 		}
+		return "index";
+	}
+	
+	/**
+	 * 退出系统，清除session中的数据
+	 */
+	@RequestMapping("loginOut")
+	public String LoginOut(HttpSession session) {
+		//invalidate()方法。该方法可以清除session对象中的所有信息。
+		session.invalidate();
 		return "index";
 	}
 }

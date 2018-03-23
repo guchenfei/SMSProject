@@ -8,7 +8,10 @@ import org.springframework.stereotype.Service;
 import com.gcf.sms.bean.Admin;
 import com.gcf.sms.bean.AdminExample;
 import com.gcf.sms.dao.AdminMapper;
-
+/**
+ * 登录Service
+ * @author gcf
+ */
 @Service
 public class LoginService {
 

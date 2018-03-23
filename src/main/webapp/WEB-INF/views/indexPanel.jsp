@@ -27,7 +27,7 @@
 			<span>
 				<img src="${APP_PATH }/static/images/sun.png" alt="天气" />
 			</span>
-			<b>超级管理员，早上好，欢迎使用信息管理系统</b>
+			<b>${UserName}，您好！欢迎使用本公司短信平台系统</b>
 			<a href="#">帐号设置</a>
 		</div>
 

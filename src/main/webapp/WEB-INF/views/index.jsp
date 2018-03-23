@@ -67,7 +67,7 @@
 						placeholder="请输入您的邮箱账号" onclick="JavaScript:this.value=''" />
 				</li>
 				<li>
-					<input name="password" type="text" class="loginpwd" value=""
+					<input name="password" type="password" class="loginpwd" value=""
 						placeholder="请输入您的密码" onclick="JavaScript:this.value=''" />
 				</li>
 

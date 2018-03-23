@@ -13,6 +13,13 @@
 <link href="${APP_PATH }/static/css/style.css" rel="stylesheet">
 	<!-- 引入js -->
 	<script src="${APP_PATH }/static/js/jquery3.3.1.min.js"></script>
+	<!-- 引入bootstrap css -->
+	<link type="text/css" rel="stylesheet"
+		href="${APP_PATH }/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+	<!-- 引入bootstrap js -->
+	<script type="text/javascript"
+		src="${APP_PATH }/static/bootstrap-3.3.7-dist/js/bootstrap.min.js">
+	</script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$(".click").click(function() {
@@ -41,38 +48,58 @@
 		<span>位置：</span>
 		<ul class="placeul">
 			<li>
-				<a href="#">管理分公司</a>
+				<a href="#">公司角色管理</a>
 			</li>
 			<li>
-				<a href="#">分公司管理员授权</a>
+				<a href="#">公司角色授权</a>
 			</li>
 			<li>
 				<a href="#">操作</a>
 			</li>
 		</ul>
 	</div>
-	<div class="tools">
-
-		<ul class="toolbar">
-			<li class="click">
-				<span>
-					<img src="${APP_PATH }/static/images/t01.png" />
-				</span>
-				添加分公司管理员
-			</li>
-		</ul>
-
-		<ul class="toolbar1">
-			<li>
-				<span>
-					<img src="${APP_PATH }/static/images/t05.png" />
-				</span>
-				设置
-			</li>
-		</ul>
-
+	<div class="row tools">
+		<div class="col-md-4">
+			<div class="col-md-6">
+				<ul class="toolbar">
+					<li class="click">
+						<span>
+							<img src="${APP_PATH }/static/images/t01.png" />
+						</span>
+						添加管理员/业务员
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<div class="dropdown">
+				<button class="btn btn-default dropdown-toggle" type="button"
+					id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="true">
+					按角色查询
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+					<li>
+						<a href="#">管理员</a>
+					</li>
+					<li>
+						<a href="#">业务员</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<ul class="toolbar1">
+				<li>
+					<span>
+						<img src="${APP_PATH }/static/images/t05.png" />
+					</span>
+					设置
+				</li>
+			</ul>
+		</div>
 	</div>
-
 	<table class="tablelist">
 		<thead>
 			<tr>
@@ -92,7 +119,7 @@
 			<tr>
 				<td><input name="" type="checkbox" value="" /></td>
 				<td>20130908</td>
-				<td>王金平幕僚：马英九声明字字见血 人活着没意思</td>
+				<td>北京总部</td>
 				<td>admin</td>
 				<td>江苏南京</td>
 				<td>2013-09-09 15:05</td>
@@ -271,5 +298,4 @@
 		$('.tablelist tbody tr:odd').addClass('odd');
 	</script>
 </body>
-
 </html>

@@ -28,7 +28,7 @@
 <body style="background: url(${APP_PATH }/static/images/topbg.gif) repeat-x;">
 
 	<div class="topleft">
-		<a href="main.html" target="_parent">
+		<a href="./superIndex" target="_parent">
 			<img src="${APP_PATH }/static/images/loginlogo1.png" title="系统首页" />
 		</a>
 	</div>
@@ -44,12 +44,12 @@
 				<a href="#">关于</a>
 			</li>
 			<li>
-				<a href="login.html" target="_parent">退出</a>
+				<a href="loginOut?" target="_parent">退出</a>
 			</li>
 		</ul>
 
 		<div class="user">
-			<span>admin</span>
+			<span>${UserName}</span>
 			<i>消息</i>
 			<b>5</b>
 		</div>

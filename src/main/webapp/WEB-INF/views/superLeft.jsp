@@ -11,28 +11,27 @@
 %>
 <!-- 引入CSS样式 -->
 <link href="${APP_PATH }/static/css/style.css" rel="stylesheet">
-<!-- 引入js -->
+	<!-- 引入js -->
 	<script src="${APP_PATH }/static/js/jquery3.3.1.min.js"></script>
-<script type="text/javascript">
-	$(function() {
-		//导航切换
-		$(".menuson li").click(function() {
-			$(".menuson li.active").removeClass("active")
-			$(this).addClass("active");
-		});
+	<script type="text/javascript">
+		$(function() {
+			//导航切换
+			$(".menuson li").click(function() {
+				$(".menuson li.active").removeClass("active")
+				$(this).addClass("active");
+			});
 
-		$('.title').click(function() {
-			var $ul = $(this).next('ul');
-			$('dd').find('ul').slideUp();
-			if ($ul.is(':visible')) {
-				$(this).next('ul').slideUp();
-			} else {
-				$(this).next('ul').slideDown();
-			}
-		});
-	})
-</script>
-
+			$('.title').click(function() {
+				var $ul = $(this).next('ul');
+				$('dd').find('ul').slideUp();
+				if ($ul.is(':visible')) {
+					$(this).next('ul').slideUp();
+				} else {
+					$(this).next('ul').slideDown();
+				}
+			});
+		})
+	</script>
 </head>
 
 <body style="background: #f0f9fd;">
@@ -48,17 +47,12 @@
 				<span>
 					<img src="${APP_PATH }/static/images/leftico01.png" />
 				</span>
-				管理分公司
+				公司角色管理
 			</div>
 			<ul class="menuson">
 				<li class="active">
 					<cite></cite>
-					<a href="./braManMan" target="rightFrame">分公司管理员管理</a>
-					<i></i>
-				</li>
-				<li>
-					<cite></cite>
-					<a href="./braSalMan" target="rightFrame">分公司业务员管理</a>
+					<a href="./braManMan" target="rightFrame">公司角色授权</a>
 					<i></i>
 				</li>
 			</ul>
@@ -74,17 +68,11 @@
 			<ul class="menuson">
 				<li>
 					<cite></cite>
-					<a href="./HQContacts" target="rightFrame">总公司通讯录</a>
-					<i></i>
-				</li>
-				<li>
-					<cite></cite>
-					<a href="./braContacts" target="rightFrame">分公司通讯录</a>
+					<a href="./HQContacts" target="rightFrame">总/分公司通讯录</a>
 					<i></i>
 				</li>
 			</ul>
 		</dd>
-
 		<dd>
 			<div class="title">
 				<span>

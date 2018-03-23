@@ -5,7 +5,7 @@
 	<artifactId>SMSProject</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	
+
 	<!--引入项目依赖的jar包 -->
 
 	<!-- 引入SpringMVC 和 Spring 的jar包 -->
@@ -74,15 +74,13 @@
 		</dependency>
 
 		<!--servlet api -->
-		<!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
+		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<!--版本要和web.xml中的version="2.5"一致 现在2.5版本能用没报错是估计因为GitHub上边更新版本原因 -->
-			<version>2.5</version>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-
 		<!-- 导包时如果版本太高可能会发生不适配的情况，所以可以适当的降低版本 -->
 		<!-- <scope>provided</scope>这句话的意思是当该项目发布时候部署到服务器上时候会剔除 -->
 		<!--junit -->
@@ -129,6 +127,14 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.4.1.Final</version>
+		</dependency>
+
+		<!-- Log4j -->
+		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.11.0</version>
 		</dependency>
 	</dependencies>
 </project>
