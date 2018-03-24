@@ -21,6 +21,9 @@ public class Admin {
 
 	private Integer cpyId;
 
+	// 希望查询用户的时候所属公司也能查出来
+	private Company company;
+
 	public Admin(Integer adminId, String username, String userpass, Integer usersex, String userbirthday,
 			String userpnum, String useraddress, String useremail, Integer usertype, Integer cpyId) {
 		super();
@@ -52,9 +55,6 @@ public class Admin {
 	public Admin() {
 		super();
 	}
-
-	// 希望查询用户的时候所属公司也能查出来
-	private Company company;
 
 	public Company getCompany() {
 		return company;

@@ -61,6 +61,12 @@ public class MapperTest {
 		System.out.println(admin);*/
 		//4，删除用户成功
 		/*adminMapper.deleteByPrimaryKey(12);*/
+		//5，批量插入多个用户，使用可以执行批量操作的sqlSession
+		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
+		for(int i=0;i<200;i++){
+			mapper.insertSelective(new Admin(null, "用户"+(i+1), "123", 1, "1992-10-11", "13365234512", "北京市海淀区", "123@qq.com", 2, 3));
+		}
+		System.out.println("批量添加用户完成！");
 	}
 	/**
 	 * 测试ContactsMapper
@@ -81,7 +87,7 @@ public class MapperTest {
 		/*Contacts contacts = contactsMapper.selectByPrimaryKeyWithCpy(12);
 		System.out.println(contacts);*/
 		//4,测试删除联系人成功
-		contactsMapper.deleteByPrimaryKey(11);
+		/*contactsMapper.deleteByPrimaryKey(11);*/
 	}
 
 }

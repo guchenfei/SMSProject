@@ -52,7 +52,7 @@
 			<ul class="menuson">
 				<li class="active">
 					<cite></cite>
-					<a href="./braManMan" target="rightFrame">公司角色授权</a>
+					<a href="allAdmin?" target="rightFrame">公司角色授权</a>
 					<i></i>
 				</li>
 			</ul>
