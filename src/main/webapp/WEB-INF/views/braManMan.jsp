@@ -105,36 +105,26 @@
 		<!-- 显示表格数据 -->
 		<div class="row">
 			<div class="col-md-12">
-				<table class="table table-striped table-hover">
-					<tr>
-						<th><input name="" type="checkbox" value="" /></th>
-						<th>用户ID</th>
-						<th>姓名</th>
-						<th>密码</th>
-						<th>性别</th>
-						<th>生日</th>
-						<th>联系方式</th>
-						<th>居住地址</th>
-						<th>邮箱</th>
-						<th>角色</th>
-						<th>所属分公司</th>
-						<th>操作</th>
-					</tr>
-					<c:forEach items="${pageInfo.list}" var="admin">
+				<table class="table table-striped table-hover" id="admins_table">
+					<thead>
 						<tr>
 							<th><input name="" type="checkbox" value="" /></th>
-							<th>${admin.adminId}</th>
-							<th>${admin.username}</th>
-							<th>******</th>
-							<!-- 性别（userSex男0女1） -->
-							<th>${admin.usersex=="0"?"男":"女"}</th>
-							<th>${admin.userbirthday}</th>
-							<th>${admin.userpnum}</th>
-							<th>${admin.useraddress}</th>
-							<th>${admin.useremail}</th>
-							<th>${admin.usertype}</th>
-							<th>${admin.company.companyname}</th>
-							<th>
+							<th>用户ID</th>
+							<th>姓名</th>
+							<th>密码</th>
+							<th>性别</th>
+							<th>生日</th>
+							<th>联系方式</th>
+							<th>居住地址</th>
+							<th>邮箱</th>
+							<th>角色</th>
+							<th>所属分公司</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<!-- <th>
 								<button type="button" class="btn-primary btn-xs"
 									aria-label="Left Align">
 									<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -145,14 +135,13 @@
 									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 									删除
 								</button>
-							</th>
-						</tr>
-					</c:forEach>
+							</th> -->
+					</tbody>
 				</table>
 			</div>
 		</div>
 		<!-- 显示分页信息 -->
-		<div class="row">
+		<%-- <div class="row">
 			<!-- 分页文字信息 -->
 			<div class="col-md-4">
 				当前第&nbsp;<font style="color: #104E8B;">${pageInfo.pageNum}</font>&nbsp;页,总共&nbsp;<font
@@ -201,15 +190,13 @@
 				</ul>
 				</nav>
 			</div>
-		</div>
-
+		</div> --%>
 	</div>
 	<div class="tip">
 		<div class="tiptop">
 			<span>提示信息</span>
 			<a></a>
 		</div>
-
 		<div class="tipinfo">
 			<span>
 				<img src="${APP_PATH }/static/images/ticon.png" />
@@ -219,7 +206,6 @@
 				<cite>如果是请点击确定按钮 ，否则请点取消。</cite>
 			</div>
 		</div>
-
 		<div class="tipbtn">
 			<input name="" type="button" class="sure" value="确定" />&nbsp; <input
 				name="" type="button" class="cancel" value="取消" />
@@ -227,6 +213,64 @@
 	</div>
 	</div>
 	<script type="text/javascript">
+		//1,页面加载完成后，直接去发送ajax请求，要到分页数据
+		$(function() {
+			$.ajax({
+				url : "${APP_PATH }/allAdmin",
+				data : "pn=1",
+				type : "POST",
+				success : function(result) {
+					/* console.log(result); */
+					//1，解析并显示用户数据
+					build_admins_table(result);
+					//2，解析并显示分页信息
+				}
+			});
+		});
+
+		function build_admins_table(result) {
+			var admins = result.extend.pageInfo.list;
+			//遍历数据
+			$
+					.each(admins,
+							function(index, item) {
+								/* alert(item.username); */
+								var adminIdTd = $("<td></td>").append(
+										item.adminId);
+								var usernameTd = $("<td></td>").append(
+										item.username);
+								var userpassTd = $("<td></td>")
+										.append("******");
+								var usersexTd = $("<td></td>").append(
+										item.usersex == "0" ? "男" : "女");
+								var userbirthdayTd = $("<td></td>").append(
+										item.userbirthday);
+								var userpnumTd = $("<td></td>").append(
+										item.userpnum);
+								var useraddressTd = $("<td></td>").append(
+										item.useraddress);
+								var useremailTd = $("<td></td>").append(
+										item.useremail);
+								var usertypeTd = $("<td></td>").append(
+										item.usertype);
+								var companyTd = $("<td></td>").append(
+										item.company.companyname);
+
+								/*append方法执行完成以后还是返回原来的元素 <tr></tr>所以一直继续添加每行内容*/
+								$("<tr></tr>").append(adminIdTd).append(
+										usernameTd).append(userpassTd).append(
+										usersexTd).append(userbirthdayTd)
+										.append(userpnumTd).append(
+												useraddressTd).append(
+												useremailTd).append(usertypeTd)
+										.append(companyTd).appendTo(
+												"#admins_table tbody");
+							});
+		}
+
+		function build_page_nav(result) {
+
+		}
 		$('.tablelist tbody tr:odd').addClass('odd');
 	</script>
 </body>
