@@ -64,34 +64,16 @@
 							<label class="col-sm-2 control-label">姓名:</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="adminName_add_input"
-									name="username" placeholder="请输入您的姓名">
+									name="username" placeholder="请输入您的姓名"> <span
+										class="help-block"></span>
 							</div>
 						</div>
-						<!--
-private String ;
-
-	private String ;
-
-	private Integer ;
-
-	private String ;
-
-	private String ;
-
-	private String ;
-
-	private String ;
-
-	private Integer ;
-
-	private Integer ;
-
-						 -->
 						<div class="form-group">
 							<label class="col-sm-2 control-label">密码:</label>
 							<div class="col-sm-10">
 								<input type="password" class="form-control" name="userpass"
-									id="adminPass_add_input" placeholder="请输入您的密码">
+									id="adminPass_add_input" placeholder="请输入您的密码"> <span
+										class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
@@ -118,7 +100,8 @@ private String ;
 							<label class="col-sm-2 control-label">联系方式:</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="adminpnum_add_input"
-									name="userpnum" placeholder="请输入您的手机号码">
+									name="userpnum" placeholder="请输入您的手机号码"> <span
+										class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
@@ -132,7 +115,8 @@ private String ;
 							<label class="col-sm-2 control-label">邮箱:</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="useremail"
-									id="adminemail_add_input" placeholder="xxx@163.com">
+									id="adminemail_add_input" placeholder="xxx@163.com"> <span
+										class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
@@ -161,7 +145,7 @@ private String ;
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary">保存</button>
+					<button type="button" class="btn btn-primary" id="admin_save_btn">保存</button>
 				</div>
 			</div>
 		</div>
@@ -270,6 +254,10 @@ private String ;
 	</div>
 	</div>
 	<script type="text/javascript">
+		//定义一个全局数据，用于添加用户后定位到最后一页，这其中有一个分页参数合理化功能，它的作用是即使翻到超出总页数的页码，最后还是定位到最后一页，
+		//所以找一个比总页码大的参数用于翻到最后一页
+		var totalRecord;
+
 		//1,页面加载完成后，直接去发送ajax请求，要到分页数据
 		$(function() {
 			//去首页
@@ -352,7 +340,7 @@ private String ;
 							+ "&nbsp;页,总共&nbsp;" + result.extend.pageInfo.pages
 							+ "&nbsp;页，总共&nbsp;" + result.extend.pageInfo.total
 							+ "&nbsp;条记录 ");
-
+			totalRecord = result.extend.pageInfo.total;
 		}
 		//解析显示分页条并且点击能去下一页等等
 		function build_page_nav(result) {
@@ -361,8 +349,7 @@ private String ;
 			//page_nav_area
 			var ul = $("<ul></ul>").addClass("pagination");
 			//构建元素
-			var firstPageLi = $("<li></li>").append(
-					$("<a></a>").append("首页").attr("href", "#"));
+			var firstPageLi = $("<li></li>").append($("<a></a>").append("首页"));
 			var prePageLi = $("<li></li>").append(
 					$("<a></a>").append("&laquo;"));
 
@@ -381,8 +368,7 @@ private String ;
 			}
 			var nextPageLi = $("<li></li>").append(
 					$("<a></a>").append("&raquo;"));
-			var lastPageLi = $("<li></li>").append(
-					$("<a></a>").append("末页").attr("href", "#"));
+			var lastPageLi = $("<li></li>").append($("<a></a>").append("末页"));
 			if (result.extend.pageInfo.hasNextPage == false) {
 				nextPageLi.addClass("disabled");
 				lastPageLi.addClass("disabled");
@@ -435,6 +421,8 @@ private String ;
 		}
 		//点击新增按钮显示增加的模态框
 		$("#admin_add_modal_btn").click(function() {
+			//清除表单数据（表单重置）
+			$("#adminAddModal form")[0].reset();
 			//发送ajax请求，查出分公司信息，显示在下拉列表中
 			getCompanies();
 			//弹出模态框
@@ -462,6 +450,135 @@ private String ;
 				}
 			});
 		}
+		/* 校验添加表单的数据 */
+		function validate_add_form() {
+			//拿到要校验的数据，使用正则表达式进行校验
+			//校验姓名
+			var adminName = $("#adminName_add_input").val();
+			var regName = /(^[a-zA-Z0-9_-]{6,16}$)|(^[\u2E80-\u9FFF]{2,5})/;
+			if (!regName.test(adminName)) {
+				/* alert("用户名必须是2-5位中文或者6-16位英文和数字等组合"); */
+				/* 应该清空这个元素之前的样式 */
+				/* $("#adminName_add_input").parent().addClass("has-error");
+				$("#adminName_add_input").next("span").text("用户名必须是2-5位中文或者6-16位英文和数字等组合"); */
+				show_validate_msg("#adminName_add_input", "error",
+						"姓名必须是2-5位中文或者6-16位英文和数字等组合");
+				return false;
+			} else {
+				/* $("#adminName_add_input").parent().addClass("has-success");
+				$("#adminName_add_input").next("span").text(""); */
+				show_validate_msg("#adminName_add_input", "success", "");
+			}
+			//校验密码
+			var adminPass = $("#adminPass_add_input").val();
+			var regPass = /^[a-zA-Z0-9_-]{6,18}$/;
+			if (!regPass.test(adminPass)) {
+				/* 应该清空这个元素之前的样式 */
+				show_validate_msg("#adminPass_add_input", "error",
+						"密码必须为6-18位的字母数字下划线组合");
+				return false;
+			} else {
+				show_validate_msg("#adminPass_add_input", "success", "");
+			}
+			//校验手机号
+			var adminpnum = $("#adminpnum_add_input").val();
+			var regPnum = /^[1][3,4,5,7,8][0-9]{9}$/;
+			if (!regPnum.test(adminpnum)) {
+				/* 应该清空这个元素之前的样式 */
+				show_validate_msg("#adminpnum_add_input", "error",
+						"请输入格式正确的11位手机号");
+				return false;
+			} else {
+				show_validate_msg("#adminpnum_add_input", "success", "");
+			}
+			//校验邮箱
+			var adminEmail = $("#adminemail_add_input").val();
+			var regEmail = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+
+			if (!regEmail.test(adminEmail)) {
+				/* alert("请按正确的邮箱格式输入"); */
+				/* $("#adminemail_add_input").parent().addClass("has-error");
+				$("#adminemail_add_input").next("span").text("请按正确的邮箱格式输入"); */
+				show_validate_msg("#adminemail_add_input", "error",
+						"请按正确的邮箱格式输入");
+				return false;
+			} else {
+				/* $("#adminemail_add_input").parent().addClass("has-success");
+				$("#adminemail_add_input").next("span").text(""); */
+				show_validate_msg("#adminemail_add_input", "success", "");
+			}
+			return true;
+		}
+
+		/* 抽取校验姓名及邮箱等的结果提示 ,显示校验的提示信息*/
+		function show_validate_msg(ele, status, msg) {
+			//清除当前元素的校验状态
+			$(ele).parent().removeClass("has-success has-error");
+			$(ele).next("span").text("");
+			if ("success" == status) {
+				$(ele).parent().addClass("has-success");
+				$(ele).next("span").text("");
+			} else if ("error" == status) {
+				$(ele).parent().addClass("has-error");
+				$(ele).next("span").text(msg);
+			}
+		}
+		/* 校验邮箱是否已存在 */
+		$("#adminemail_add_input").change(
+				function() {
+					//发送ajax请求校验邮箱是否已存在
+					var adminEmail = this.value;
+					$.ajax({
+						url : "${APP_PATH }/checkEmail",
+						data : "email=" + adminEmail,
+						type : "POST",
+						success : function(result) {
+							状态码
+							100 - 成功
+							200 - 失败
+							if (result.code == 100) {
+								show_validate_msg("#adminemail_add_input",
+										"success", "该邮箱可用");
+								$("#admin_save_btn").attr("ajax_validate",
+										"success");
+							} else if (result.code == 200) {
+								show_validate_msg("#adminemail_add_input",
+										"error", "该邮箱已经存在，请核查");
+								$("#admin_save_btn").attr("ajax_validate",
+										"error");
+							}
+						}
+					});
+				});
+		/* 用户添加保存事件 */
+		$("#admin_save_btn").click(function() {
+			//将模态框中填写的表单数据提交给服务器保存
+			//1，先对要提交给服务器的数据进行校验
+			if (!validate_add_form()) {
+				return false;
+			}
+			//2，判断之前的ajax邮箱校验是否成功，如果校验不存在（校验返回成功）
+			if ($(this).attr("ajax_validate") == "error") {
+				return false;
+			}
+			
+			//3，发送ajax请求保存用户
+			/* alert($("#adminAddModal form").serialize()); */
+			/*当使用ajax序列化提交表单时，一定要使用post请求方式提交表单，避免乱码问题。 */
+			$.ajax({
+				url : "${APP_PATH }/addAdmin",
+				type : "POST",
+				data : $("#adminAddModal form").serialize(),
+				success : function(result) {
+					/* alert(result.msg); */
+					//用户保存成功后需要完成2件事
+					//1，关闭模态框
+					$("#adminAddModal").modal('hide');
+					//2，来到最后一页，显示刚才保存的数据
+					to_page(totalRecord);
+				}
+			});
+		});
 		$('.tablelist tbody tr:odd').addClass('odd');
 	</script>
 </body>
