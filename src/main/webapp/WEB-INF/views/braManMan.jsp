@@ -527,15 +527,13 @@
 		$("#adminemail_add_input").change(
 				function() {
 					//发送ajax请求校验邮箱是否已存在
+					/* 状态码 100 - 成功   200 - 失败 */
 					var adminEmail = this.value;
 					$.ajax({
 						url : "${APP_PATH }/checkEmail",
 						data : "email=" + adminEmail,
 						type : "POST",
 						success : function(result) {
-							状态码
-							100 - 成功
-							200 - 失败
 							if (result.code == 100) {
 								show_validate_msg("#adminemail_add_input",
 										"success", "该邮箱可用");
@@ -561,7 +559,7 @@
 			if ($(this).attr("ajax_validate") == "error") {
 				return false;
 			}
-			
+
 			//3，发送ajax请求保存用户
 			/* alert($("#adminAddModal form").serialize()); */
 			/*当使用ajax序列化提交表单时，一定要使用post请求方式提交表单，避免乱码问题。 */
