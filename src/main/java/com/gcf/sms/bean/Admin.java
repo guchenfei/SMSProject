@@ -1,20 +1,31 @@
 package com.gcf.sms.bean;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Admin {
 	private Integer adminId;
-
+    //"\\u"是Unicode编码
+	@Pattern(regexp = "(^[a-zA-Z0-9_-]{6,16}$)|(^[\\u2E80-\\u9FFF]{2,5})", message = "姓名必须是2-5位中文或者6-16位英文和数字等组合")
 	private String username;
-
+	
+	@Pattern(regexp = "(^[a-zA-Z0-9_-]{6,18}$)", message = "密码必须为6-18位的字母数字下划线组合")
 	private String userpass;
 
 	private Integer usersex;
-
+    @NotEmpty(message="生日不能为空！")
 	private String userbirthday;
-
+	
+	@Pattern(regexp = "(^[1][3,4,5,7,8][0-9]{9}$)", message = "请输入格式正确的11位手机号")
 	private String userpnum;
-
+	
+	@NotEmpty(message="地址不能为空！")
 	private String useraddress;
-
+	
+	@Pattern(regexp = "(^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$)", message = "请按正确的邮箱格式输入")
 	private String useremail;
 
 	private Integer usertype;

@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.gcf.sms.bean.Admin;
+import com.gcf.sms.bean.AdminExample;
 import com.gcf.sms.bean.Company;
 import com.gcf.sms.bean.Contacts;
 import com.gcf.sms.dao.AdminMapper;
@@ -60,13 +61,15 @@ public class MapperTest {
 		/*Admin admin = adminMapper.selectByPrimaryKeyWithCpy(13);
 		System.out.println(admin);*/
 		//4，删除用户成功
-		/*adminMapper.deleteByPrimaryKey(12);*/
+		AdminExample example = new AdminExample();
+		example.createCriteria().andUseremailEqualTo("1234@qq.com");
+		adminMapper.deleteByExample(example);
 		//5，批量插入多个用户，使用可以执行批量操作的sqlSession
-		AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
+		/*AdminMapper mapper = sqlSession.getMapper(AdminMapper.class);
 		for(int i=0;i<200;i++){
 			mapper.insertSelective(new Admin(null, "用户"+(i+1), "123", 1, "1992-10-11", "13365234512", "北京市海淀区", "123@qq.com", 2, 3));
 		}
-		System.out.println("批量添加用户完成！");
+		System.out.println("批量添加用户完成！");*/
 	}
 	/**
 	 * 测试ContactsMapper

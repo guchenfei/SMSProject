@@ -94,6 +94,7 @@
 									name="userbirthday" class="form-control"
 									onclick="WdatePicker({isShowClear:false,readOnly:true})"
 									placeholder="请点击输入您的生日" />
+								<span class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
@@ -108,7 +109,8 @@
 							<label class="col-sm-2 control-label">地址:</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="useraddress"
-									id="adminaddress_add_input" placeholder="请输入您的详细地址">
+									id="adminaddress_add_input" placeholder="请输入您的详细地址"> <span
+										class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
@@ -146,6 +148,113 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 					<button type="button" class="btn btn-primary" id="admin_save_btn">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 用户修改的模态框 -->
+	<div class="modal fade" id="adminUpdateModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">修改管理员/业务员</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">姓名:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="adminName_update_input"
+									name="username" placeholder="请输入您的姓名"> <span
+										class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">密码:</label>
+							<div class="col-sm-10">
+								<input type="password" class="form-control" name="userpass"
+									id="adminPass_update_input" placeholder="请输入您的密码"> <span
+										class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">性别:</label>
+							<div class="col-sm-10">
+								<label class="radio-inline"> <!-- 男0女1 --> <input
+									type="radio" name="usersex" id="adminsex0_update_input" value="0"
+									checked="checked">男 </label> <label class="radio-inline">
+									<input type="radio" name="usersex" id="adminsex1_update_input"
+									value="1">女 
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">生日:</label>
+							<div class="col-sm-10">
+								<input id="adminbirthday_update_input" type="text"
+									name="userbirthday" class="form-control"
+									onclick="WdatePicker({isShowClear:false,readOnly:true})"
+									placeholder="请点击输入您的生日" />
+								<span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">联系方式:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="adminpnum_update_input"
+									name="userpnum" placeholder="请输入您的手机号码"> <span
+										class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">地址:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="useraddress"
+									id="adminaddress_update_input" placeholder="请输入您的详细地址"> <span
+										class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">邮箱:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="useremail"
+									id="adminemail_update_input" placeholder="xxx@163.com"> <span
+										class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">角色:</label>
+							<div class="col-sm-4">
+								<select class="form-control" id="admintype_update_select"
+									name="usertype">
+									<!-- 权限角色：0表示超级管理员，1表示普通管理员，2表示业务员 -->
+									<option value="0">超级管理员</option>
+									<option value="1">普通管理员</option>
+									<option value="2">业务员</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">所属公司:</label>
+							<div class="col-sm-4">
+								<select class="form-control" id="admincpy_add_select"
+									name="cpyId">
+									<!--  所属公司提交公司ID即可 -->
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="admin_update_btn">更新</button>
 				</div>
 			</div>
 		</div>
@@ -305,14 +414,14 @@
 								var companyTd = $("<td></td>").append(
 										item.company.companyname);
 								var modifyBtn = $("<button></button>")
-										.addClass("btn-primary btn-xs")
+										.addClass("btn-primary btn-xs edit_btn")
 										.append(
 												$("<span></span>")
 														.addClass(
 																"glyphicon glyphicon-pencil"))
 										.append("修改");
 								var delBtn = $("<button></button>").addClass(
-										"btn-danger btn-xs").append(
+										"btn-danger btn-xs ").append(
 										$("<span></span>").addClass(
 												"glyphicon glyphicon-trash"))
 										.append("删除");
@@ -419,9 +528,26 @@
 				}
 			});
 		}
+		//清空表单样式及内容
+		function reset_form(ele) {
+			//清空表单数据
+			$(ele)[0].reset();
+			//清空表单样式
+			$(ele).find("*").removeClass("has-success has-error");
+			$(ele).find(".help-block").text("");
+
+		}
+		//清除表单样式
+		function reset_formStyle(ele) {
+			//清空表单样式
+			$(ele).find("*").removeClass("has-success has-error");
+			$(ele).find(".help-block").text("");
+
+		}
 		//点击新增按钮显示增加的模态框
 		$("#admin_add_modal_btn").click(function() {
-			//清除表单数据（表单重置）
+			//清除表单数据（表单完整重置（表单数据，表单样式））
+			reset_form("#adminAddModal form");
 			$("#adminAddModal form")[0].reset();
 			//发送ajax请求，查出分公司信息，显示在下拉列表中
 			getCompanies();
@@ -514,10 +640,10 @@
 		function show_validate_msg(ele, status, msg) {
 			//清除当前元素的校验状态
 			$(ele).parent().removeClass("has-success has-error");
-			$(ele).next("span").text("");
+			$(ele).next("span").text(" ");
 			if ("success" == status) {
 				$(ele).parent().addClass("has-success");
-				$(ele).next("span").text("");
+				$(ele).next("span").text(msg);
 			} else if ("error" == status) {
 				$(ele).parent().addClass("has-error");
 				$(ele).next("span").text(msg);
@@ -529,54 +655,121 @@
 					//发送ajax请求校验邮箱是否已存在
 					/* 状态码 100 - 成功   200 - 失败 */
 					var adminEmail = this.value;
-					$.ajax({
-						url : "${APP_PATH }/checkEmail",
-						data : "email=" + adminEmail,
-						type : "POST",
-						success : function(result) {
-							if (result.code == 100) {
-								show_validate_msg("#adminemail_add_input",
-										"success", "该邮箱可用");
-								$("#admin_save_btn").attr("ajax_validate",
-										"success");
-							} else if (result.code == 200) {
-								show_validate_msg("#adminemail_add_input",
-										"error", "该邮箱已经存在，请核查");
-								$("#admin_save_btn").attr("ajax_validate",
-										"error");
-							}
-						}
-					});
+					$
+							.ajax({
+								url : "${APP_PATH }/checkEmail",
+								data : "email=" + adminEmail,
+								type : "POST",
+								success : function(result) {
+									if (result.code == 100) {
+										show_validate_msg(
+												"#adminemail_add_input",
+												"success",
+												result.extend.checkEmail_msg);
+										$("#admin_save_btn").attr(
+												"ajax_validate", "success");
+									} else if (result.code == 200) {
+										show_validate_msg(
+												"#adminemail_add_input",
+												"error",
+												result.extend.checkEmail_msg);
+										$("#admin_save_btn").attr(
+												"ajax_validate", "error");
+									}
+								}
+							});
 				});
 		/* 用户添加保存事件 */
-		$("#admin_save_btn").click(function() {
-			//将模态框中填写的表单数据提交给服务器保存
-			//1，先对要提交给服务器的数据进行校验
-			if (!validate_add_form()) {
-				return false;
-			}
-			//2，判断之前的ajax邮箱校验是否成功，如果校验不存在（校验返回成功）
-			if ($(this).attr("ajax_validate") == "error") {
-				return false;
-			}
+		$("#admin_save_btn")
+				.click(
+						function() {
+							//将模态框中填写的表单数据提交给服务器保存
+							//1，先对要提交给服务器的数据进行校验
+							if (!validate_add_form()) {
+								return false;
+							} 
+							//2，判断之前的ajax邮箱校验是否成功，如果校验不存在（校验返回成功）
+							if ($(this).attr("ajax_validate") == "error") {
+								return false;
+							}
 
-			//3，发送ajax请求保存用户
-			/* alert($("#adminAddModal form").serialize()); */
-			/*当使用ajax序列化提交表单时，一定要使用post请求方式提交表单，避免乱码问题。 */
-			$.ajax({
-				url : "${APP_PATH }/addAdmin",
-				type : "POST",
-				data : $("#adminAddModal form").serialize(),
-				success : function(result) {
-					/* alert(result.msg); */
-					//用户保存成功后需要完成2件事
-					//1，关闭模态框
-					$("#adminAddModal").modal('hide');
-					//2，来到最后一页，显示刚才保存的数据
-					to_page(totalRecord);
-				}
-			});
-		});
+							//3，发送ajax请求保存用户
+							/* alert($("#adminAddModal form").serialize()); */
+							/*当使用ajax序列化提交表单时，一定要使用post请求方式提交表单，避免乱码问题。 */
+							$
+									.ajax({
+										url : "${APP_PATH }/addAdmin",
+										type : "POST",
+										data : $("#adminAddModal form")
+												.serialize(),
+										success : function(result) {
+											/* alert(result.msg); */
+											if (result.code == 100) {
+												//用户保存成功后需要完成2件事
+												//1，关闭模态框
+												$("#adminAddModal").modal(
+														'hide');
+												//2，来到最后一页，显示刚才保存的数据
+												to_page(totalRecord);
+											} else if (result.code == 200) {
+												//显示失败信息之前需要清除以前的样式
+												reset_formStyle("#adminAddModal form");
+												//显示失败信息
+												/*  console.log(result); */
+												//有那个字段的错误信息就显示那个字段的；
+												/* alert(result.extend.fieldErrors.userpass);
+												alert(result.extend.fieldErrors.userpnum);  */
+												//后台存在校验通过就不会传来校验信息的字段，所以通过未定义判断来判断每个字段的校验信息
+												if (undefined != result.extend.fieldErrors.username) {
+													//显示姓名错误信息
+													show_validate_msg(
+															"#adminName_add_input",
+															"error",
+															result.extend.fieldErrors.username);
+
+												}
+												if (undefined != result.extend.fieldErrors.userpass) {
+													//显示密码错误信息
+													show_validate_msg(
+															"#adminPass_add_input",
+															"error",
+															result.extend.fieldErrors.userpass);
+												}
+
+												if (undefined != result.extend.fieldErrors.userbirthday) {
+													//显示生日错误信息
+													show_validate_msg(
+															"#adminbirthday_add_input",
+															"error",
+															result.extend.fieldErrors.userbirthday);
+												}
+
+												if (undefined != result.extend.fieldErrors.userpnum) {
+													//显示手机号的错误信息
+													show_validate_msg(
+															"#adminpnum_add_input",
+															"error",
+															result.extend.fieldErrors.userpnum);
+												}
+												if (undefined != result.extend.fieldErrors.useraddress) {
+													//显示地址不为空的错误信息
+													show_validate_msg(
+															"#adminaddress_add_input",
+															"error",
+															result.extend.fieldErrors.useraddress);
+												}
+
+												if (undefined != result.extend.fieldErrors.useremail) {
+													//显示邮箱错误信息
+													show_validate_msg(
+															"#adminemail_add_input",
+															"error",
+															result.extend.fieldErrors.useremail);
+												}
+											}
+										}
+									});
+						});
 		$('.tablelist tbody tr:odd').addClass('odd');
 	</script>
 </body>
