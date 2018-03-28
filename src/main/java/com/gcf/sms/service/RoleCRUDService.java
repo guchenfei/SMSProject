@@ -57,8 +57,44 @@ public class RoleCRUDService {
 			// 代表该邮箱不存在，可以添加
 			return false;
 		} else {
-			//代表该邮箱存在，不能添加
+			// 代表该邮箱存在，不能添加
 			return true;
 		}
+	}
+
+	/**
+	 * 查询单个用户
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public Admin getAdmin(Integer id) {
+		Admin admin = adminMapper.selectByPrimaryKey(id);
+		return admin;
+	}
+
+	/**
+	 * 更新用户信息
+	 * 
+	 * @param admin
+	 */
+	public void updateAdmin(Admin admin) {
+		adminMapper.updateByPrimaryKeySelective(admin);
+	}
+
+	/**
+	 * 通过Id值删除用户
+	 * 
+	 * @param adminId
+	 */
+	public void deleteAdmin(Integer adminId) {
+       adminMapper.deleteByPrimaryKey(adminId);
+	}
+
+	public void deleteBatch(List<Integer> adminIds) {
+		AdminExample example = new AdminExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andAdminIdIn(adminIds);
+		adminMapper.deleteByExample(example);
 	}
 }

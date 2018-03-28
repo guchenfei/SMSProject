@@ -152,10 +152,10 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- 用户修改的模态框 -->
-	<div class="modal fade" id="adminUpdateModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel">
+	<div class="modal fade" id="adminUpdateModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -170,15 +170,15 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">姓名:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="adminName_update_input"
-									name="username" placeholder="请输入您的姓名"> <span
-										class="help-block"></span>
+								<input type="text" class="form-control"
+									id="adminName_update_input" name="username"
+									placeholder="请输入您的姓名"> <span class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">密码:</label>
 							<div class="col-sm-10">
-								<input type="password" class="form-control" name="userpass"
+								<input type="text" class="form-control" name="userpass"
 									id="adminPass_update_input" placeholder="请输入您的密码"> <span
 										class="help-block"></span>
 							</div>
@@ -187,10 +187,10 @@
 							<label class="col-sm-2 control-label">性别:</label>
 							<div class="col-sm-10">
 								<label class="radio-inline"> <!-- 男0女1 --> <input
-									type="radio" name="usersex" id="adminsex0_update_input" value="0"
-									checked="checked">男 </label> <label class="radio-inline">
-									<input type="radio" name="usersex" id="adminsex1_update_input"
-									value="1">女 
+									type="radio" name="usersex" id="adminsex0_update_input"
+									value="0" checked="checked">男 </label> <label
+									class="radio-inline"> <input type="radio"
+									name="usersex" id="adminsex1_update_input" value="1">女
 								</label>
 							</div>
 						</div>
@@ -207,25 +207,24 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">联系方式:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="adminpnum_update_input"
-									name="userpnum" placeholder="请输入您的手机号码"> <span
-										class="help-block"></span>
+								<input type="text" class="form-control"
+									id="adminpnum_update_input" name="userpnum"
+									placeholder="请输入您的手机号码"> <span class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">地址:</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="useraddress"
-									id="adminaddress_update_input" placeholder="请输入您的详细地址"> <span
-										class="help-block"></span>
+									id="adminaddress_update_input" placeholder="请输入您的详细地址">
+									<span class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">邮箱:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="useremail"
-									id="adminemail_update_input" placeholder="xxx@163.com"> <span
-										class="help-block"></span>
+								<p class="form-control-static" id="adminEmail_update_static"></p>
+								<span class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
@@ -244,7 +243,7 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">所属公司:</label>
 							<div class="col-sm-4">
-								<select class="form-control" id="admincpy_add_select"
+								<select class="form-control" id="admincpy_update_select"
 									name="cpyId">
 									<!--  所属公司提交公司ID即可 -->
 								</select>
@@ -277,19 +276,24 @@
 	<!-- 搭建显示页面 -->
 	<div>
 		<div class="row tools">
-			<div class="col-md-4">
-				<div class="col-md-6">
-					<ul class="toolbar">
-						<li id="admin_add_modal_btn">
-							<span>
-								<img src="${APP_PATH }/static/images/t01.png" />
-							</span>
-							<font style="font-size: 11px">添加管理员/业务员</font>
-						</li>
-					</ul>
-				</div>
+			<div class="col-md-3">
+				<ul class="toolbar">
+					<li id="admin_add_modal_btn">
+						<span>
+							<img src="${APP_PATH }/static/images/t01.png" />
+						</span>
+						<font style="font-size: 11px">添加管理员/业务员</font>
+					</li>
+				</ul>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-3">
+				<button type="button" class="btn-danger btn btn-default"
+					id="admin_mutiDelete_btn">
+					<span class="glyphicon glyphicon-trash"></span>
+					批量删除
+				</button>
+			</div>
+			<div class="col-md-3">
 				<select class="form-control">
 					<option>按角色查询</option>
 					<option>超级管理员</option>
@@ -297,7 +301,7 @@
 					<option>业务员</option>
 				</select>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-3">
 				<ul class="toolbar1">
 					<li>
 						<span>
@@ -314,7 +318,7 @@
 				<table class="table table-striped table-hover" id="admins_table">
 					<thead>
 						<tr>
-							<th><input name="" type="checkbox" value="" /></th>
+							<th><input name="" type="checkbox" value="" id="check_all" /></th>
 							<th>用户ID</th>
 							<th>姓名</th>
 							<th>密码</th>
@@ -342,30 +346,10 @@
 		<!-- 分页条信息 -->
 		<div class="col-md-4" id="page_nav_area"></div>
 	</div>
-	<div class="tip">
-		<div class="tiptop">
-			<span>提示信息</span>
-			<a></a>
-		</div>
-		<div class="tipinfo">
-			<span>
-				<img src="${APP_PATH }/static/images/ticon.png" />
-			</span>
-			<div class="tipright">
-				<p>是否确认对信息的修改 ？</p>
-				<cite>如果是请点击确定按钮 ，否则请点取消。</cite>
-			</div>
-		</div>
-		<div class="tipbtn">
-			<input name="" type="button" class="sure" value="确定" />&nbsp; <input
-				name="" type="button" class="cancel" value="取消" />
-		</div>
-	</div>
-	</div>
 	<script type="text/javascript">
 		//定义一个全局数据，用于添加用户后定位到最后一页，这其中有一个分页参数合理化功能，它的作用是即使翻到超出总页数的页码，最后还是定位到最后一页，
-		//所以找一个比总页码大的参数用于翻到最后一页
-		var totalRecord;
+		//所以找一个比总页码大的参数用于翻到最后一页.currentPage记录当前页
+		var totalRecord, currentPage;
 
 		//1,页面加载完成后，直接去发送ajax请求，要到分页数据
 		$(function() {
@@ -385,7 +369,8 @@
 								/* alert(item.username); */
 								/* <th><input name="" type="checkbox" value="" /></th> */
 								var checkboxTd = $("<td></td>").append(
-										$("<input/>").attr("type", "checkbox"));
+										$("<input/>").attr("type", "checkbox")
+												.addClass("check_item"));
 								var adminIdTd = $("<td></td>").append(
 										item.adminId);
 								var usernameTd = $("<td></td>").append(
@@ -420,11 +405,16 @@
 														.addClass(
 																"glyphicon glyphicon-pencil"))
 										.append("修改");
+								//为修改按钮添加自定义属性，来表示当前用户的属性
+								modifyBtn.attr("modify_id", item.adminId);
+
 								var delBtn = $("<button></button>").addClass(
-										"btn-danger btn-xs ").append(
+										"btn-danger btn-xs delete_btn").append(
 										$("<span></span>").addClass(
 												"glyphicon glyphicon-trash"))
 										.append("删除");
+								//为删除按钮添加自定义属性，来表示当前用户的属性
+								delBtn.attr("delete_id", item.adminId);
 								var btnTd = $("<td></td>").append(modifyBtn)
 										.append(" ").append(delBtn);
 
@@ -450,6 +440,7 @@
 							+ "&nbsp;页，总共&nbsp;" + result.extend.pageInfo.total
 							+ "&nbsp;条记录 ");
 			totalRecord = result.extend.pageInfo.total;
+			currentPage = result.extend.pageInfo.pageNum;
 		}
 		//解析显示分页条并且点击能去下一页等等
 		function build_page_nav(result) {
@@ -550,14 +541,16 @@
 			reset_form("#adminAddModal form");
 			$("#adminAddModal form")[0].reset();
 			//发送ajax请求，查出分公司信息，显示在下拉列表中
-			getCompanies();
+			getCompanies("#admincpy_add_select");
 			//弹出模态框
 			$("#adminAddModal").modal({
 				backdrop : "static"
 			})
 		});
 		//查出所有的分公司信息并显示在下拉列表中
-		function getCompanies() {
+		function getCompanies(ele) {
+			//清空上次请求的下拉列表信息
+			$(ele).empty();
 			$.ajax({
 				url : "${APP_PATH }/companies",
 				types : "POST",
@@ -571,7 +564,7 @@
 								var optionEle = $("<option></option>").append(
 										this.companyname).attr("value",
 										this.companyId);
-								optionEle.appendTo("#admincpy_add_select");
+								optionEle.appendTo(ele);
 							})
 				}
 			});
@@ -687,7 +680,7 @@
 							//1，先对要提交给服务器的数据进行校验
 							if (!validate_add_form()) {
 								return false;
-							} 
+							}
 							//2，判断之前的ajax邮箱校验是否成功，如果校验不存在（校验返回成功）
 							if ($(this).attr("ajax_validate") == "error") {
 								return false;
@@ -770,7 +763,184 @@
 										}
 									});
 						});
-		$('.tablelist tbody tr:odd').addClass('odd');
+		/* 1,我们是在按钮创建之前就绑定了click,所以绑定不上；
+		解决方式：（1）可以在创建按钮的时候绑定 
+		                  （2）绑定点击live(但是jQuery新版没有live，使用on进行替代)
+		 */
+		/*修改按钮点击事件*/
+		$(document).on(
+				"click",
+				".edit_btn",
+				function() {
+					/* alert("edit"); */
+					//1，查出公司信息，并显示公司列表
+					getCompanies("#admincpy_update_select");
+					//2，查出用户信息并且显示用户信息
+					getAdmin($(this).attr("modify_id"));
+					//3,把用户的ID传递给修改模态框的更新按钮
+					$("#admin_update_btn").attr("modify_id",
+							$(this).attr("modify_id"));
+					//弹出模态框
+					$("#adminUpdateModal").modal({
+						backdrop : "static"
+					})
+
+				});
+		/*删除按钮点击事件*/
+		$(document).on("click", ".delete_btn", function() {
+			//1，弹出确认删除对话框
+			/* alert($(this).parents("tr").find("td:eq(8)").text()); */
+			var adminEmail = $(this).parents("tr").find("td:eq(8)").text();
+			var adminId = $(this).attr("delete_id");
+			/* alert(adminId); */
+			if (confirm("确认删除【" + adminEmail + "】吗？")) {
+				//确认删除，发送ajax请求删除
+				$.ajax({
+					url : "${APP_PATH }/admin/" + adminId,
+					type : "DELETE",
+					success : function(result) {
+						/* alert(result.msg); */
+						to_page(currentPage);
+					}
+				});
+			}
+		});
+		//查询用户信息
+		function getAdmin(id) {
+			$.ajax({
+				url : "${APP_PATH }/admin/" + id,
+				type : "GET",
+				success : function(result) {
+					/* console.log(result); */
+					var adminData = result.extend.admin;
+					$("#adminName_update_input").val(adminData.username);
+					$("#adminPass_update_input").val(adminData.userpass);
+					$("#adminUpdateModal input[name=usersex]").val(
+							[ adminData.usersex ])
+					$("#adminbirthday_update_input")
+							.val(adminData.userbirthday);
+					$("#adminpnum_update_input").val(adminData.userpnum);
+					$("#adminaddress_update_input").val(adminData.useraddress);
+					$("#adminEmail_update_static").text(adminData.useremail);
+					$("#admintype_update_select").val([ adminData.usertype ]);
+					$("#admincpy_update_select").val([ adminData.cpyId ]);
+				}
+			});
+		}
+		/* 校验修改表单的数据 */
+		function validate_modify_form() {
+			//拿到要校验的数据，使用正则表达式进行校验
+			//校验姓名
+			var adminName = $("#adminName_update_input").val();
+			var regName = /(^[a-zA-Z0-9_-]{6,16}$)|(^[\u2E80-\u9FFF]{2,5})/;
+			if (!regName.test(adminName)) {
+				/* alert("用户名必须是2-5位中文或者6-16位英文和数字等组合"); */
+				/* 应该清空这个元素之前的样式 */
+				/* $("#adminName_add_input").parent().addClass("has-error");
+				$("#adminName_add_input").next("span").text("用户名必须是2-5位中文或者6-16位英文和数字等组合"); */
+				show_validate_msg("#adminName_update_input", "error",
+						"姓名必须是2-5位中文或者6-16位英文和数字等组合");
+				return false;
+			} else {
+				/* $("#adminName_add_input").parent().addClass("has-success");
+				$("#adminName_add_input").next("span").text(""); */
+				show_validate_msg("#adminName_update_input", "success", "");
+			}
+			//校验密码
+			var adminPass = $("#adminPass_update_input").val();
+			var regPass = /^[a-zA-Z0-9_-]{6,18}$/;
+			if (!regPass.test(adminPass)) {
+				/* 应该清空这个元素之前的样式 */
+				show_validate_msg("#adminPass_update_input", "error",
+						"密码必须为6-18位的字母数字下划线组合");
+				return false;
+			} else {
+				show_validate_msg("#adminPass_update_input", "success", "");
+			}
+			//校验手机号
+			var adminpnum = $("#adminpnum_update_input").val();
+			var regPnum = /^[1][3,4,5,7,8][0-9]{9}$/;
+			if (!regPnum.test(adminpnum)) {
+				/* 应该清空这个元素之前的样式 */
+				show_validate_msg("#adminpnum_update_input", "error",
+						"请输入格式正确的11位手机号");
+				return false;
+			} else {
+				show_validate_msg("#adminpnum_update_input", "success", "");
+			}
+			return true;
+		}
+		//点击更新，更新用户信息
+		$("#admin_update_btn").click(
+				function() {
+					//进行修改表单验证
+					if (validate_modify_form()) {
+						//验证成功发送ajax请求保存用户信息（更新）
+						$.ajax({
+							url : "${APP_PATH }/admin/"
+									+ $(this).attr("modify_id"),
+							type : "POST",
+							data : $("#adminUpdateModal form").serialize()
+									+ "&_method=PUT",
+							success : function(result) {
+								/* alert(result.msg); */
+								//1，关闭模态框
+								$("#adminUpdateModal").modal('hide');
+								//2,回到本页面
+								to_page(currentPage);
+							}
+						});
+					}
+				});
+		/* 全选和全不选功能 */
+		$("#check_all").click(function() {
+			/*attr获取到的CheckBox属性为undefined,它可以获取自定义属性的值
+			prop修改和读取dom原生属性值
+			 */
+			//同步选中状态即全选
+			$(".check_item").prop("checked", $(this).prop("checked"));
+		});
+		/*check_item点击事件*/
+		$(document)
+				.on(
+						"click",
+						".check_item",
+						function() {
+							//1,判断当前选中元素是否选满（20个）
+							var flag = $(".check_item:checked").length == $(".check_item").length;
+							$("#check_all").prop("checked", flag);
+						});
+		//点击批量删除按钮事件
+		$("#admin_mutiDelete_btn").click(
+				function() {
+					var adminEmails = "";
+					var adminIds = "";
+					$.each($(".check_item:checked"), function() {
+						adminEmails += $(this).parents("tr").find("td:eq(8)")
+								.text()
+								+ ",";
+						adminIds += $(this).parents("tr").find("td:eq(1)")
+								.text()
+								+ ",";
+					});
+					//去除adminEmails多余的
+					adminEmails = adminEmails.substring(0,
+							adminEmails.length - 1);
+					//去除adminIds多余的
+					adminIds = adminIds.substring(0, adminIds.length - 1);
+					if (confirm("确认删除【" + adminEmails + "】吗？")) {
+						//发送ajax请求删除
+						$.ajax({
+							url : "${APP_PATH }/admin/" + adminIds,
+							type : "DELETE",
+							success : function(result) {
+								alert(result.msg);
+								//回到当前页面
+								to_page(currentPage);
+							}
+						});
+					}
+				});
 	</script>
 </body>
 </html>
