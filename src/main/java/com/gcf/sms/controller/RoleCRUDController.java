@@ -3,6 +3,7 @@ package com.gcf.sms.controller;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -186,6 +187,24 @@ public class RoleCRUDController {
 			return Msg.success();
 		}
 
+	}
+	
+	/**
+	 * 按用户角色查询
+	 * @param opValue
+	 * @param pn
+	 * @return
+	 */
+	@RequestMapping(value="/selectAdminByRole",method=RequestMethod.POST)
+	@ResponseBody
+	public Msg selectAdminByRole(@RequestParam(value = "opValue", defaultValue = "0") Integer opValue,@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+		PageHelper.startPage(pn, 20);
+		// startPage后面紧跟着这个查询就是一个分页查询
+		List<Admin> admins = roleCRUDService.getAllAdminByRole(opValue);
+		// 使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就行了
+		// 封装了详细的分页信息，包括有我们查出来的数据，传入连续显示的页数
+		PageInfo page = new PageInfo(admins, 5);
+		return Msg.success().add("pageInfo", page);
 	}
 
 }

@@ -63,11 +63,11 @@
 			<form action="${APP_PATH}/login" method="post">
 				<ul>
 					<li>
-						<input name="email" type="text" class="loginuser" value="123@qq.com"
+						<input name="email" type="text" class="loginuser" value="456@qq.com"
 							placeholder="请输入您的邮箱账号" onclick="JavaScript:this.value=''" />
 					</li>
 					<li>
-						<input name="password" type="password" class="loginpwd" value="123"
+						<input name="password" type="password" class="loginpwd" value="123456"
 							placeholder="请输入您的密码" onclick="JavaScript:this.value=''" />
 					</li>
 

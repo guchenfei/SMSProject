@@ -97,4 +97,16 @@ public class RoleCRUDService {
 		criteria.andAdminIdIn(adminIds);
 		adminMapper.deleteByExample(example);
 	}
+    /**
+     * 按角色查询用户
+     * @param opValue
+     * @return
+     */
+	public List<Admin> getAllAdminByRole(Integer opValue) {
+		AdminExample example = new AdminExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andUsertypeEqualTo(opValue);
+		List<Admin> admins = adminMapper.selectByExampleWithCpy(example);
+		return admins;
+	}
 }

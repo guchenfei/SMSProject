@@ -23,26 +23,6 @@
 	</script>
 	<script language="javascript" type="text/javascript"
 		src="${APP_PATH }/static/My97DatePicker/WdatePicker.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$(".click").click(function() {
-				$(".tip").fadeIn(200);
-			});
-
-			$(".tiptop a").click(function() {
-				$(".tip").fadeOut(200);
-			});
-
-			$(".sure").click(function() {
-				$(".tip").fadeOut(100);
-			});
-
-			$(".cancel").click(function() {
-				$(".tip").fadeOut(100);
-			});
-
-		});
-	</script>
 </head>
 
 <body>
@@ -153,7 +133,7 @@
 		</div>
 	</div>
 
-	<!-- 用户修改的模态框 -->
+	<!-- 普通用户修改的模态框 -->
 	<div class="modal fade" id="adminUpdateModal" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel">
 		<div class="modal-dialog" role="document">
@@ -258,6 +238,112 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 角色用户修改的模态框 -->
+	<div class="modal fade" id="adminUpdateModalRole" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">修改管理员/业务员</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">姓名:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control"
+									id="adminName_update_inputRole" name="username"
+									placeholder="请输入您的姓名"> <span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">密码:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="userpass"
+									id="adminPass_update_inputRole" placeholder="请输入您的密码"> <span
+										class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">性别:</label>
+							<div class="col-sm-10">
+								<label class="radio-inline"> <!-- 男0女1 --> <input
+									type="radio" name="usersexRole" id="adminsex0_update_input"
+									value="0" checked="checked">男 </label> <label
+									class="radio-inline"> <input type="radio"
+									name="usersexRole" id="adminsex1_update_input" value="1">女
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">生日:</label>
+							<div class="col-sm-10">
+								<input id="adminbirthday_update_inputRole" type="text"
+									name="userbirthday" class="form-control"
+									onclick="WdatePicker({isShowClear:false,readOnly:true})"
+									placeholder="请点击输入您的生日" />
+								<span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">联系方式:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control"
+									id="adminpnum_update_inputRole" name="userpnum"
+									placeholder="请输入您的手机号码"> <span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">地址:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="useraddress"
+									id="adminaddress_update_inputRole" placeholder="请输入您的详细地址">
+									<span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">邮箱:</label>
+							<div class="col-sm-10">
+								<p class="form-control-static" id="adminEmail_update_staticRole"></p>
+								<span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">角色:</label>
+							<div class="col-sm-4">
+								<select class="form-control" id="admintype_update_selectRole"
+									name="usertype">
+									<!-- 权限角色：0表示超级管理员，1表示普通管理员，2表示业务员 -->
+									<option value="0">超级管理员</option>
+									<option value="1">普通管理员</option>
+									<option value="2">业务员</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">所属公司:</label>
+							<div class="col-sm-4">
+								<select class="form-control" id="admincpy_update_selectRole"
+									name="cpyId">
+									<!--  所属公司提交公司ID即可 -->
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="admin_update_btnRole">更新</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="place">
 		<span>位置：</span>
@@ -294,11 +380,12 @@
 				</button>
 			</div>
 			<div class="col-md-3">
-				<select class="form-control">
-					<option>按角色查询</option>
-					<option>超级管理员</option>
-					<option>管理员</option>
-					<option>业务员</option>
+				<select class="form-control" id="selectByRole">
+					<!-- 权限角色：0表示超级管理员，1表示普通管理员，2表示业务员 -->
+					<option value="#">按角色查询</option>
+					<option value="0">超级管理员</option>
+					<option value="1">普通管理员</option>
+					<option value="2">业务员</option>
 				</select>
 			</div>
 			<div class="col-md-3">
@@ -348,8 +435,8 @@
 	</div>
 	<script type="text/javascript">
 		//定义一个全局数据，用于添加用户后定位到最后一页，这其中有一个分页参数合理化功能，它的作用是即使翻到超出总页数的页码，最后还是定位到最后一页，
-		//所以找一个比总页码大的参数用于翻到最后一页.currentPage记录当前页
-		var totalRecord, currentPage;
+		//所以找一个比总页码大的参数用于翻到最后一页.currentPage记录当前页,currentRole记录当前角色
+		var totalRecord, currentPage,currentRole;
 
 		//1,页面加载完成后，直接去发送ajax请求，要到分页数据
 		$(function() {
@@ -357,6 +444,9 @@
 			to_page(1);
 		});
 
+		/**
+		 * 普通查询构建table
+		 */
 		function build_admins_table(result) {
 			//每次放新数据的时候要清空上次请求后的数据
 			$("#admins_table tbody").empty();
@@ -429,8 +519,84 @@
 										.appendTo("#admins_table tbody");
 							});
 		}
+		
+		/**
+		 * 角色查询构建table
+		 */
+		function build_adminsRole_table(result) {
+			//每次放新数据的时候要清空上次请求后的数据
+			$("#admins_table tbody").empty();
+			var admins = result.extend.pageInfo.list;
+			//遍历数据
+			$
+					.each(
+							admins,
+							function(index, item) {
+								/* alert(item.username); */
+								/* <th><input name="" type="checkbox" value="" /></th> */
+								var checkboxTd = $("<td></td>").append(
+										$("<input/>").attr("type", "checkbox")
+												.addClass("check_item"));
+								var adminIdTd = $("<td></td>").append(
+										item.adminId);
+								var usernameTd = $("<td></td>").append(
+										item.username);
+								var userpassTd = $("<td></td>")
+										.append("******");
+								var usersexTd = $("<td></td>").append(
+										item.usersex == "0" ? "男" : "女");
+								var userbirthdayTd = $("<td></td>").append(
+										item.userbirthday);
+								var userpnumTd = $("<td></td>").append(
+										item.userpnum);
+								var useraddressTd = $("<td></td>").append(
+										item.useraddress);
+								var useremailTd = $("<td></td>").append(
+										item.useremail);
+								/* 权限角色：0表示超级管理员，1表示普通管理员，2表示业务员 */
+								if (item.usertype == 0) {
+									var role = "超级管理员";
+								} else if (item.usertype == 1) {
+									var role = "普通管理员";
+								} else if (item.usertype == 2) {
+									var role = "业务员";
+								}
+								var usertypeTd = $("<td></td>").append(role);
+								var companyTd = $("<td></td>").append(
+										item.company.companyname);
+								var modifyBtn = $("<button></button>")
+										.addClass("btn-primary btn-xs edit_btnRole")
+										.append(
+												$("<span></span>")
+														.addClass(
+																"glyphicon glyphicon-pencil"))
+										.append("修改");
+								//为修改按钮添加自定义属性，来表示当前用户的属性
+								modifyBtn.attr("modify_id", item.adminId);
 
-		//解析显示分页信息
+								var delBtn = $("<button></button>").addClass(
+										"btn-danger btn-xs delete_btnRole").append(
+										$("<span></span>").addClass(
+												"glyphicon glyphicon-trash"))
+										.append("删除");
+								//为删除按钮添加自定义属性，来表示当前用户的属性
+								delBtn.attr("delete_id", item.adminId);
+								var btnTd = $("<td></td>").append(modifyBtn)
+										.append(" ").append(delBtn);
+
+								/*append方法执行完成以后还是返回原来的元素 <tr></tr>所以一直继续添加每行内容*/
+								$("<tr></tr>").append(checkboxTd).append(
+										adminIdTd).append(usernameTd).append(
+										userpassTd).append(usersexTd).append(
+										userbirthdayTd).append(userpnumTd)
+										.append(useraddressTd).append(
+												useremailTd).append(usertypeTd)
+										.append(companyTd).append(btnTd)
+										.appendTo("#admins_table tbody");
+							});
+		}
+
+		//解析显示普通查询分页信息
 		function build_page_info(result) {
 			//每次放新数据的时候要清空上次请求后的数据
 			$("#page_info_area").empty();
@@ -442,7 +608,8 @@
 			totalRecord = result.extend.pageInfo.total;
 			currentPage = result.extend.pageInfo.pageNum;
 		}
-		//解析显示分页条并且点击能去下一页等等
+		
+		//解析普通查询显示分页条并且点击能去下一页等等
 		function build_page_nav(result) {
 			//每次放新数据的时候要清空上次请求后的数据
 			$("#page_nav_area").empty();
@@ -501,6 +668,66 @@
 					"Page navigation");
 			navEle.appendTo("#page_nav_area");
 		}
+		
+		//解析普通查询显示分页条并且点击能去下一页等等
+		function build_pageRole_nav(result) {
+			//每次放新数据的时候要清空上次请求后的数据
+			$("#page_nav_area").empty();
+			//page_nav_area
+			var ul = $("<ul></ul>").addClass("pagination");
+			//构建元素
+			var firstPageLi = $("<li></li>").append($("<a></a>").append("首页"));
+			var prePageLi = $("<li></li>").append(
+					$("<a></a>").append("&laquo;"));
+
+			if (result.extend.pageInfo.hasPreviousPage == false) {
+				firstPageLi.addClass("disabled");
+				prePageLi.addClass("disabled");
+			} else {
+				//为元素添加翻页事件
+				firstPageLi.click(function() {
+					to_pageByRole(currentRole,1);
+				});
+
+				prePageLi.click(function() {
+					to_pageByRole(currentRole,result.extend.pageInfo.pageNum - 1);
+				});
+			}
+			var nextPageLi = $("<li></li>").append(
+					$("<a></a>").append("&raquo;"));
+			var lastPageLi = $("<li></li>").append($("<a></a>").append("末页"));
+			if (result.extend.pageInfo.hasNextPage == false) {
+				nextPageLi.addClass("disabled");
+				lastPageLi.addClass("disabled");
+			} else {
+				nextPageLi.click(function() {
+					to_pageByRole(currentRole,result.extend.pageInfo.pageNum + 1);
+				});
+
+				lastPageLi.click(function() {
+					to_pageByRole(currentRole,result.extend.pageInfo.pages);
+				});
+			}
+			//添加首页和前一页的提示
+			ul.append(firstPageLi).append(prePageLi);
+			//1,2,3,4,5页码号,遍历给ul中添加页码提示
+			$.each(result.extend.pageInfo.navigatepageNums, function(index,
+					item) {
+				var numLi = $("<li></li>").append($("<a></a>").append(item));
+				if (result.extend.pageInfo.pageNum == item) {
+					numLi.addClass("active");
+				}
+				numLi.click(function() {
+					to_pageByRole(currentRole,item);
+				});
+				ul.append(numLi);
+			});
+			//添加下一页和末页的提示
+			ul.append(nextPageLi).append(lastPageLi);
+			var navEle = $("<nav></nav>").append(ul).attr("aria-label",
+					"Page navigation");
+			navEle.appendTo("#page_nav_area");
+		}
 
 		//发送指定的请求，跳到点击的页码页
 		function to_page(pn) {
@@ -509,13 +736,56 @@
 				data : "pn=" + pn,
 				type : "POST",
 				success : function(result) {
-					/* console.log(result); */
+					console.log(result);
 					//1，解析并显示用户数据
 					build_admins_table(result);
 					//2，解析并显示分页信息
 					build_page_info(result);
 					//3，解析显示分页条数据
 					build_page_nav(result);
+				}
+			});
+		}
+		
+		//按角色查询后跳到指定页码
+		function to_pageByRole(currentRole,pn) {
+			$.ajax({
+				url : "${APP_PATH }/selectAdminByRole",
+				data : {
+					"opValue" : currentRole,
+					"pn" : pn
+				},
+				dataType: "JSON",
+				type : "POST",
+				success : function(result) {
+					//1，解析并显示用户数据
+					build_adminsRole_table(result);
+					//2，解析并显示分页信息
+					build_page_info(result);
+					//3，解析显示分页条数据
+					build_pageRole_nav(result);
+				}
+			});
+		}
+
+		//发送按角色查询的请求，显示数据
+		function selectByRole(opValue, pn) {
+			currentRole = opValue;
+			$.ajax({
+				url : "${APP_PATH }/selectAdminByRole",
+				data : {
+					"opValue" : opValue,
+					"pn" : pn
+				},
+				type : "POST",
+				dataType : "JSON",
+				success : function(result) {
+					//1，解析并显示用户数据
+					build_adminsRole_table(result);
+					//2，解析并显示分页信息
+					build_page_info(result);
+					//3，解析显示分页条数据
+					build_pageRole_nav(result);
 				}
 			});
 		}
@@ -699,6 +969,7 @@
 											/* alert(result.msg); */
 											if (result.code == 100) {
 												//用户保存成功后需要完成2件事
+												alert(result.msg);
 												//1，关闭模态框
 												$("#adminAddModal").modal(
 														'hide');
@@ -767,7 +1038,7 @@
 		解决方式：（1）可以在创建按钮的时候绑定 
 		                  （2）绑定点击live(但是jQuery新版没有live，使用on进行替代)
 		 */
-		/*修改按钮点击事件*/
+		/*普通修改按钮点击事件*/
 		$(document).on(
 				"click",
 				".edit_btn",
@@ -786,7 +1057,26 @@
 					})
 
 				});
-		/*删除按钮点击事件*/
+		
+		/*角色修改按钮点击事件*/
+		$(document).on(
+				"click",
+				".edit_btnRole",
+				function() {
+					/* alert("edit"); */
+					//1，查出公司信息，并显示公司列表
+					getCompanies("#admincpy_update_selectRole");
+					//2，查出用户信息并且显示用户信息
+					getAdminRole($(this).attr("modify_id"));
+					//3,把用户的ID传递给修改模态框的更新按钮
+					$("#admin_update_btnRole").attr("modify_id",
+							$(this).attr("modify_id"));
+					//弹出模态框
+					$("#adminUpdateModalRole").modal({
+						backdrop : "static"
+					})
+				});
+		/*普通删除按钮点击事件*/
 		$(document).on("click", ".delete_btn", function() {
 			//1，弹出确认删除对话框
 			/* alert($(this).parents("tr").find("td:eq(8)").text()); */
@@ -799,13 +1089,43 @@
 					url : "${APP_PATH }/admin/" + adminId,
 					type : "DELETE",
 					success : function(result) {
-						/* alert(result.msg); */
-						to_page(currentPage);
+						//状态码 100-成功 200-失败
+						if (result.code == 100) {
+							alert(result.msg);
+							to_page(currentPage);
+						} else if (result.code == 200) {
+							alert(result.msg);
+						}
 					}
 				});
 			}
 		});
-		//查询用户信息
+		
+		/*角色删除按钮点击事件*/
+		$(document).on("click", ".delete_btnRole", function() {
+			//1，弹出确认删除对话框
+			/* alert($(this).parents("tr").find("td:eq(8)").text()); */
+			var adminEmail = $(this).parents("tr").find("td:eq(8)").text();
+			var adminId = $(this).attr("delete_id");
+			/* alert(adminId); */
+			if (confirm("确认删除【" + adminEmail + "】吗？")) {
+				//确认删除，发送ajax请求删除
+				$.ajax({
+					url : "${APP_PATH }/admin/" + adminId,
+					type : "DELETE",
+					success : function(result) {
+						//状态码 100-成功 200-失败
+						if (result.code == 100) {
+							alert(result.msg);
+							to_pageByRole(currentRole,currentPage);
+						} else if (result.code == 200) {
+							alert(result.msg);
+						}
+					}
+				});
+			}
+		});
+		//查询用户信息提交到普通修改模态框
 		function getAdmin(id) {
 			$.ajax({
 				url : "${APP_PATH }/admin/" + id,
@@ -827,7 +1147,30 @@
 				}
 			});
 		}
-		/* 校验修改表单的数据 */
+		
+		//查询用户信息提交到角色修改模态框
+		function getAdminRole(id) {
+			$.ajax({
+				url : "${APP_PATH }/admin/" + id,
+				type : "GET",
+				success : function(result) {
+					/* console.log(result); */
+					var adminData = result.extend.admin;
+					$("#adminName_update_inputRole").val(adminData.username);
+					$("#adminPass_update_inputRole").val(adminData.userpass);
+					$("#adminUpdateModalRole input[name=usersexRole]").val(
+							[ adminData.usersex ])
+					$("#adminbirthday_update_inputRole")
+							.val(adminData.userbirthday);
+					$("#adminpnum_update_inputRole").val(adminData.userpnum);
+					$("#adminaddress_update_inputRole").val(adminData.useraddress);
+					$("#adminEmail_update_staticRole").text(adminData.useremail);
+					$("#admintype_update_selectRole").val([ adminData.usertype ]);
+					$("#admincpy_update_selectRole").val([ adminData.cpyId ]);
+				}
+			});
+		}
+		/* 普通校验修改表单的数据 */
 		function validate_modify_form() {
 			//拿到要校验的数据，使用正则表达式进行校验
 			//校验姓名
@@ -870,28 +1213,221 @@
 			}
 			return true;
 		}
-		//点击更新，更新用户信息
-		$("#admin_update_btn").click(
-				function() {
-					//进行修改表单验证
-					if (validate_modify_form()) {
-						//验证成功发送ajax请求保存用户信息（更新）
-						$.ajax({
-							url : "${APP_PATH }/admin/"
-									+ $(this).attr("modify_id"),
-							type : "POST",
-							data : $("#adminUpdateModal form").serialize()
-									+ "&_method=PUT",
-							success : function(result) {
-								/* alert(result.msg); */
-								//1，关闭模态框
-								$("#adminUpdateModal").modal('hide');
-								//2,回到本页面
-								to_page(currentPage);
+		
+		/* 角色校验修改表单的数据 */
+		function validate_modify_formRole() {
+			//拿到要校验的数据，使用正则表达式进行校验
+			//校验姓名
+			var adminName = $("#adminName_update_inputRole").val();
+			var regName = /(^[a-zA-Z0-9_-]{6,16}$)|(^[\u2E80-\u9FFF]{2,5})/;
+			if (!regName.test(adminName)) {
+				/* alert("用户名必须是2-5位中文或者6-16位英文和数字等组合"); */
+				/* 应该清空这个元素之前的样式 */
+				/* $("#adminName_add_input").parent().addClass("has-error");
+				$("#adminName_add_input").next("span").text("用户名必须是2-5位中文或者6-16位英文和数字等组合"); */
+				show_validate_msg("#adminName_update_inputRole", "error",
+						"姓名必须是2-5位中文或者6-16位英文和数字等组合");
+				return false;
+			} else {
+				/* $("#adminName_add_input").parent().addClass("has-success");
+				$("#adminName_add_input").next("span").text(""); */
+				show_validate_msg("#adminName_update_inputRole", "success", "");
+			}
+			//校验密码
+			var adminPass = $("#adminPass_update_inputRole").val();
+			var regPass = /^[a-zA-Z0-9_-]{6,18}$/;
+			if (!regPass.test(adminPass)) {
+				/* 应该清空这个元素之前的样式 */
+				show_validate_msg("#adminPass_update_inputRole", "error",
+						"密码必须为6-18位的字母数字下划线组合");
+				return false;
+			} else {
+				show_validate_msg("#adminPass_update_inputRole", "success", "");
+			}
+			//校验手机号
+			var adminpnum = $("#adminpnum_update_inputRole").val();
+			var regPnum = /^[1][3,4,5,7,8][0-9]{9}$/;
+			if (!regPnum.test(adminpnum)) {
+				/* 应该清空这个元素之前的样式 */
+				show_validate_msg("#adminpnum_update_inputRole", "error",
+						"请输入格式正确的11位手机号");
+				return false;
+			} else {
+				show_validate_msg("#adminpnum_update_inputRole", "success", "");
+			}
+			return true;
+		}
+		//普通点击更新，更新用户信息
+		$("#admin_update_btn")
+				.click(
+						function() {
+							//进行修改表单验证
+							if (validate_modify_form()) {
+								//验证成功发送ajax请求保存用户信息（更新）
+								$
+										.ajax({
+											url : "${APP_PATH }/admin/"
+													+ $(this).attr("modify_id"),
+											type : "POST",
+											data : $("#adminUpdateModal form")
+													.serialize()
+													+ "&_method=PUT",
+											success : function(result) {
+												/* alert(result.msg); */
+												if (result.code == 100) {
+													alert(result.msg);
+													//用户保存成功后需要完成2件事
+													//1，关闭模态框
+													$("#adminUpdateModal")
+															.modal('hide');
+													//2,回到本页面
+													to_page(currentPage);
+												} else if (result.code == 200) {
+													//显示失败信息之前需要清除以前的样式
+													reset_formStyle("#adminUpdateModal form");
+													//显示失败信息
+													/*  console.log(result); */
+													//有那个字段的错误信息就显示那个字段的；
+													/* alert(result.extend.fieldErrors.userpass);
+													alert(result.extend.fieldErrors.userpnum);  */
+													//后台存在校验通过就不会传来校验信息的字段，所以通过未定义判断来判断每个字段的校验信息
+													if (undefined != result.extend.fieldErrors.username) {
+														//显示姓名错误信息
+														show_validate_msg(
+																"#adminName_update_input",
+																"error",
+																result.extend.fieldErrors.username);
+
+													}
+													if (undefined != result.extend.fieldErrors.userpass) {
+														//显示密码错误信息
+														show_validate_msg(
+																"#adminPass_update_input",
+																"error",
+																result.extend.fieldErrors.userpass);
+													}
+
+													if (undefined != result.extend.fieldErrors.userbirthday) {
+														//显示生日错误信息
+														show_validate_msg(
+																"#adminbirthday_update_input",
+																"error",
+																result.extend.fieldErrors.userbirthday);
+													}
+
+													if (undefined != result.extend.fieldErrors.userpnum) {
+														//显示手机号的错误信息
+														show_validate_msg(
+																"#adminpnum_update_input",
+																"error",
+																result.extend.fieldErrors.userpnum);
+													}
+													if (undefined != result.extend.fieldErrors.useraddress) {
+														//显示地址不为空的错误信息
+														show_validate_msg(
+																"#adminaddress_update_input",
+																"error",
+																result.extend.fieldErrors.useraddress);
+													}
+
+													if (undefined != result.extend.fieldErrors.useremail) {
+														//显示邮箱错误信息
+														show_validate_msg(
+																"#adminemail_update_input",
+																"error",
+																result.extend.fieldErrors.useremail);
+													}
+												}
+											}
+										});
 							}
 						});
-					}
-				});
+		
+		//角色点击更新，更新用户信息
+		$("#admin_update_btnRole")
+				.click(
+						function() {
+							//进行修改表单验证
+							if (validate_modify_formRole()) {
+								//验证成功发送ajax请求保存用户信息（更新）
+								$
+										.ajax({
+											url : "${APP_PATH }/admin/"
+													+ $(this).attr("modify_id"),
+											type : "POST",
+											data : $("#adminUpdateModalRole form")
+													.serialize()
+													+ "&_method=PUT",
+											success : function(result) {
+												/* alert(result.msg); */
+												if (result.code == 100) {
+													alert(result.msg);
+													//用户保存成功后需要完成2件事
+													//1，关闭模态框
+													$("#adminUpdateModalRole")
+															.modal('hide');
+													//2,回到本页面
+													to_pageByRole(currentRole,currentPage);
+												} else if (result.code == 200) {
+													//显示失败信息之前需要清除以前的样式
+													reset_formStyle("#adminUpdateModalRole form");
+													//显示失败信息
+													/*  console.log(result); */
+													//有那个字段的错误信息就显示那个字段的；
+													/* alert(result.extend.fieldErrors.userpass);
+													alert(result.extend.fieldErrors.userpnum);  */
+													//后台存在校验通过就不会传来校验信息的字段，所以通过未定义判断来判断每个字段的校验信息
+													if (undefined != result.extend.fieldErrors.username) {
+														//显示姓名错误信息
+														show_validate_msg(
+																"#adminName_update_inputRole",
+																"error",
+																result.extend.fieldErrors.username);
+
+													}
+													if (undefined != result.extend.fieldErrors.userpass) {
+														//显示密码错误信息
+														show_validate_msg(
+																"#adminPass_update_inputRole",
+																"error",
+																result.extend.fieldErrors.userpass);
+													}
+
+													if (undefined != result.extend.fieldErrors.userbirthday) {
+														//显示生日错误信息
+														show_validate_msg(
+																"#adminbirthday_update_inputRole",
+																"error",
+																result.extend.fieldErrors.userbirthday);
+													}
+
+													if (undefined != result.extend.fieldErrors.userpnum) {
+														//显示手机号的错误信息
+														show_validate_msg(
+																"#adminpnum_update_inputRole",
+																"error",
+																result.extend.fieldErrors.userpnum);
+													}
+													if (undefined != result.extend.fieldErrors.useraddress) {
+														//显示地址不为空的错误信息
+														show_validate_msg(
+																"#adminaddress_update_inputRole",
+																"error",
+																result.extend.fieldErrors.useraddress);
+													}
+
+													if (undefined != result.extend.fieldErrors.useremail) {
+														//显示邮箱错误信息
+														show_validate_msg(
+																"#adminemail_update_inputRole",
+																"error",
+																result.extend.fieldErrors.useremail);
+													}
+												}
+											}
+										});
+							}
+						});
 		/* 全选和全不选功能 */
 		$("#check_all").click(function() {
 			/*attr获取到的CheckBox属性为undefined,它可以获取自定义属性的值
@@ -934,13 +1470,22 @@
 							url : "${APP_PATH }/admin/" + adminIds,
 							type : "DELETE",
 							success : function(result) {
-								alert(result.msg);
-								//回到当前页面
-								to_page(currentPage);
+								if (result.code == 100) {
+									alert(result.msg);
+									//回到当前页面
+									to_page(currentPage);
+								} else if (result.code == 200) {
+									alert(result.msg);
+								}
 							}
 						});
 					}
 				});
+		/*通过角色查询用户 */
+		$("#selectByRole").change(function() {
+			var opValue = $("#selectByRole option:selected").val();
+			selectByRole(opValue, 1);
+		});
 	</script>
 </body>
 </html>
