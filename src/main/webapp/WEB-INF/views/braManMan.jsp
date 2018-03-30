@@ -36,7 +36,7 @@
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">添加管理员/业务员</h4>
+					<h4 class="modal-title">添加管理员/业务员</h4>
 				</div>
 				<div class="modal-body">
 					<form class="form-horizontal">
@@ -238,7 +238,7 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- 角色用户修改的模态框 -->
 	<div class="modal fade" id="adminUpdateModalRole" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel">
@@ -265,8 +265,8 @@
 							<label class="col-sm-2 control-label">密码:</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="userpass"
-									id="adminPass_update_inputRole" placeholder="请输入您的密码"> <span
-										class="help-block"></span>
+									id="adminPass_update_inputRole" placeholder="请输入您的密码">
+									<span class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
@@ -339,7 +339,8 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-					<button type="button" class="btn btn-primary" id="admin_update_btnRole">更新</button>
+					<button type="button" class="btn btn-primary"
+						id="admin_update_btnRole">更新</button>
 				</div>
 			</div>
 		</div>
@@ -436,7 +437,7 @@
 	<script type="text/javascript">
 		//定义一个全局数据，用于添加用户后定位到最后一页，这其中有一个分页参数合理化功能，它的作用是即使翻到超出总页数的页码，最后还是定位到最后一页，
 		//所以找一个比总页码大的参数用于翻到最后一页.currentPage记录当前页,currentRole记录当前角色
-		var totalRecord, currentPage,currentRole;
+		var totalRecord, currentPage, currentRole;
 
 		//1,页面加载完成后，直接去发送ajax请求，要到分页数据
 		$(function() {
@@ -519,7 +520,7 @@
 										.appendTo("#admins_table tbody");
 							});
 		}
-		
+
 		/**
 		 * 角色查询构建table
 		 */
@@ -565,7 +566,8 @@
 								var companyTd = $("<td></td>").append(
 										item.company.companyname);
 								var modifyBtn = $("<button></button>")
-										.addClass("btn-primary btn-xs edit_btnRole")
+										.addClass(
+												"btn-primary btn-xs edit_btnRole")
 										.append(
 												$("<span></span>")
 														.addClass(
@@ -574,10 +576,13 @@
 								//为修改按钮添加自定义属性，来表示当前用户的属性
 								modifyBtn.attr("modify_id", item.adminId);
 
-								var delBtn = $("<button></button>").addClass(
-										"btn-danger btn-xs delete_btnRole").append(
-										$("<span></span>").addClass(
-												"glyphicon glyphicon-trash"))
+								var delBtn = $("<button></button>")
+										.addClass(
+												"btn-danger btn-xs delete_btnRole")
+										.append(
+												$("<span></span>")
+														.addClass(
+																"glyphicon glyphicon-trash"))
 										.append("删除");
 								//为删除按钮添加自定义属性，来表示当前用户的属性
 								delBtn.attr("delete_id", item.adminId);
@@ -608,7 +613,7 @@
 			totalRecord = result.extend.pageInfo.total;
 			currentPage = result.extend.pageInfo.pageNum;
 		}
-		
+
 		//解析普通查询显示分页条并且点击能去下一页等等
 		function build_page_nav(result) {
 			//每次放新数据的时候要清空上次请求后的数据
@@ -668,7 +673,7 @@
 					"Page navigation");
 			navEle.appendTo("#page_nav_area");
 		}
-		
+
 		//解析普通查询显示分页条并且点击能去下一页等等
 		function build_pageRole_nav(result) {
 			//每次放新数据的时候要清空上次请求后的数据
@@ -686,11 +691,12 @@
 			} else {
 				//为元素添加翻页事件
 				firstPageLi.click(function() {
-					to_pageByRole(currentRole,1);
+					to_pageByRole(currentRole, 1);
 				});
 
 				prePageLi.click(function() {
-					to_pageByRole(currentRole,result.extend.pageInfo.pageNum - 1);
+					to_pageByRole(currentRole,
+							result.extend.pageInfo.pageNum - 1);
 				});
 			}
 			var nextPageLi = $("<li></li>").append(
@@ -701,11 +707,12 @@
 				lastPageLi.addClass("disabled");
 			} else {
 				nextPageLi.click(function() {
-					to_pageByRole(currentRole,result.extend.pageInfo.pageNum + 1);
+					to_pageByRole(currentRole,
+							result.extend.pageInfo.pageNum + 1);
 				});
 
 				lastPageLi.click(function() {
-					to_pageByRole(currentRole,result.extend.pageInfo.pages);
+					to_pageByRole(currentRole, result.extend.pageInfo.pages);
 				});
 			}
 			//添加首页和前一页的提示
@@ -718,7 +725,7 @@
 					numLi.addClass("active");
 				}
 				numLi.click(function() {
-					to_pageByRole(currentRole,item);
+					to_pageByRole(currentRole, item);
 				});
 				ul.append(numLi);
 			});
@@ -746,16 +753,16 @@
 				}
 			});
 		}
-		
+
 		//按角色查询后跳到指定页码
-		function to_pageByRole(currentRole,pn) {
+		function to_pageByRole(currentRole, pn) {
 			$.ajax({
 				url : "${APP_PATH }/selectAdminByRole",
 				data : {
 					"opValue" : currentRole,
 					"pn" : pn
 				},
-				dataType: "JSON",
+				dataType : "JSON",
 				type : "POST",
 				success : function(result) {
 					//1，解析并显示用户数据
@@ -1057,7 +1064,7 @@
 					})
 
 				});
-		
+
 		/*角色修改按钮点击事件*/
 		$(document).on(
 				"click",
@@ -1100,7 +1107,7 @@
 				});
 			}
 		});
-		
+
 		/*角色删除按钮点击事件*/
 		$(document).on("click", ".delete_btnRole", function() {
 			//1，弹出确认删除对话框
@@ -1117,7 +1124,7 @@
 						//状态码 100-成功 200-失败
 						if (result.code == 100) {
 							alert(result.msg);
-							to_pageByRole(currentRole,currentPage);
+							to_pageByRole(currentRole, currentPage);
 						} else if (result.code == 200) {
 							alert(result.msg);
 						}
@@ -1136,7 +1143,7 @@
 					$("#adminName_update_input").val(adminData.username);
 					$("#adminPass_update_input").val(adminData.userpass);
 					$("#adminUpdateModal input[name=usersex]").val(
-							[ adminData.usersex ])
+							[ adminData.usersex ]);
 					$("#adminbirthday_update_input")
 							.val(adminData.userbirthday);
 					$("#adminpnum_update_input").val(adminData.userpnum);
@@ -1147,7 +1154,7 @@
 				}
 			});
 		}
-		
+
 		//查询用户信息提交到角色修改模态框
 		function getAdminRole(id) {
 			$.ajax({
@@ -1160,16 +1167,20 @@
 					$("#adminPass_update_inputRole").val(adminData.userpass);
 					$("#adminUpdateModalRole input[name=usersexRole]").val(
 							[ adminData.usersex ])
-					$("#adminbirthday_update_inputRole")
-							.val(adminData.userbirthday);
+					$("#adminbirthday_update_inputRole").val(
+							adminData.userbirthday);
 					$("#adminpnum_update_inputRole").val(adminData.userpnum);
-					$("#adminaddress_update_inputRole").val(adminData.useraddress);
-					$("#adminEmail_update_staticRole").text(adminData.useremail);
-					$("#admintype_update_selectRole").val([ adminData.usertype ]);
+					$("#adminaddress_update_inputRole").val(
+							adminData.useraddress);
+					$("#adminEmail_update_staticRole")
+							.text(adminData.useremail);
+					$("#admintype_update_selectRole").val(
+							[ adminData.usertype ]);
 					$("#admincpy_update_selectRole").val([ adminData.cpyId ]);
 				}
 			});
 		}
+		
 		/* 普通校验修改表单的数据 */
 		function validate_modify_form() {
 			//拿到要校验的数据，使用正则表达式进行校验
@@ -1213,7 +1224,7 @@
 			}
 			return true;
 		}
-		
+
 		/* 角色校验修改表单的数据 */
 		function validate_modify_formRole() {
 			//拿到要校验的数据，使用正则表达式进行校验
@@ -1342,7 +1353,7 @@
 										});
 							}
 						});
-		
+
 		//角色点击更新，更新用户信息
 		$("#admin_update_btnRole")
 				.click(
@@ -1355,7 +1366,8 @@
 											url : "${APP_PATH }/admin/"
 													+ $(this).attr("modify_id"),
 											type : "POST",
-											data : $("#adminUpdateModalRole form")
+											data : $(
+													"#adminUpdateModalRole form")
 													.serialize()
 													+ "&_method=PUT",
 											success : function(result) {
@@ -1367,7 +1379,8 @@
 													$("#adminUpdateModalRole")
 															.modal('hide');
 													//2,回到本页面
-													to_pageByRole(currentRole,currentPage);
+													to_pageByRole(currentRole,
+															currentPage);
 												} else if (result.code == 200) {
 													//显示失败信息之前需要清除以前的样式
 													reset_formStyle("#adminUpdateModalRole form");

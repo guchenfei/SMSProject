@@ -81,10 +81,9 @@ public class RoleCRUDController {
 			// 校验失败,应该返回失败，在模态框中显示校验失败的错误信息
 			Map<String, Object> map = new HashMap<String, Object>();
 			List<FieldError> errors = result.getFieldErrors();
-			System.out.println(errors);
 			for (FieldError fieldError : errors) {
-				System.out.println("错误字段名" + fieldError.getField());
-				System.out.println("错误信息" + fieldError.getDefaultMessage());
+				/*System.out.println("错误字段名" + fieldError.getField());
+				System.out.println("错误信息" + fieldError.getDefaultMessage());*/
 				map.put(fieldError.getField(), fieldError.getDefaultMessage());
 			}
 
@@ -147,10 +146,7 @@ public class RoleCRUDController {
 			// 校验失败,应该返回失败，在模态框中显示校验失败的错误信息
 			Map<String, Object> map = new HashMap<String, Object>();
 			List<FieldError> errors = result.getFieldErrors();
-			System.out.println(errors);
 			for (FieldError fieldError : errors) {
-				System.out.println("错误字段名" + fieldError.getField());
-				System.out.println("错误信息" + fieldError.getDefaultMessage());
 				map.put(fieldError.getField(), fieldError.getDefaultMessage());
 			}
 			return Msg.fail().add("fieldErrors", map);
@@ -162,7 +158,7 @@ public class RoleCRUDController {
 	}
 
 	/**
-	 * 单个和批量删除二合一 批量删除，1-2-3..... 单个删除，1
+	 * 单个和批量删除二合一 批量删除，1,2,3..... 单个删除，1
 	 * 
 	 * @param adminId
 	 * @return
@@ -170,7 +166,7 @@ public class RoleCRUDController {
 	@RequestMapping(value = "/admin/{adminIds}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public Msg deleteAdminById(@PathVariable("adminIds") String adminIds) {
-		// 包含-就是批量删除，否则单一删除
+		// 包含,就是批量删除，否则单一删除
 		if (adminIds.contains(",")) {
 			String[] str_adminIds = adminIds.split(",");
 			// 组装adminId的集合

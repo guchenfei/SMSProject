@@ -1,18 +1,23 @@
 package com.gcf.sms.bean;
 
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Contacts {
 	private Integer contactId;
-
+	// "\\u"是Unicode编码
+	@Pattern(regexp = "(^[a-zA-Z0-9_-]{6,16}$)|(^[\\u2E80-\\u9FFF]{2,5})", message = "姓名必须是2-5位中文或者6-16位英文和数字等组合")
 	private String conname;
 
 	private Integer consex;
-
+	@NotEmpty(message = "生日不能为空！")
 	private String conbirthday;
-
+	@Pattern(regexp = "(^[1][3,4,5,7,8][0-9]{9}$)", message = "请输入格式正确的11位手机号")
 	private String conphonenum;
-
+	@NotEmpty(message="地址不能为空！")
 	private String conaddress;
-
+	@Pattern(regexp = "(^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$)", message = "请按正确的邮箱格式输入")
 	private String conemail;
 
 	private Integer concompany;
