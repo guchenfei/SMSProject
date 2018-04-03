@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.gcf.sms.bean.Contacts;
 import com.gcf.sms.bean.ContactsExample;
 import com.gcf.sms.bean.ContactsExample.Criteria;
@@ -80,5 +81,22 @@ public class ContactsService {
 	 */
 	public void deleteContacts(Integer contactId) {
 		contactsMapper.deleteByPrimaryKey(contactId);
+	}
+
+	/**
+	 * 按所属的公司查询联系人
+	 * @param opValue
+	 * @return
+	 */
+	public List<Contacts> getAllContactsByCompany(Integer opValue) {
+		/*AdminExample example = new AdminExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andUsertypeEqualTo(opValue);
+		List<Admin> admins = adminMapper.selectByExampleWithCpy(example);*/
+		ContactsExample example = new ContactsExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andConcompanyEqualTo(opValue);
+		List<Contacts> contacts = contactsMapper.selectByExampleWithCpy(example);
+		return contacts;
 	}
 }

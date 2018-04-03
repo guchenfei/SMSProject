@@ -101,7 +101,7 @@ public class ContactsController {
 		Contacts contacts = contactsService.getContacts(id);
 		return Msg.success().add("contacts", contacts);
 	}
-	
+
 	/**
 	 * 更新联系人信息
 	 * 
@@ -124,8 +124,7 @@ public class ContactsController {
 			return Msg.success();
 		}
 	}
-	
-	
+
 	/**
 	 * 单个和批量删除二合一 批量删除，1,2,3..... 单个删除，1
 	 * 
@@ -151,5 +150,24 @@ public class ContactsController {
 			contactsService.deleteContacts(contactId);
 			return Msg.success();
 		}
+	}
+
+	/**
+	 * 按联系人所属的公司查询
+	 * @param opValue
+	 * @param pn
+	 * @return
+	 */
+	@RequestMapping(value = "/selectContactsByCompany", method = RequestMethod.POST)
+	@ResponseBody
+	public Msg selectContactsByCompany(@RequestParam(value = "opValue", defaultValue = "1") Integer opValue,
+			@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+		PageHelper.startPage(pn, 20);
+		// startPage后面紧跟着这个查询就是一个分页查询
+		List<Contacts> contacts = contactsService.getAllContactsByCompany(opValue);
+		// 使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就行了
+		// 封装了详细的分页信息，包括有我们查出来的数据，传入连续显示的页数
+		PageInfo page = new PageInfo(contacts, 5);
+		return Msg.success().add("pageInfo", page);
 	}
 }

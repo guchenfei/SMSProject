@@ -197,6 +197,94 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- 按公司查询后联系人修改的模态框 -->
+	<div class="modal fade" id="contactsUpdateModalCompany" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">修改各分公司联系人</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">姓名:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control"
+									id="conName_update_inputCompany" name="conname"
+									placeholder="请输入您的姓名"> <span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">性别:</label>
+							<div class="col-sm-10">
+								<label class="radio-inline"> <!-- 男0女1 --> <input
+									type="radio" name="consexCompany"
+									id="contactsSex0_update_inputCompany" value="0"
+									checked="checked">男 </label> <label class="radio-inline">
+									<input type="radio" name="consexCompany"
+									id="contactsSex1_update_inputCompany" value="1">女 
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">生日:</label>
+							<div class="col-sm-10">
+								<input id="conbirthday_update_inputCompany" type="text"
+									name="conbirthday" class="form-control"
+									onclick="WdatePicker({isShowClear:false,readOnly:true})"
+									placeholder="请点击输入您的生日" />
+								<span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">联系方式:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control"
+									id="conphonenum_update_inputCompany" name="conphonenum"
+									placeholder="请输入您的手机号码"> <span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">地址:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="conaddress"
+									id="conaddress_update_inputCompany" placeholder="请输入您的详细地址">
+									<span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">邮箱:</label>
+							<div class="col-sm-10">
+								<p class="form-control-static"
+									id="conemail_update_staticCompany"></p>
+								<span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">所属公司:</label>
+							<div class="col-sm-4">
+								<select class="form-control"
+									id="contactsCpy_update_selectCompany" name="concompany">
+									<!--  所属公司提交公司ID即可 -->
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary"
+						id="contacts_update_btnCompany">更新</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="place">
 		<span>位置：</span>
 		<ul class="placeul">
@@ -232,15 +320,12 @@
 				</button>
 			</div>
 			<div class="col-md-3">
-				<select class="form-control" id="selectByCompany">
-					<!--  1：北京总部，2：西安分公司，3：上海分公司，4：成都分公司，5南京分公司；后边动态请求获取 -->
-					<option value="#">按公司查询</option>
-					<option value="1">北京总部</option>
-					<option value="2">西安分公司</option>
-					<option value="3">上海分公司</option>
-					<option value="4">成都分公司</option>
-					<option value="5">南京分公司</option>
-				</select>
+				<!--  1：北京总部，2：西安分公司，3：上海分公司，4：成都分公司，5南京分公司；后边动态请求获取 -->
+				<div>
+					<select class="form-control" id="contactsCpy_select"
+						name="concompanySelect">
+					</select>
+				</div>
 			</div>
 			<div class="col-md-3">
 				<ul class="toolbar1">
@@ -293,6 +378,7 @@
 		//1,页面加载完成后，直接去发送ajax请求，要到分页数据
 		$(function() {
 			//去首页
+			getCompanies("#contactsCpy_select");
 			to_page(1);
 		});
 
@@ -670,8 +756,7 @@
 										}
 									});
 						});
-		
-		
+
 		//查询联系人信息提交到普通修改模态框
 		function getContacts(id) {
 			$.ajax({
@@ -685,10 +770,12 @@
 							[ contactsData.consex ]);
 					$("#conbirthday_update_input")
 							.val(contactsData.conbirthday);
-					$("#conphonenum_update_input").val(contactsData.conphonenum);
+					$("#conphonenum_update_input")
+							.val(contactsData.conphonenum);
 					$("#conaddress_update_input").val(contactsData.conaddress);
 					$("#conemail_update_static").text(contactsData.conemail);
-					$("#contactsCpy_update_select").val([ contactsData.concompany ]);
+					$("#contactsCpy_update_select").val(
+							[ contactsData.concompany ]);
 				}
 			});
 		}
@@ -710,7 +797,7 @@
 						backdrop : "static"
 					})
 				});
-		
+
 		/* 普通校验修改表单的数据 */
 		function validate_modify_form() {
 			//拿到要校验的数据，使用正则表达式进行校验
@@ -730,7 +817,7 @@
 				$("#adminName_add_input").next("span").text(""); */
 				show_validate_msg("#conName_update_input", "success", "");
 			}
-			
+
 			//校验手机号
 			var conphonenum = $("#conphonenum_update_input").val();
 			var regPnum = /^[1][3,4,5,7,8][0-9]{9}$/;
@@ -744,8 +831,42 @@
 			}
 			return true;
 		}
-		
-		
+
+		/* 按公司属性查询后校验修改表单的数据 */
+		function validate_modify_formCompany() {
+			//拿到要校验的数据，使用正则表达式进行校验
+			//校验姓名
+			var conName = $("#conName_update_inputCompany").val();
+			var regName = /(^[a-zA-Z0-9_-]{6,16}$)|(^[\u2E80-\u9FFF]{2,5})/;
+			if (!regName.test(conName)) {
+				/* alert("用户名必须是2-5位中文或者6-16位英文和数字等组合"); */
+				/* 应该清空这个元素之前的样式 */
+				/* $("#adminName_add_input").parent().addClass("has-error");
+				$("#adminName_add_input").next("span").text("用户名必须是2-5位中文或者6-16位英文和数字等组合"); */
+				show_validate_msg("#conName_update_inputCompany", "error",
+						"姓名必须是2-5位中文或者6-16位英文和数字等组合");
+				return false;
+			} else {
+				/* $("#adminName_add_input").parent().addClass("has-success");
+				$("#adminName_add_input").next("span").text(""); */
+				show_validate_msg("#conName_update_inputCompany", "success", "");
+			}
+
+			//校验手机号
+			var conphonenum = $("#conphonenum_update_inputCompany").val();
+			var regPnum = /^[1][3,4,5,7,8][0-9]{9}$/;
+			if (!regPnum.test(conphonenum)) {
+				/* 应该清空这个元素之前的样式 */
+				show_validate_msg("#conphonenum_update_inputCompany", "error",
+						"请输入格式正确的11位手机号");
+				return false;
+			} else {
+				show_validate_msg("#conphonenum_update_inputCompany",
+						"success", "");
+			}
+			return true;
+		}
+
 		//普通点击更新，更新联系人信息
 		$("#contacts_update_btn")
 				.click(
@@ -758,7 +879,8 @@
 											url : "${APP_PATH }/Contacts/"
 													+ $(this).attr("modify_id"),
 											type : "POST",
-											data : $("#contactsUpdateModal form")
+											data : $(
+													"#contactsUpdateModal form")
 													.serialize()
 													+ "&_method=PUT",
 											success : function(result) {
@@ -824,7 +946,7 @@
 										});
 							}
 						});
-		
+
 		/*普通删除按钮点击事件*/
 		$(document).on("click", ".delete_btn", function() {
 			//1，弹出确认删除对话框
@@ -848,7 +970,7 @@
 				});
 			}
 		});
-		
+
 		/* 全选和全不选功能 */
 		$("#check_all").click(function() {
 			/*attr获取到的CheckBox属性为undefined,它可以获取自定义属性的值
@@ -867,15 +989,15 @@
 							var flag = $(".check_item:checked").length == $(".check_item").length;
 							$("#check_all").prop("checked", flag);
 						});
-		
+
 		//点击批量删除按钮事件
 		$("#contacts_mutiDelete_btn").click(
 				function() {
 					var contactsEmails = "";
 					var contactsIds = "";
 					$.each($(".check_item:checked"), function() {
-						contactsEmails += $(this).parents("tr").find("td:eq(7)")
-								.text()
+						contactsEmails += $(this).parents("tr")
+								.find("td:eq(7)").text()
 								+ ",";
 						contactsIds += $(this).parents("tr").find("td:eq(1)")
 								.text()
@@ -885,7 +1007,8 @@
 					contactsEmails = contactsEmails.substring(0,
 							contactsEmails.length - 1);
 					//去除contactsIds多余的
-					contactsIds = contactsIds.substring(0, contactsIds.length - 1);
+					contactsIds = contactsIds.substring(0,
+							contactsIds.length - 1);
 					if (confirm("确认删除【" + contactsEmails + "】吗？")) {
 						//发送ajax请求删除
 						$.ajax({
@@ -903,6 +1026,327 @@
 						});
 					}
 				});
+
+		/**
+		 * 按公司查询构建table
+		 */
+		function build_contactsByCompany_table(result) {
+			//每次放新数据的时候要清空上次请求后的数据
+			$("#contacts_table tbody").empty();
+			var contacts = result.extend.pageInfo.list;
+			//遍历数据
+			$.each(contacts,
+					function(index, item) {
+						var checkboxTd = $("<td></td>").append(
+								$("<input/>").attr("type", "checkbox")
+										.addClass("check_item"));
+						var contactsIdTd = $("<td></td>")
+								.append(item.contactId);
+						var connameTd = $("<td></td>").append(item.conname);
+						var consexTd = $("<td></td>").append(
+								item.consex == "0" ? "男" : "女");
+						var conbirthdayTd = $("<td></td>").append(
+								item.conbirthday);
+						var conphonenumTd = $("<td></td>").append(
+								item.conphonenum);
+						var conaddressTd = $("<td></td>").append(
+								item.conaddress);
+						var conemailTd = $("<td></td>").append(item.conemail);
+
+						var companyTd = $("<td></td>").append(
+								item.company.companyname);
+						var modifyBtn = $("<button></button>").addClass(
+								"btn-primary btn-xs edit_btnCompany").append(
+								$("<span></span>").addClass(
+										"glyphicon glyphicon-pencil")).append(
+								"修改");
+						//为修改按钮添加自定义属性，来表示当前联系人的属性
+						modifyBtn.attr("modify_id", item.contactId);
+
+						var delBtn = $("<button></button>").addClass(
+								"btn-danger btn-xs delete_btnCompany").append(
+								$("<span></span>").addClass(
+										"glyphicon glyphicon-trash")).append(
+								"删除");
+						//为删除按钮添加自定义属性，来表示当前联系人的属性
+						delBtn.attr("delete_id", item.contactId);
+						var btnTd = $("<td></td>").append(modifyBtn)
+								.append(" ").append(delBtn);
+
+						/*append方法执行完成以后还是返回原来的元素 <tr></tr>所以一直继续添加每行内容*/
+						$("<tr></tr>").append(checkboxTd).append(contactsIdTd)
+								.append(connameTd).append(consexTd).append(
+										conbirthdayTd).append(conphonenumTd)
+								.append(conaddressTd).append(conemailTd)
+								.append(companyTd).append(btnTd).appendTo(
+										"#contacts_table tbody");
+					});
+		}
+
+		//按公司属性查询后跳到指定页码
+		function to_pageByCompany(currentCompany, pn) {
+			$.ajax({
+				url : "${APP_PATH }/selectContactsByCompany",
+				data : {
+					"opValue" : currentCompany,
+					"pn" : pn
+				},
+				dataType : "JSON",
+				type : "POST",
+				success : function(result) {
+					//1，解析并显示用户数据
+					build_contactsByCompany_table(result);
+					//2，解析并显示分页信息
+					build_page_info(result);
+					//3，解析显示分页条数据
+					build_pageByCompany_nav(result);
+				}
+			});
+		}
+
+		//解析按公司属性查询显示分页条并且点击能去下一页等等
+		function build_pageByCompany_nav(result) {
+			//每次放新数据的时候要清空上次请求后的数据
+			$("#page_nav_area").empty();
+			//page_nav_area
+			var ul = $("<ul></ul>").addClass("pagination");
+			//构建元素
+			var firstPageLi = $("<li></li>").append($("<a></a>").append("首页"));
+			var prePageLi = $("<li></li>").append(
+					$("<a></a>").append("&laquo;"));
+
+			if (result.extend.pageInfo.hasPreviousPage == false) {
+				firstPageLi.addClass("disabled");
+				prePageLi.addClass("disabled");
+			} else {
+				//为元素添加翻页事件
+				firstPageLi.click(function() {
+					to_pageByCompany(currentCompany, 1);
+				});
+
+				prePageLi.click(function() {
+					to_pageByCompany(currentCompany,
+							result.extend.pageInfo.pageNum - 1);
+				});
+			}
+			var nextPageLi = $("<li></li>").append(
+					$("<a></a>").append("&raquo;"));
+			var lastPageLi = $("<li></li>").append($("<a></a>").append("末页"));
+			if (result.extend.pageInfo.hasNextPage == false) {
+				nextPageLi.addClass("disabled");
+				lastPageLi.addClass("disabled");
+			} else {
+				nextPageLi.click(function() {
+					to_pageByCompany(currentCompany,
+							result.extend.pageInfo.pageNum + 1);
+				});
+
+				lastPageLi.click(function() {
+					to_pageByCompany(currentCompany,
+							result.extend.pageInfo.pages);
+				});
+			}
+			//添加首页和前一页的提示
+			ul.append(firstPageLi).append(prePageLi);
+			//1,2,3,4,5页码号,遍历给ul中添加页码提示
+			$.each(result.extend.pageInfo.navigatepageNums, function(index,
+					item) {
+				var numLi = $("<li></li>").append($("<a></a>").append(item));
+				if (result.extend.pageInfo.pageNum == item) {
+					numLi.addClass("active");
+				}
+				numLi.click(function() {
+					to_pageByCompany(currentCompany, item);
+				});
+				ul.append(numLi);
+			});
+			//添加下一页和末页的提示
+			ul.append(nextPageLi).append(lastPageLi);
+			var navEle = $("<nav></nav>").append(ul).attr("aria-label",
+					"Page navigation");
+			navEle.appendTo("#page_nav_area");
+		}
+
+		//发送按公司查询的请求，显示数据
+		function selectByConpany(opValue, pn) {
+			currentCompany = opValue;
+			$.ajax({
+				url : "${APP_PATH }/selectContactsByCompany",
+				data : {
+					"opValue" : opValue,
+					"pn" : pn
+				},
+				type : "POST",
+				dataType : "JSON",
+				success : function(result) {
+					//1，解析并显示用户数据
+					build_contactsByCompany_table(result);
+					//2，解析并显示分页信息
+					build_page_info(result);
+					//3，解析显示分页条数据
+					build_pageByCompany_nav(result);
+				}
+			});
+		}
+		$("#contactsCpy_select").change(function() {
+			var opValue = $(this).val();
+			selectByConpany(opValue, 1);
+		});
+
+
+		//查询联系人信息提交到公司查询后修改模态框
+		function getContactsByCompany(id) {
+			$
+					.ajax({
+						url : "${APP_PATH }/Contacts/" + id,
+						type : "GET",
+						success : function(result) {
+							/* console.log(result); */
+							var contactsData = result.extend.contacts;
+							$("#conName_update_inputCompany").val(
+									contactsData.conname);
+							$(
+									"#contactsUpdateModalCompany input[name=consexCompany]")
+									.val([ contactsData.consex ]);
+							$("#conbirthday_update_inputCompany").val(
+									contactsData.conbirthday);
+							$("#conphonenum_update_inputCompany").val(
+									contactsData.conphonenum);
+							$("#conaddress_update_inputCompany").val(
+									contactsData.conaddress);
+							$("#conemail_update_staticCompany").text(
+									contactsData.conemail);
+							$("#contactsCpy_update_selectCompany").val(
+									[ contactsData.concompany ]);
+						}
+					});
+		}
+
+		/*按公司查询后修改按钮点击事件*/
+		$(document).on(
+				"click",
+				".edit_btnCompany",
+				function() {
+					/* alert("edit"); */
+					//1，查出公司信息，并显示公司列表
+					getCompanies("#contactsCpy_update_selectCompany");
+					//2，查出联系人信息并且显示联系人信息
+					getContactsByCompany($(this).attr("modify_id"));
+					//3,把用户的ID传递给修改模态框的更新按钮
+					$("#contacts_update_btnCompany").attr("modify_id",
+							$(this).attr("modify_id"));
+					//弹出模态框
+					$("#contactsUpdateModalCompany").modal({
+						backdrop : "static"
+					})
+				});
+
+		//按公司属性查询后修改点击更新，更新联系人信息
+		$("#contacts_update_btnCompany")
+				.click(
+						function() {
+							//进行修改表单验证
+							if (validate_modify_formCompany()) {
+								//验证成功发送ajax请求保存用户信息（更新）
+								$
+										.ajax({
+											url : "${APP_PATH }/Contacts/"
+													+ $(this).attr("modify_id"),
+											type : "POST",
+											data : $(
+													"#contactsUpdateModalCompany form")
+													.serialize()
+													+ "&_method=PUT",
+											success : function(result) {
+												/* alert(result.msg); */
+												if (result.code == 100) {
+													alert(result.msg);
+													//用户保存成功后需要完成2件事
+													//1，关闭模态框
+													$(
+															"#contactsUpdateModalCompany")
+															.modal('hide');
+													//2,回到本页面
+													to_pageByCompany(
+															currentCompany,
+															currentPage);
+												} else if (result.code == 200) {
+													//显示失败信息之前需要清除以前的样式
+													reset_formStyle("#contactsUpdateModalCompany form");
+													//显示失败信息
+													/*  console.log(result); */
+													//有那个字段的错误信息就显示那个字段的；
+													/* alert(result.extend.fieldErrors.userpass);
+													alert(result.extend.fieldErrors.userpnum);  */
+													//后台存在校验通过就不会传来校验信息的字段，所以通过未定义判断来判断每个字段的校验信息
+													if (undefined != result.extend.fieldErrors.conname) {
+														//显示姓名错误信息
+														show_validate_msg(
+																"#conName_update_inputCompany",
+																"error",
+																result.extend.fieldErrors.conname);
+
+													}
+
+													if (undefined != result.extend.fieldErrors.conbirthday) {
+														//显示生日错误信息
+														show_validate_msg(
+																"#conbirthday_update_inputCompany",
+																"error",
+																result.extend.fieldErrors.conbirthday);
+													}
+
+													if (undefined != result.extend.fieldErrors.conphonenum) {
+														//显示手机号的错误信息
+														show_validate_msg(
+																"#conphonenum_update_inputCompany",
+																"error",
+																result.extend.fieldErrors.conphonenum);
+													}
+													if (undefined != result.extend.fieldErrors.conaddress) {
+														//显示地址不为空的错误信息
+														show_validate_msg(
+																"#conaddress_update_inputCompany",
+																"error",
+																result.extend.fieldErrors.conaddress);
+													}
+
+													if (undefined != result.extend.fieldErrors.conemail) {
+														//显示邮箱错误信息
+														show_validate_msg(
+																"#conemail_update_staticCompany",
+																"error",
+																result.extend.fieldErrors.conemail);
+													}
+												}
+											}
+										});
+							}
+						});
+		
+		/*公司属性查询后删除按钮点击事件*/
+		$(document).on("click", ".delete_btnCompany", function() {
+			//1，弹出确认删除对话框
+			/* alert($(this).parents("tr").find("td:eq(7)").text()); */
+			var contactsEmail = $(this).parents("tr").find("td:eq(7)").text();
+			var contactsId = $(this).attr("delete_id");
+			if (confirm("确认删除【" + contactsEmail + "】吗？")) {
+				//确认删除，发送ajax请求删除
+				$.ajax({
+					url : "${APP_PATH }/Contacts/" + contactsId,
+					type : "DELETE",
+					success : function(result) {
+						//状态码 100-成功 200-失败
+						if (result.code == 100) {
+							alert(result.msg);
+							to_pageByCompany(currentCompany, currentPage);
+						} else if (result.code == 200) {
+							alert(result.msg);
+						}
+					}
+				});
+			}
+		});
 	</script>
 </body>
 </html>
