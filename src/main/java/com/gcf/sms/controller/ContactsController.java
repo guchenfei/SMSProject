@@ -154,6 +154,7 @@ public class ContactsController {
 
 	/**
 	 * 按联系人所属的公司查询
+	 * 
 	 * @param opValue
 	 * @param pn
 	 * @return
@@ -169,5 +170,18 @@ public class ContactsController {
 		// 封装了详细的分页信息，包括有我们查出来的数据，传入连续显示的页数
 		PageInfo page = new PageInfo(contacts, 5);
 		return Msg.success().add("pageInfo", page);
+	}
+
+	/**
+	 * 按联系人所属的公司查询出所有联系人（提取手机号，群发短信）
+	 * 
+	 * @param opValue
+	 * @return
+	 */
+	@RequestMapping(value = "/selectAllContactsByCompany", method = RequestMethod.POST)
+	@ResponseBody
+	public Msg selectAllContactsByCompany(@RequestParam(value = "opValue", defaultValue = "1") Integer opValue) {
+		List<Contacts> contacts = contactsService.getAllContactsByCompany(opValue);
+		return Msg.success().add("contacts", contacts);
 	}
 }

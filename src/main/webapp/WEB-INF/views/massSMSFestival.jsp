@@ -80,7 +80,7 @@
 			<div class="col-md-6">
 				<span class="label label-info">短信预览：</span>
 				<div>&nbsp;&nbsp;&nbsp;</div>
-				<textarea class="form-control" rows="8" placeholder="请输入短信内容..."></textarea>
+				<textarea class="form-control" rows="8" placeholder="请输入短信内容..." readonly="readonly"></textarea>
 			</div>
 		</div>
 		</div>

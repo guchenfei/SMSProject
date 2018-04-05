@@ -72,7 +72,7 @@
 				</li>
 
 				<li>
-					<input name="checkCode" type="text" style="height: 18px;border: 1px;solid;border-color:#000;" placeholder="请输入验证码"/>
+					<input name="checkCode" type="text" style="height: 18px;border: 1px;solid;border-color:#000;" placeholder="请输入验证码" autocomplete="off"/>
 					<img id="checkCode" src="${APP_PATH}/checkCode.png" width="98" height="18" onclick="onCheckCode()"/>
 					<font style="color: red; font-weight: bold;">${msg}</font>
 				</li>

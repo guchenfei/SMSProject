@@ -1188,11 +1188,11 @@
 				}
 			});
 		}
+
 		$("#contactsCpy_select").change(function() {
 			var opValue = $(this).val();
 			selectByConpany(opValue, 1);
 		});
-
 
 		//查询联系人信息提交到公司查询后修改模态框
 		function getContactsByCompany(id) {
@@ -1323,7 +1323,7 @@
 										});
 							}
 						});
-		
+
 		/*公司属性查询后删除按钮点击事件*/
 		$(document).on("click", ".delete_btnCompany", function() {
 			//1，弹出确认删除对话框
