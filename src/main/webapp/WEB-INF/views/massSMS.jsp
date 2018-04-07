@@ -20,6 +20,9 @@
 	<script type="text/javascript"
 		src="${APP_PATH }/static/bootstrap-3.3.7-dist/js/bootstrap.min.js" />
 	</script>
+
+	<script language="javascript" type="text/javascript"
+		src="${APP_PATH }/static/My97DatePicker/WdatePicker.js"></script>
 </head>
 
 <body>
@@ -44,26 +47,122 @@
 				<div class="input-group">
 					<span class="input-group-addon" id="basic-addon1">接收者：</span>
 					<input type="text" class="form-control" id="phoneNumber"
-						placeholder="请点击下方选择要发送的子公司..." aria-describedby="basic-addon1">
+						placeholder="请点击下方选择要发送的子公司..." aria-describedby="basic-addon1"
+						autocomplete="off" />
 				</div>
 			</div>
 		</div>
 		<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 		<div class="row">
-			<div class="col-md-4">
-				<span class="label label-info">
-					<font style="font-size: 13px;">选择短信接收公司：</font>
-				</span>
-			</div>
-			<div class="col-md-4">
+			<div class="col-md-3">
+				<div>
+					<span class="label label-info">
+						<font style="font-size: 13px;">选择短信接收公司：</font>
+					</span>
+				</div>
+				<div>&nbsp;</div>
 				<div>
 					<select class="form-control" id="smsCpy_select"
 						name="concompanySelect">
 					</select>
 				</div>
 			</div>
-			<div class="col-md-4"></div>
+			<div class="col-md-3">
+				<div>
+					<span class="label label-info">
+						<font style="font-size: 13px;">任务名称：</font>
+					</span>
+				</div>
+				<div>&nbsp;</div>
+				<div>
+					<input type="text" class="form-control" id="phoneNumber"
+						placeholder="请输入该任务主题" aria-describedby="basic-addon1"
+						autocomplete="off" />
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div>
+					<span class="label label-info">
+						<font style="font-size: 13px;">任务描述：</font>
+					</span>
+				</div>
+				<div>&nbsp;</div>
+				<div>
+					<input type="text" class="form-control" id="phoneNumber"
+						placeholder="请输入该任务描述（备注）" aria-describedby="basic-addon1"
+						autocomplete="off" />
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div>
+					<span class="label label-info">
+						<font style="font-size: 13px;">创建人：</font>
+					</span>
+				</div>
+				<div>&nbsp;</div>
+				<div>
+					<p class="form-control-static" id="conemail_update_static">${admin.getUsername()}</p>
+				</div>
+			</div>
 		</div>
+		<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+		<div class="row">
+			<div class="col-md-3">
+				<div>
+					<span class="label label-info">
+						<font style="font-size: 13px;">群发类型：</font>
+					</span>
+				</div>
+				<div>&nbsp;</div>
+				<div>
+					<select class="form-control" id="" name="">
+						<!-- value为0普通群发，1定时群发 -->
+						<option value="#">请选择发送类型</option>
+						<option value="0">立即发送</option>
+						<option value="1">定时发送</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div>
+					<span class="label label-info">
+						<font style="font-size: 13px;">创建时间：</font>
+					</span>
+				</div>
+				<div>&nbsp;</div>
+				<div>
+					<input type="text" id="d241"
+						onclick="WdatePicker({dateFmt:'yyyy年MM月dd日 HH时mm分ss秒'})"
+						class="form-control" placeholder="点击今天输入创建时间" autocomplete="off" />
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div>
+					<span class="label label-info">
+						<font style="font-size: 13px;">节日模板：</font>
+					</span>
+				</div>
+				<div>&nbsp;</div>
+				<div>
+					<select class="form-control" id="festivalTemp_select" name="">
+					</select>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div>
+					<span class="label label-info">
+						<font style="font-size: 13px;">设定发送时间：</font>
+					</span>
+				</div>
+				<div>&nbsp;</div>
+				<div>
+					<input type="text" id="d241"
+						onclick="WdatePicker({dateFmt:'yyyy年MM月dd日 HH时mm分ss秒'})"
+						class="form-control" placeholder="点击预定发送时间" autocomplete="off" />
+				</div>
+			</div>
+		</div>
+
 		<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 		<div class="row">
 			<div class="col-md-6">
@@ -73,7 +172,7 @@
 				<div>&nbsp;&nbsp;&nbsp;</div>
 
 				<textarea class="form-control" rows="8" placeholder="请输入短信内容..."
-					id="smsContent" onkeyup="showcontent()"></textarea>
+					id="smsContent" onkeyup="showcontent()">有过欢笑，有过泪水；有过争执，有过摩擦；有过精彩，有过失落；有过彷徨，有过喜悦。而这一切都将转瞬即逝，再见了我的大学时代！我会将这一切永远珍藏！在这离别之际，我想对帮助过我的老师，同学，家人说声：谢谢！感谢陪我走过的每一段特殊的路程，最后我真心得祝福你们，身体健康，工作顺利，财源广进，心想事成！【谷晨飞】</textarea>
 				<span>
 					<font id="word" style="color: red;">300</font> /300
 				</span>
@@ -90,10 +189,10 @@
 		<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
 		<div class="row">
 			<div class="col-md-6">
-				<button onclick="sendMessages()" class="btn btn-info">发送</button>
+				<button onclick="sendMessages()" class="btn btn-info">确定任务</button>
 			</div>
 			<div class="col-md-6">
-				<button type="reset" class="btn btn-info">重置</button>
+				<button type="reset" class="btn btn-info">重置任务</button>
 			</div>
 		</div>
 	</form>
@@ -105,9 +204,35 @@
 			var word = $("#word");
 			//去首页
 			getCompanies("#smsCpy_select");
+			getFestivalTemp("#festivalTemp_select");
 			statInputNum(textArea, word);
 		});
 
+		
+		//查出所有的节日模板主题，并且显示到对应的下拉列表中
+		function getFestivalTemp(ele) {
+			//清空上次请求的下拉列表信息
+			$(ele).empty();
+			$.ajax({
+				url : "${APP_PATH }/festivalTemp",
+				types : "POST",
+				success : function(result) {
+					//思考下没有这个会产生响应信息吗？
+					/* console.log(result); */
+					//{"code":100,"msg":"处理成功！","extend":{"companies":[{"companyId":1,"companyname":"北京总部"},{"companyId":2,"companyname":"西安分公司"},{"companyId":3,"companyname":"上海分公司"},{"companyId":4,"companyname":"成都分公司"},{"companyId":5,"companyname":"南京分公司"}]}}
+					//显示节日模板信息在下拉列表中
+					$.each(result.extend.festivalTemps,
+							function() {
+								var optionEle = $("<option></option>").append(
+										this.festivalName).attr("value",
+										this.festivalId);
+								optionEle.appendTo(ele);
+							})
+				}
+			});
+		}
+		
+		
 		//查出所有的分公司信息并显示在下拉列表中
 		function getCompanies(ele) {
 			//清空上次请求的下拉列表信息
@@ -196,10 +321,31 @@
 					"smsContent" : messageContents
 				},
 				success : function(result) {
-                     alert(result.msg);
+					alert(result.msg);
 				}
 			});
 		}
+		
+		//发送按模板主题查询的请求，显示模板内容
+		function selectFestivalTempCon(opValue) {
+			$.ajax({
+				url : "${APP_PATH }/selectFestivalTempCon",
+				data : {
+					"opValue" : opValue
+				},
+				type : "POST",
+				dataType : "JSON",
+				success : function(result) {
+					//1，解析并显示模板内容于短信框
+					$("#smsContent").val(result.extend.festivalTempCon);
+				}
+			});
+		}
+		
+		$("#festivalTemp_select").change(function() {
+			var opValue = $(this).val();
+			selectFestivalTempCon(opValue);
+		});
 	</script>
 </body>
 </html>

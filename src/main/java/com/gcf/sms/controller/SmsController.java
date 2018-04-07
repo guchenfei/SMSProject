@@ -2,6 +2,8 @@ package com.gcf.sms.controller;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HttpClient;
@@ -37,10 +39,15 @@ public class SmsController {
 		Header[] headers = post.getResponseHeaders();
 		int statusCode = post.getStatusCode();
 		System.out.println("statusCode:"+statusCode);
+		List<String> headersList = new ArrayList<String>();
+		
 		for(Header h : headers)
 		{
+	    headersList.add(h.toString());
 		System.out.println(h.toString());
 		}
+		
+		System.out.println(headersList);
 		String result = new String(post.getResponseBodyAsString().getBytes("gbk"));
 		System.out.println(result); //打印返回消息状态
 

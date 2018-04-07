@@ -80,7 +80,7 @@ public class LoginController {
 			} else if (admins.get(0).getUserpass().equals(password)) {
 				// 验证成功根据不同角色进入主界面
 				int type = admins.get(0).getUsertype();
-				session.setAttribute("UserName", admins.get(0).getUsername());
+				session.setAttribute("admin", admins.get(0));
 				// 权限角色：0表示超级管理员，1表示普通管理员，2表示业务员
 				switch (type) {
 				case 0:

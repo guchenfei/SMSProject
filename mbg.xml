@@ -38,9 +38,10 @@
 
 
 		<!-- table指定每个表的生成策略 -->
-		<table tableName="admin" domainObjectName="Admin"></table>
+		<!-- <table tableName="admin" domainObjectName="Admin"></table>
 		<table tableName="company" domainObjectName="Company"></table>
 		<table tableName="contacts" domainObjectName="Contacts"></table>
-		<table tableName="sended" domainObjectName="Sended"></table>
+		<table tableName="sended" domainObjectName="Sended"></table> -->
+		<table tableName="festivalTemp" domainObjectName="FestivalTemp"></table>
 	</context>
 </generatorConfiguration>

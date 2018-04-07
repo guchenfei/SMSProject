@@ -120,14 +120,6 @@
 		<url-pattern>/massSMS</url-pattern>
 	</servlet-mapping>
 	<servlet>
-		<servlet-name>massSMSFestival</servlet-name>
-		<jsp-file>/WEB-INF/views/massSMSFestival.jsp</jsp-file>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>massSMSFestival</servlet-name>
-		<url-pattern>/massSMSFestival</url-pattern>
-	</servlet-mapping>
-	<servlet>
 		<servlet-name>superIndex</servlet-name>
 		<jsp-file>/WEB-INF/views/superIndex.jsp</jsp-file>
 	</servlet>

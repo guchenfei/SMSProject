@@ -83,17 +83,11 @@
 			<ul class="menuson">
 				<li>
 					<cite></cite>
-					<a href="./massSMS" target="rightFrame">通知群发</a>
-					<i></i>
-				</li>
-				<li>
-					<cite></cite>
-					<a href="./massSMSFestival" target="rightFrame">节日慰问</a>
+					<a href="./massSMS" target="rightFrame">通知群发/节日慰问</a>
 					<i></i>
 				</li>
 			</ul>
 		</dd>
-
 		<dd>
 			<div class="title">
 				<span>

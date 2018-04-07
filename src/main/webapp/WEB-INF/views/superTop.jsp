@@ -49,7 +49,7 @@
 		</ul>
 
 		<div class="user">
-			<span>${UserName}</span>
+			<span>${admin.getUsername()}</span>
 			<i>消息</i>
 			<b>5</b>
 		</div>
