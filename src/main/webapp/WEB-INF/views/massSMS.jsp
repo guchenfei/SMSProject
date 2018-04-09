@@ -158,7 +158,7 @@
 				<div>
 					<input type="text" id="d241"
 						onclick="WdatePicker({dateFmt:'yyyy年MM月dd日 HH时mm分ss秒'})"
-						class="form-control" placeholder="点击预定发送时间" autocomplete="off" />
+						class="form-control" placeholder="点击预定发送时间(及时发送可为空)" autocomplete="off" />
 				</div>
 			</div>
 		</div>

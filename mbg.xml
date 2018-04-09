@@ -42,6 +42,7 @@
 		<table tableName="company" domainObjectName="Company"></table>
 		<table tableName="contacts" domainObjectName="Contacts"></table>
 		<table tableName="sended" domainObjectName="Sended"></table> -->
-		<table tableName="festivalTemp" domainObjectName="FestivalTemp"></table>
+		<!-- <table tableName="festivalTemp" domainObjectName="FestivalTemp"></table> -->
+		<table tableName="sendedRec" domainObjectName="SendedRec"></table>
 	</context>
 </generatorConfiguration>

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2018-04-07 23:38:13
+Date: 2018-04-09 23:37:50
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -34,7 +34,7 @@ CREATE TABLE `admin` (
   UNIQUE KEY `email_unique` (`userEmail`) USING BTREE COMMENT '邮箱唯一性约束',
   KEY `fk_admin_cpy` (`cpy_id`) USING BTREE,
   CONSTRAINT `fk_admin_cpy` FOREIGN KEY (`cpy_id`) REFERENCES `company` (`company_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=264 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of admin
@@ -169,22 +169,27 @@ INSERT INTO `festivaltemp` VALUES ('14', '圣诞节1', ' 美酒醇，火鸡香�
 INSERT INTO `festivaltemp` VALUES ('15', '圣诞节2', ' 圣诞老人是一个美丽的传说，七彩礼物装满背包，只有相信美好的人才能看到；圣诞欢歌是一曲精彩的演奏，高低起伏婉转悠扬，只有满心欢乐的人才能感知它的美妙；温馨祝福是一首动人的歌谣，真挚情谊传唱到老，只有我最好的朋友才能收到。愿你圣诞快乐，幸福逍遥！');
 
 -- ----------------------------
--- Table structure for sended
+-- Table structure for sendedrec
 -- ----------------------------
-DROP TABLE IF EXISTS `sended`;
-CREATE TABLE `sended` (
-  `SRecord_id` int(11) NOT NULL AUTO_INCREMENT,
-  `ad_id` int(11) NOT NULL COMMENT '用户编号外键关联到用户ID',
-  `receivePhone` varchar(255) NOT NULL COMMENT '接收号码',
-  `deliveryStatus` int(11) NOT NULL COMMENT '发送状态',
-  `errorInfo` varchar(255) NOT NULL COMMENT '错误信息',
-  `smsContent` varchar(255) NOT NULL COMMENT '短信内容',
-  `sendTime` varchar(255) NOT NULL COMMENT '发送时间',
+DROP TABLE IF EXISTS `sendedrec`;
+CREATE TABLE `sendedrec` (
+  `SRecord_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',
+  `receCompanyId` int(11) NOT NULL COMMENT '接收公司id',
+  `topic` varchar(255) NOT NULL COMMENT '任务主题',
+  `describe` varchar(600) NOT NULL COMMENT '任务描述',
+  `creator_id` int(11) NOT NULL COMMENT '创建人ID',
+  `massType` int(11) NOT NULL COMMENT '群发类型:0立即发送，1定时发送',
+  `createTime` varchar(255) NOT NULL COMMENT '创建时间',
+  `reserveTime` varchar(255) NOT NULL COMMENT '定时发送时间',
+  `smsCon` varchar(900) NOT NULL COMMENT '短信内容',
   PRIMARY KEY (`SRecord_id`),
-  KEY `fk_sen_adm` (`ad_id`) USING BTREE,
-  CONSTRAINT `fk_sen_adm` FOREIGN KEY (`ad_id`) REFERENCES `admin` (`admin_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `fk_sendedRec_Company` (`receCompanyId`),
+  KEY `fk_sendedRec_admin` (`creator_id`),
+  CONSTRAINT `fk_sendedRec_Company` FOREIGN KEY (`receCompanyId`) REFERENCES `company` (`company_id`),
+  CONSTRAINT `fk_sendedRec_admin` FOREIGN KEY (`creator_id`) REFERENCES `admin` (`admin_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of sended
+-- Records of sendedrec
 -- ----------------------------
+INSERT INTO `sendedrec` VALUES ('1', '1', '五一慰问', '五一假期给员工慰问下', '2', '0', '2018-5-1 8:0:0', '立即发送', '五一假期到了，祝各位五一快乐！');
