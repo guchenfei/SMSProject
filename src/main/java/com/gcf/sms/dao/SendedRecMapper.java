@@ -19,6 +19,10 @@ public interface SendedRecMapper {
     List<SendedRec> selectByExample(SendedRecExample example);
 
     SendedRec selectByPrimaryKey(Integer srecordId);
+    
+    List<SendedRec> selectByExampleWithAdmCom(SendedRecExample example);
+
+    SendedRec selectByPrimaryKeyWithAdmCom(Integer srecordId);
 
     int updateByExampleSelective(@Param("record") SendedRec record, @Param("example") SendedRecExample example);
 

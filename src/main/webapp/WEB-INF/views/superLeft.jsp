@@ -98,12 +98,7 @@
 			<ul class="menuson">
 				<li>
 					<cite></cite>
-					<a href="#">各分公司短信详情</a>
-					<i></i>
-				</li>
-				<li>
-					<cite></cite>
-					<a href="#">各分公司群发详情</a>
+					<a href="./statisticalQuery" target="rightFrame">各分公司群发详情</a>
 					<i></i>
 				</li>
 			</ul>

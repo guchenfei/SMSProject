@@ -159,4 +159,12 @@
 		<servlet-name>salesmanLeft</servlet-name>
 		<url-pattern>/salesmanLeft</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>statisticalQuery</servlet-name>
+		<jsp-file>/WEB-INF/views/statisticalQuery.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>statisticalQuery</servlet-name>
+		<url-pattern>/statisticalQuery</url-pattern>
+	</servlet-mapping>
 </web-app>

@@ -294,73 +294,73 @@ public class SendedRecExample {
             return (Criteria) this;
         }
 
-        public Criteria andDescribeIsNull() {
-            addCriterion("describe is null");
+        public Criteria andDescribetaskIsNull() {
+            addCriterion("describeTask is null");
             return (Criteria) this;
         }
 
-        public Criteria andDescribeIsNotNull() {
-            addCriterion("describe is not null");
+        public Criteria andDescribetaskIsNotNull() {
+            addCriterion("describeTask is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDescribeEqualTo(String value) {
-            addCriterion("describe =", value, "describe");
+        public Criteria andDescribetaskEqualTo(String value) {
+            addCriterion("describeTask =", value, "describetask");
             return (Criteria) this;
         }
 
-        public Criteria andDescribeNotEqualTo(String value) {
-            addCriterion("describe <>", value, "describe");
+        public Criteria andDescribetaskNotEqualTo(String value) {
+            addCriterion("describeTask <>", value, "describetask");
             return (Criteria) this;
         }
 
-        public Criteria andDescribeGreaterThan(String value) {
-            addCriterion("describe >", value, "describe");
+        public Criteria andDescribetaskGreaterThan(String value) {
+            addCriterion("describeTask >", value, "describetask");
             return (Criteria) this;
         }
 
-        public Criteria andDescribeGreaterThanOrEqualTo(String value) {
-            addCriterion("describe >=", value, "describe");
+        public Criteria andDescribetaskGreaterThanOrEqualTo(String value) {
+            addCriterion("describeTask >=", value, "describetask");
             return (Criteria) this;
         }
 
-        public Criteria andDescribeLessThan(String value) {
-            addCriterion("describe <", value, "describe");
+        public Criteria andDescribetaskLessThan(String value) {
+            addCriterion("describeTask <", value, "describetask");
             return (Criteria) this;
         }
 
-        public Criteria andDescribeLessThanOrEqualTo(String value) {
-            addCriterion("describe <=", value, "describe");
+        public Criteria andDescribetaskLessThanOrEqualTo(String value) {
+            addCriterion("describeTask <=", value, "describetask");
             return (Criteria) this;
         }
 
-        public Criteria andDescribeLike(String value) {
-            addCriterion("describe like", value, "describe");
+        public Criteria andDescribetaskLike(String value) {
+            addCriterion("describeTask like", value, "describetask");
             return (Criteria) this;
         }
 
-        public Criteria andDescribeNotLike(String value) {
-            addCriterion("describe not like", value, "describe");
+        public Criteria andDescribetaskNotLike(String value) {
+            addCriterion("describeTask not like", value, "describetask");
             return (Criteria) this;
         }
 
-        public Criteria andDescribeIn(List<String> values) {
-            addCriterion("describe in", values, "describe");
+        public Criteria andDescribetaskIn(List<String> values) {
+            addCriterion("describeTask in", values, "describetask");
             return (Criteria) this;
         }
 
-        public Criteria andDescribeNotIn(List<String> values) {
-            addCriterion("describe not in", values, "describe");
+        public Criteria andDescribetaskNotIn(List<String> values) {
+            addCriterion("describeTask not in", values, "describetask");
             return (Criteria) this;
         }
 
-        public Criteria andDescribeBetween(String value1, String value2) {
-            addCriterion("describe between", value1, value2, "describe");
+        public Criteria andDescribetaskBetween(String value1, String value2) {
+            addCriterion("describeTask between", value1, value2, "describetask");
             return (Criteria) this;
         }
 
-        public Criteria andDescribeNotBetween(String value1, String value2) {
-            addCriterion("describe not between", value1, value2, "describe");
+        public Criteria andDescribetaskNotBetween(String value1, String value2) {
+            addCriterion("describeTask not between", value1, value2, "describetask");
             return (Criteria) this;
         }
 
@@ -691,6 +691,66 @@ public class SendedRecExample {
 
         public Criteria andSmsconNotBetween(String value1, String value2) {
             addCriterion("smsCon not between", value1, value2, "smscon");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNull() {
+            addCriterion("status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIsNotNull() {
+            addCriterion("status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusEqualTo(Integer value) {
+            addCriterion("status =", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotEqualTo(Integer value) {
+            addCriterion("status <>", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThan(Integer value) {
+            addCriterion("status >", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("status >=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThan(Integer value) {
+            addCriterion("status <", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("status <=", value, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusIn(List<Integer> values) {
+            addCriterion("status in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotIn(List<Integer> values) {
+            addCriterion("status not in", values, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusBetween(Integer value1, Integer value2) {
+            addCriterion("status between", value1, value2, "status");
+            return (Criteria) this;
+        }
+
+        public Criteria andStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("status not between", value1, value2, "status");
             return (Criteria) this;
         }
     }
