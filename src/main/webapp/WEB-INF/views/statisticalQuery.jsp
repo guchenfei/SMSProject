@@ -11,18 +11,18 @@
 %>
 <!-- 引入CSS样式 -->
 <link href="${APP_PATH }/static/css/style.css" rel="stylesheet">
-<!-- 引入js -->
-<script src="${APP_PATH }/static/js/jquery3.3.1.min.js"></script>
-<!-- 引入bootstrap css -->
-<link type="text/css" rel="stylesheet"
-	href="${APP_PATH }/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
-<!-- 引入bootstrap js -->
-<script type="text/javascript"
-	src="${APP_PATH }/static/bootstrap-3.3.7-dist/js/bootstrap.min.js">
-	
-</script>
-<script language="javascript" type="text/javascript"
-	src="${APP_PATH }/static/My97DatePicker/WdatePicker.js"></script>
+	<!-- 引入js -->
+	<script src="${APP_PATH }/static/js/jquery3.3.1.min.js"></script>
+	<!-- 引入bootstrap css -->
+	<link type="text/css" rel="stylesheet"
+		href="${APP_PATH }/static/bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+	<!-- 引入bootstrap js -->
+	<script type="text/javascript"
+		src="${APP_PATH }/static/bootstrap-3.3.7-dist/js/bootstrap.min.js">
+		
+	</script>
+	<script language="javascript" type="text/javascript"
+		src="${APP_PATH }/static/My97DatePicker/WdatePicker.js"></script>
 </head>
 
 <body>
@@ -61,12 +61,8 @@
 				</button>
 			</div>
 			<div class="col-md-3">
-				<select class="form-control" id="selectByRole">
+				<select class="form-control" id="selectByCompany">
 					<!-- 按公司查询统计情况 -->
-					<option value="#">按公司查询</option>
-					<option value="0">北京总部</option>
-					<option value="1">成都分公司</option>
-					<option value="2">西安分公司</option>
 				</select>
 			</div>
 			<div class="col-md-3">
@@ -116,5 +112,53 @@
 		<!-- 分页条信息 -->
 		<div class="col-md-4" id="page_nav_area"></div>
 	</div>
+	<script type="text/javascript">
+		//1,页面加载完成后，直接去发送ajax请求，要到分页数据
+		$(function() {
+			//去首页
+			getCompanies("#selectByCompany");
+			to_page(1);
+		});
+		
+		//发送指定的请求，跳到点击的页码页
+		function to_page(pn) {
+			$.ajax({
+				url : "${APP_PATH }/allContacts",
+				data : "pn=" + pn,
+				type : "POST",
+				success : function(result) {
+					//1，解析并显示用户数据
+					build_contacts_table(result);
+					//2，解析并显示分页信息
+					build_page_info(result);
+					//3，解析显示分页条数据
+					build_page_nav(result);
+				}
+			});
+		}
+
+		//查出所有的分公司信息并显示在下拉列表中
+		function getCompanies(ele) {
+			//清空上次请求的下拉列表信息
+			$(ele).empty();
+			$.ajax({
+				url : "${APP_PATH }/companies",
+				types : "POST",
+				success : function(result) {
+					//思考下没有这个会产生响应信息吗？
+					/* console.log(result); */
+					//{"code":100,"msg":"处理成功！","extend":{"companies":[{"companyId":1,"companyname":"北京总部"},{"companyId":2,"companyname":"西安分公司"},{"companyId":3,"companyname":"上海分公司"},{"companyId":4,"companyname":"成都分公司"},{"companyId":5,"companyname":"南京分公司"}]}}
+					//显示公司信息在下拉列表中
+					$.each(result.extend.companies,
+							function() {
+								var optionEle = $("<option></option>").append(
+										this.companyname).attr("value",
+										this.companyId);
+								optionEle.appendTo(ele);
+							})
+				}
+			});
+		}
+	</script>
 </body>
 </html>

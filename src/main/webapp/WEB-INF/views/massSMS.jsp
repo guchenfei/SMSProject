@@ -312,37 +312,15 @@
 
 		//发送短信请求方法
 		function sendMessages() {
-			/* var phoneNumbers = $("#phoneNumber").val();
-			var smsCpy_select = $("#smsCpy_select").val();
-			var taskName = $("#taskName").val();
-			var taskDescribe = $("#taskDescribe").val();
-			var creatorId = $("#creatorId").val();
-			var masstype = $("#masstype").val();
-			var createtime = $("#createtime").val();
-			var reservetime = $("#reservetime").val();
-			var messageContents = $("#smsContent").val();
-			alert("电话号："+ phoneNumbers + "接收公司:" + smsCpy_select+"任务名称：" + taskName+"任务描述："+ taskDescribe +"创建人ID" + creatorId +
-					"群发类型：" + masstype +"创建时间："+ createtime+"定时时间："+reservetime+"短信内容:"+messageContents); */
-			/* {
-					"phoneNumbers":phoneNumbers,
-					"smsCpy_select":smsCpy_select,
-					"taskName":taskName,
-					"taskDescribe":taskDescribe,
-					"creatorId":creatorId,
-					"masstype":masstype,
-					"createtime":createtime,
-					"reservetime":reservetime,
-					"messageContents" : messageContents
-				}, */ 
 			$.ajax({
-				url : "${APP_PATH }/sendMessages",
+				url : "${APP_PATH}/sendMessages",
 				type : "POST",
-				data : $(
-				"#smsMass form")
-				.serialize()
+				dateType : "JSON",
+				data : $("#smsMass form").serialize()
 				+ "&_method=PUT",
+				async: false,
 				success : function(result) {
-					alert(result.msg);
+					alert(result.extend.smsResult);
 				}
 			}); 
 		}
