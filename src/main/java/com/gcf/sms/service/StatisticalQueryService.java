@@ -20,7 +20,7 @@ public class StatisticalQueryService {
 
 	public List<SendedRec> getAllStatistical() {
 		SendedRecExample sendedRecExample = new SendedRecExample();
-		sendedRecExample.setOrderByClause("srecordId ASC");
+		sendedRecExample.setOrderByClause("SRecord_id ASC");
 		return sendedRecMapper.selectByExampleWithAdmCom(sendedRecExample);
 	}
 
