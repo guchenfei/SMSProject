@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -38,6 +40,19 @@ public class StatisticalQueryController {
 		// 封装了详细的分页信息，包括有我们查出来的数据，传入连续显示的页数
 		PageInfo page = new PageInfo(sendedRecs, 5);
 		return Msg.success().add("pageInfo", page);
+	}
+	
+	/**
+	 * 根据ID查询单个统计记录
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@RequestMapping(value = "/Statistical/{id}", method = RequestMethod.GET)
+	@ResponseBody
+	public Msg getStatistical(@PathVariable("id") Integer id) {
+		SendedRec  sendedRec = statisticalQueryService.getStatistical(id);
+		return Msg.success().add("sendedRec", sendedRec);
 	}
 
 }
