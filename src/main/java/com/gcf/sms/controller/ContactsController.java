@@ -128,7 +128,7 @@ public class ContactsController {
 	/**
 	 * 单个和批量删除二合一 批量删除，1,2,3..... 单个删除，1
 	 * 
-	 * @param adminId
+	 * @param contactIds
 	 * @return
 	 */
 	@RequestMapping(value = "/Contacts/{contactIds}", method = RequestMethod.DELETE)

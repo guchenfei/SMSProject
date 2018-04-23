@@ -1,5 +1,6 @@
 package com.gcf.sms.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,33 @@ public class StatisticalQueryController {
 	public Msg getStatistical(@PathVariable("id") Integer id) {
 		SendedRec  sendedRec = statisticalQueryService.getStatistical(id);
 		return Msg.success().add("sendedRec", sendedRec);
+	}
+	
+	/**
+	 * 单个和批量删除二合一 批量删除，1,2,3..... 单个删除，1
+	 * 
+	 * @param contactIds
+	 * @return
+	 */
+	@RequestMapping(value = "/Statistical/{recordIds}", method = RequestMethod.DELETE)
+	@ResponseBody
+	public Msg deleteContactsById(@PathVariable("recordIds") String recordIds) {
+		// 包含,就是批量删除，否则单一删除
+		if (recordIds.contains(",")) {
+			String[] str_recordIds = recordIds.split(",");
+			// 组装recordId的集合
+			List<Integer> del_recordIds = new ArrayList<Integer>();
+			for (String str_recordId : str_recordIds) {
+				Integer recordId = Integer.parseInt(str_recordId);
+				del_recordIds.add(recordId);
+			}
+			statisticalQueryService.deleteBatch(del_recordIds);
+			return Msg.success();
+		} else {
+			Integer recordId = Integer.parseInt(recordIds);
+			statisticalQueryService.deleteRecord(recordId);
+			return Msg.success();
+		}
 	}
 
 }
