@@ -148,8 +148,7 @@
 	<!-- 搭建显示页面 -->
 	<div>
 		<div class="row tools">
-			<div class="col-md-3">
-			</div>
+			<div class="col-md-3"></div>
 			<div class="col-md-3">
 				<button type="button" class="btn-danger btn btn-default"
 					id="record_mutiDelete_btn">
@@ -211,7 +210,7 @@
 		<div class="col-md-4" id="page_nav_area_main"></div>
 	</div>
 	<script type="text/javascript">
-		var totalRecord_main,totalRecord,currentPage_main,currentPage,currentCompany_main,currentCompany;
+		var totalRecord_main, totalRecord, currentPage_main, currentPage, currentCompany_main, currentCompany;
 
 		//1,页面加载完成后，直接去发送ajax请求，要到分页数据
 		$(function() {
@@ -328,6 +327,165 @@
 										.append(receDetailsTd).append(btnTd)
 										.appendTo("#statistical_table tbody");
 							});
+		}
+
+		/**
+		 * 按公司查询构建table
+		 */
+		function build_recordsByCompany_table(result) {
+			//每次放新数据的时候要清空上次请求后的数据
+			$("#statistical_table tbody").empty();
+			var statisticals = result.extend.pageInfo.list;
+			//遍历数据
+			$
+					.each(
+							statisticals,
+							function(index, item) {
+								/* alert(item.username); */
+								/* <th><input name="" type="checkbox" value="" /></th> */
+								var checkboxTd = $("<td></td>").append(
+										$("<input/>").attr("type", "checkbox")
+												.addClass("check_item"));
+								var srecordIdTd = $("<td></td>").append(
+										item.srecordId);
+								var adminTd = $("<td></td>").append(
+										item.admin.username);
+								var createtimeTd = $("<td></td>").append(
+										item.createtime);
+								var topicTd = $("<td></td>").append(item.topic);
+
+								var describetask = $("<button></button>")
+										.addClass(
+												"btn-primary btn-xs view_btn_describe")
+										.append(
+												$("<span></span>")
+														.addClass(
+																"glyphicon glyphicon-eye-open"))
+										.append("点击查看");
+								//为查看按钮添加自定义属性，来表示记录的属性
+								describetask.attr("view_id", item.srecordId);
+
+								var describetaskTd = $("<td></td>").append(
+										describetask);
+								;
+								/* 群发类型:0立即发送，1定时发送 */
+								var masstypeTd = $("<td></td>").append(
+										item.masstype == "0" ? "立即发送" : "定时发送");
+								var smscon = $("<button></button>")
+										.addClass(
+												"btn-primary btn-xs view_btn_smscon")
+										.append(
+												$("<span></span>")
+														.addClass(
+																"glyphicon glyphicon-eye-open"))
+										.append("点击查看");
+								//为查看按钮添加自定义属性，来表示记录的属性
+								smscon.attr("view_id", item.srecordId);
+								var smsconTd = $("<td></td>").append(smscon);
+								var reservetimeTd = $("<td></td>").append(
+										item.reservetime);
+								var companyTd = $("<td></td>").append(
+										item.company.companyname);
+								/* 发送状态0:已发送，1:待发送 */
+								var statusTd = $("<td></td>").append(
+										item.masstype == "0" ? "已发送" : "待发送");
+								var receDetails = $("<button></button>")
+										.addClass(
+												"btn-primary btn-xs view_btn_Details")
+										.append(
+												$("<span></span>")
+														.addClass(
+																"glyphicon glyphicon-eye-open"))
+										.append("点击查看");
+								//为查看按钮添加自定义属性，来表示记录的属性
+								receDetails.attr("view_id", item.rececompanyid);
+								var receDetailsTd = $("<td></td>").append(
+										receDetails);
+								var delBtn = $("<button></button>")
+										.addClass(
+												"btn-danger btn-xs delete_btnCompany")
+										.append(
+												$("<span></span>")
+														.addClass(
+																"glyphicon glyphicon-trash"))
+										.append("删除");
+								//为删除按钮添加自定义属性，来表示当前任务的属性
+								delBtn.attr("delete_id", item.srecordId);
+								var btnTd = $("<td></td>").append(delBtn);
+
+								/*append方法执行完成以后还是返回原来的元素 <tr></tr>所以一直继续添加每行内容*/
+								$("<tr></tr>").append(checkboxTd).append(
+										srecordIdTd).append(adminTd).append(
+										createtimeTd).append(topicTd).append(
+										describetaskTd).append(masstypeTd)
+										.append(smsconTd).append(reservetimeTd)
+										.append(companyTd).append(statusTd)
+										.append(receDetailsTd).append(btnTd)
+										.appendTo("#statistical_table tbody");
+							});
+		}
+
+		//解析按公司查询显示分页条并且点击能去下一页等等（统计主界面）
+		function build_page_nav_mainByCompany(result) {
+			//每次放新数据的时候要清空上次请求后的数据
+			$("#page_nav_area_main").empty();
+			//page_nav_area_main
+			var ul = $("<ul></ul>").addClass("pagination");
+			//构建元素
+			var firstPageLi = $("<li></li>").append($("<a></a>").append("首页"));
+			var prePageLi = $("<li></li>").append(
+					$("<a></a>").append("&laquo;"));
+
+			if (result.extend.pageInfo.hasPreviousPage == false) {
+				firstPageLi.addClass("disabled");
+				prePageLi.addClass("disabled");
+			} else {
+				//为元素添加翻页事件
+				firstPageLi.click(function() {
+					to_pageByCompany_main(currentCompany_main, 1);
+				});
+
+				prePageLi.click(function() {
+					to_pageByCompany_main(currentCompany_main,
+							result.extend.pageInfo.pageNum - 1);
+				});
+			}
+			var nextPageLi = $("<li></li>").append(
+					$("<a></a>").append("&raquo;"));
+			var lastPageLi = $("<li></li>").append($("<a></a>").append("末页"));
+			if (result.extend.pageInfo.hasNextPage == false) {
+				nextPageLi.addClass("disabled");
+				lastPageLi.addClass("disabled");
+			} else {
+				nextPageLi.click(function() {
+					to_pageByCompany_main(currentCompany_main,
+							result.extend.pageInfo.pageNum + 1);
+				});
+
+				lastPageLi.click(function() {
+					to_pageByCompany_main(currentCompany_main,
+							result.extend.pageInfo.pages);
+				});
+			}
+			//添加首页和前一页的提示
+			ul.append(firstPageLi).append(prePageLi);
+			//1,2,3,4,5页码号,遍历给ul中添加页码提示
+			$.each(result.extend.pageInfo.navigatepageNums, function(index,
+					item) {
+				var numLi = $("<li></li>").append($("<a></a>").append(item));
+				if (result.extend.pageInfo.pageNum == item) {
+					numLi.addClass("active");
+				}
+				numLi.click(function() {
+					to_pageByCompany_main(currentCompany_main, item);
+				});
+				ul.append(numLi);
+			});
+			//添加下一页和末页的提示
+			ul.append(nextPageLi).append(lastPageLi);
+			var navEle = $("<nav></nav>").append(ul).attr("aria-label",
+					"Page navigation");
+			navEle.appendTo("#page_nav_area_main");
 		}
 
 		//查出所有的分公司信息并显示在下拉列表中
@@ -516,7 +674,7 @@
 			totalRecord = result.extend.pageInfo.total;
 			currentPage = result.extend.pageInfo.pageNum;
 		}
-		
+
 		//解析显示普通查询分页信息(统计主界面)
 		function build_page_info_main(result) {
 			//每次放新数据的时候要清空上次请求后的数据
@@ -529,8 +687,7 @@
 			totalRecord_main = result.extend.pageInfo.total;
 			currentPage_main = result.extend.pageInfo.pageNum;
 		}
-		
-		
+
 		//解析普通查询显示分页条并且点击能去下一页等等（统计主界面）
 		function build_page_nav_main(result) {
 			//每次放新数据的时候要清空上次请求后的数据
@@ -629,33 +786,42 @@
 				backdrop : "static"
 			})
 		});
-		
+
 		/*普通删除按钮点击事件*/
-		$(document).on("click", ".delete_btn", function() {
-			//1，弹出确认删除对话框
-			/* alert($(this).parents("tr").find("td:eq(7)").text()); */
-			var recordID = $(this).parents("tr").find("td:eq(1)").text();
-			var creator = $(this).parents("tr").find("td:eq(2)").text();
-			var recordTopic = $(this).parents("tr").find("td:eq(4)").text();
-			var recordId = $(this).attr("delete_id");
-			if (confirm("确认删除ID为【" + recordID + "】的【"+creator+"】创建的，以【" + recordTopic + "】为主题的任务记录吗？")) {
-				//确认删除，发送ajax请求删除
-				$.ajax({
-					url : "${APP_PATH }/Statistical/" + recordId,
-					type : "DELETE",
-					success : function(result) {
-						//状态码 100-成功 200-失败
-						if (result.code == 100) {
-							alert(result.msg);
-							to_page(currentPage_main);
-						} else if (result.code == 200) {
-							alert(result.msg);
-						}
-					}
-				});
-			}
-		});
-		
+		$(document)
+				.on(
+						"click",
+						".delete_btn",
+						function() {
+							//1，弹出确认删除对话框
+							/* alert($(this).parents("tr").find("td:eq(7)").text()); */
+							var recordID = $(this).parents("tr").find(
+									"td:eq(1)").text();
+							var creator = $(this).parents("tr")
+									.find("td:eq(2)").text();
+							var recordTopic = $(this).parents("tr").find(
+									"td:eq(4)").text();
+							var recordId = $(this).attr("delete_id");
+							if (confirm("确认删除ID为【" + recordID + "】的【" + creator
+									+ "】创建的，以【" + recordTopic + "】为主题的任务记录吗？")) {
+								//确认删除，发送ajax请求删除
+								$.ajax({
+									url : "${APP_PATH }/Statistical/"
+											+ recordId,
+									type : "DELETE",
+									success : function(result) {
+										//状态码 100-成功 200-失败
+										if (result.code == 100) {
+											alert(result.msg);
+											to_page(currentPage_main);
+										} else if (result.code == 200) {
+											alert(result.msg);
+										}
+									}
+								});
+							}
+						});
+
 		/* 全选和全不选功能 */
 		$("#check_all").click(function() {
 			/*attr获取到的CheckBox属性为undefined,它可以获取自定义属性的值
@@ -685,8 +851,7 @@
 								+ ",";
 					});
 					//去除recordIds多余的
-					recordIds = recordIds.substring(0,
-							recordIds.length - 1);
+					recordIds = recordIds.substring(0, recordIds.length - 1);
 					if (confirm("确认删除任务ID为【" + recordIds + "】吗？")) {
 						//发送ajax请求删除
 						$.ajax({
@@ -704,6 +869,54 @@
 						});
 					}
 				});
+
+		//按公司属性查询后跳到指定页码
+		function to_pageByCompany_main(currentCompany_main, pn) {
+			$.ajax({
+				url : "${APP_PATH }/selectRecordsByCompany",
+				data : {
+					"opValue" : currentCompany_main,
+					"pn" : pn
+				},
+				dataType : "JSON",
+				type : "POST",
+				success : function(result) {
+					//1，解析并显示用户数据
+					build_recordsByCompany_table(result);
+					//2，解析并显示分页信息
+					build_page_info_main(result);
+					//3，解析显示分页条数据
+					build_page_nav_mainByCompany(result);
+				}
+			});
+		}
+
+		$("#selectByCompany").change(function() {
+			var opValue = $(this).val();
+			selectByConpany(opValue, 1);
+		});
+
+		//发送按公司查询的请求，显示数据
+		function selectByConpany(opValue, pn) {
+			currentCompany_main = opValue;
+			$.ajax({
+				url : "${APP_PATH }/selectRecordsByCompany",
+				data : {
+					"opValue" : opValue,
+					"pn" : pn
+				},
+				type : "POST",
+				dataType : "JSON",
+				success : function(result) {
+					//1，解析并显示用户数据
+					build_recordsByCompany_table(result);
+					//2，解析并显示分页信息
+					build_page_info_main(result);
+					//3，解析显示分页条数据
+					build_page_nav_mainByCompany(result);
+				}
+			});
+		}
 	</script>
 </body>
 </html>

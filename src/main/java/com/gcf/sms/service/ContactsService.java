@@ -89,10 +89,6 @@ public class ContactsService {
 	 * @return
 	 */
 	public List<Contacts> getAllContactsByCompany(Integer opValue) {
-		/*AdminExample example = new AdminExample();
-		Criteria criteria = example.createCriteria();
-		criteria.andUsertypeEqualTo(opValue);
-		List<Admin> admins = adminMapper.selectByExampleWithCpy(example);*/
 		ContactsExample example = new ContactsExample();
 		Criteria criteria = example.createCriteria();
 		criteria.andConcompanyEqualTo(opValue);

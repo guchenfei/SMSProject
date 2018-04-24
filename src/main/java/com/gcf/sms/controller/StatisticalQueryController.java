@@ -64,7 +64,7 @@ public class StatisticalQueryController {
 	 */
 	@RequestMapping(value = "/Statistical/{recordIds}", method = RequestMethod.DELETE)
 	@ResponseBody
-	public Msg deleteContactsById(@PathVariable("recordIds") String recordIds) {
+	public Msg deleteRecordById(@PathVariable("recordIds") String recordIds) {
 		// 包含,就是批量删除，否则单一删除
 		if (recordIds.contains(",")) {
 			String[] str_recordIds = recordIds.split(",");
@@ -81,6 +81,27 @@ public class StatisticalQueryController {
 			statisticalQueryService.deleteRecord(recordId);
 			return Msg.success();
 		}
+	}
+	
+	
+	/**
+	 * 按接收对象所属的公司查询
+	 * 
+	 * @param opValue
+	 * @param pn
+	 * @return
+	 */
+	@RequestMapping(value = "/selectRecordsByCompany", method = RequestMethod.POST)
+	@ResponseBody
+	public Msg selectRecordsByCompany(@RequestParam(value = "opValue", defaultValue = "1") Integer opValue,
+			@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+		PageHelper.startPage(pn, 20);
+		// startPage后面紧跟着这个查询就是一个分页查询
+		List<SendedRec> records = statisticalQueryService.getAllRecordsByCompany(opValue);
+		// 使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就行了
+		// 封装了详细的分页信息，包括有我们查出来的数据，传入连续显示的页数
+		PageInfo page = new PageInfo(records, 5);
+		return Msg.success().add("pageInfo", page);
 	}
 
 }

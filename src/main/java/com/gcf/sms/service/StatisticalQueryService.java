@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gcf.sms.bean.Contacts;
+import com.gcf.sms.bean.ContactsExample;
 import com.gcf.sms.bean.SendedRec;
 import com.gcf.sms.bean.SendedRecExample;
 import com.gcf.sms.bean.SendedRecExample.Criteria;
@@ -47,6 +49,14 @@ public class StatisticalQueryService {
 
 	public void deleteRecord(Integer recordId) {
 		sendedRecMapper.deleteByPrimaryKey(recordId);
+	}
+
+	public List<SendedRec> getAllRecordsByCompany(Integer opValue) {
+		SendedRecExample example = new SendedRecExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andRececompanyidEqualTo(opValue);
+		List<SendedRec> records = sendedRecMapper.selectByExampleWithAdmCom(example);
+		return records;
 	}
 
 	
