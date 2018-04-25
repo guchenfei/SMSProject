@@ -25,7 +25,7 @@ public class LoginService {
 	public List<Admin> findUserByEmail(String email) {
 		AdminExample adminExample = new AdminExample();
 		adminExample.createCriteria().andUseremailEqualTo(email);
-		List<Admin> admins = adminMapper.selectByExample(adminExample);
+		List<Admin> admins = adminMapper.selectByExampleWithCpy(adminExample);
 		return admins;
 	}
 }

@@ -821,6 +821,43 @@
 								});
 							}
 						});
+		
+		/*按公司属性查询后删除按钮点击事件*/
+		$(document)
+				.on(
+						"click",
+						".delete_btnCompany",
+						function() {
+							//1，弹出确认删除对话框
+							/* alert($(this).parents("tr").find("td:eq(7)").text()); */
+							var recordID = $(this).parents("tr").find(
+									"td:eq(1)").text();
+							var creator = $(this).parents("tr")
+									.find("td:eq(2)").text();
+							var recordTopic = $(this).parents("tr").find(
+									"td:eq(4)").text();
+							var recordId = $(this).attr("delete_id");
+							if (confirm("确认删除ID为【" + recordID + "】的【" + creator
+									+ "】创建的，以【" + recordTopic + "】为主题的任务记录吗？")) {
+								//确认删除，发送ajax请求删除
+								$.ajax({
+									url : "${APP_PATH }/Statistical/"
+											+ recordId,
+									type : "DELETE",
+									success : function(result) {
+										//状态码 100-成功 200-失败
+										if (result.code == 100) {
+											alert(result.msg);
+											selectByCompany(currentCompany_main,currentPage_main);
+										} else if (result.code == 200) {
+											alert(result.msg);
+										}
+									}
+								});
+							}
+						});
+		
+		
 
 		/* 全选和全不选功能 */
 		$("#check_all").click(function() {
@@ -893,11 +930,11 @@
 
 		$("#selectByCompany").change(function() {
 			var opValue = $(this).val();
-			selectByConpany(opValue, 1);
+			selectByCompany(opValue, 1);
 		});
 
 		//发送按公司查询的请求，显示数据
-		function selectByConpany(opValue, pn) {
+		function selectByCompany(opValue, pn) {
 			currentCompany_main = opValue;
 			$.ajax({
 				url : "${APP_PATH }/selectRecordsByCompany",

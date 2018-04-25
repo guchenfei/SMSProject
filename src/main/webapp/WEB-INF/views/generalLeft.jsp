@@ -34,7 +34,7 @@
 	</script>
 </head>
 <body style="background:#f0f9fd;">
-		<div class="lefttop"><span></span>某分公司管理员界面</div>
+		<div class="lefttop"><span></span>${admin.getCompany().getCompanyname()}管理员界面</div>
 
 		<dl class="leftmenu">
 
