@@ -88,7 +88,7 @@ public class RoleCRUDService {
 	 * @param adminId
 	 */
 	public void deleteAdmin(Integer adminId) {
-       adminMapper.deleteByPrimaryKey(adminId);
+		adminMapper.deleteByPrimaryKey(adminId);
 	}
 
 	public void deleteBatch(List<Integer> adminIds) {
@@ -97,15 +97,32 @@ public class RoleCRUDService {
 		criteria.andAdminIdIn(adminIds);
 		adminMapper.deleteByExample(example);
 	}
-    /**
-     * 按角色查询用户
-     * @param opValue
-     * @return
-     */
+
+	/**
+	 * 按角色查询用户
+	 * 
+	 * @param opValue
+	 * @return
+	 */
 	public List<Admin> getAllAdminByRole(Integer opValue) {
 		AdminExample example = new AdminExample();
 		Criteria criteria = example.createCriteria();
 		criteria.andUsertypeEqualTo(opValue);
+		List<Admin> admins = adminMapper.selectByExampleWithCpy(example);
+		return admins;
+	}
+
+	/**
+	 * 按公司和角色查询用户
+	 * @param currentCompany
+	 * @param currentRole
+	 * @return
+	 */
+	public List<Admin> getAllAdminByRoleAndCpy(Integer currentCompany, Integer currentRole) {
+		AdminExample example = new AdminExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andUsertypeEqualTo(currentRole);
+		criteria.andCpyIdEqualTo(currentCompany);
 		List<Admin> admins = adminMapper.selectByExampleWithCpy(example);
 		return admins;
 	}

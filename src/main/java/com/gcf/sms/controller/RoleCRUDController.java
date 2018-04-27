@@ -1,9 +1,5 @@
 package com.gcf.sms.controller;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,15 +7,11 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
-import org.apache.logging.log4j.core.pattern.EqualsReplacementConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -202,5 +194,25 @@ public class RoleCRUDController {
 		PageInfo page = new PageInfo(admins, 5);
 		return Msg.success().add("pageInfo", page);
 	}
+	
+	/**
+	 * 按用户角色查询
+	 * @param opValue
+	 * @param pn
+	 * @return
+	 */
+	@RequestMapping(value="/selectAdminByRoleAndCpy",method=RequestMethod.POST)
+	@ResponseBody
+	public Msg selectAdminByRoleAndCpy(@RequestParam(value = "currentCompany", defaultValue = "1") Integer currentCompany,@RequestParam(value = "currentRole", defaultValue = "2") Integer currentRole,@RequestParam(value = "pn", defaultValue = "1") Integer pn) {
+		PageHelper.startPage(pn, 20);
+		// startPage后面紧跟着这个查询就是一个分页查询
+		List<Admin> admins = roleCRUDService.getAllAdminByRoleAndCpy(currentCompany,currentRole);
+		// 使用pageInfo包装查询后的结果，只需要将pageInfo交给页面就行了
+		// 封装了详细的分页信息，包括有我们查出来的数据，传入连续显示的页数
+		PageInfo page = new PageInfo(admins, 5);
+		return Msg.success().add("pageInfo", page);
+	}
+	
+	
 
 }

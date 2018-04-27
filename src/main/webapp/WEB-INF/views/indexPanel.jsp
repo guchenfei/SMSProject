@@ -9,9 +9,9 @@
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
 <!-- 引入CSS样式 -->
-<link href="${APP_PATH }/static/css/style.css" rel="stylesheet">
-	<!-- 引入js -->
-	<script src="${APP_PATH }/static/js/jquery3.3.1.min.js"></script>
+<link href="${APP_PATH }/static/css/style.css" rel="stylesheet" />
+<!-- 引入js -->
+<script src="${APP_PATH }/static/js/jquery3.3.1.min.js"></script>
 </head>
 <body>
 	<div class="place">
