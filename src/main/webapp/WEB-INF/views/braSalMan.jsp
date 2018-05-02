@@ -130,6 +130,111 @@
 			</div>
 		</div>
 	</div>
+	
+		<!-- 普通用户修改的模态框 -->
+	<div class="modal fade" id="adminUpdateModal" tabindex="-1"
+		role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title">修改业务员</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">姓名:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control"
+									id="adminName_update_input" name="username"
+									placeholder="请输入您的姓名"> <span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">密码:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="userpass"
+									id="adminPass_update_input" placeholder="请输入您的密码"> <span
+										class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">性别:</label>
+							<div class="col-sm-10">
+								<label class="radio-inline"> <!-- 男0女1 --> <input
+									type="radio" name="usersex" id="adminsex0_update_input"
+									value="0" checked="checked">男 </label> <label
+									class="radio-inline"> <input type="radio"
+									name="usersex" id="adminsex1_update_input" value="1">女
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">生日:</label>
+							<div class="col-sm-10">
+								<input id="adminbirthday_update_input" type="text"
+									name="userbirthday" class="form-control"
+									onclick="WdatePicker({isShowClear:false,readOnly:true})"
+									placeholder="请点击输入您的生日" />
+								<span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">联系方式:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control"
+									id="adminpnum_update_input" name="userpnum"
+									placeholder="请输入您的手机号码"> <span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">地址:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="useraddress"
+									id="adminaddress_update_input" placeholder="请输入您的详细地址">
+									<span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">邮箱:</label>
+							<div class="col-sm-10">
+								<p class="form-control-static" id="adminEmail_update_static"></p>
+								<span class="help-block"></span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">角色:</label>
+							<div class="col-sm-4">
+								<select class="form-control" id="admintype_update_select"
+									name="usertype">
+									<!-- 权限角色：2表示业务员 -->
+									<option value="2">业务员</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">所属公司:</label>
+							<div class="col-sm-4">
+								<select class="form-control" id="admincpy_update_select"
+									name="cpyId">
+									<!--  所属公司提交公司ID即可 -->
+									<option value="${admin.getCpyId()}">${admin.getCompany().getCompanyname()}</option>
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-primary" id="admin_update_btn">更新</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- 搭建显示页面 -->
 	<div>
 		<div class="row tools">
@@ -608,6 +713,258 @@
 									}
 								}
 							});
+				});
+		
+		//查询用户信息提交到普通修改模态框
+		function getAdmin(id) {
+			$.ajax({
+				url : "${APP_PATH }/admin/" + id,
+				type : "GET",
+				success : function(result) {
+					/* console.log(result); */
+					var adminData = result.extend.admin;
+					$("#adminName_update_input").val(adminData.username);
+					$("#adminPass_update_input").val(adminData.userpass);
+					$("#adminUpdateModal input[name=usersex]").val(
+							[ adminData.usersex ]);
+					$("#adminbirthday_update_input")
+							.val(adminData.userbirthday);
+					$("#adminpnum_update_input").val(adminData.userpnum);
+					$("#adminaddress_update_input").val(adminData.useraddress);
+					$("#adminEmail_update_static").text(adminData.useremail);
+					$("#admintype_update_select").val([ adminData.usertype ]);
+					$("#admincpy_update_select").val([ adminData.cpyId ]);
+				}
+			});
+		}
+		
+		
+		/*普通修改按钮点击事件*/
+		$(document).on(
+				"click",
+				".edit_btn",
+				function() {
+					//2，查出用户信息并且显示用户信息
+					getAdmin($(this).attr("modify_id"));
+					//3,把用户的ID传递给修改模态框的更新按钮
+					$("#admin_update_btn").attr("modify_id",
+							$(this).attr("modify_id"));
+					//弹出模态框
+					$("#adminUpdateModal").modal({
+						backdrop : "static"
+					})
+
+				});
+		
+		/* 普通校验修改表单的数据 */
+		function validate_modify_form() {
+			//拿到要校验的数据，使用正则表达式进行校验
+			//校验姓名
+			var adminName = $("#adminName_update_input").val();
+			var regName = /(^[a-zA-Z0-9_-]{6,16}$)|(^[\u2E80-\u9FFF]{2,5})/;
+			if (!regName.test(adminName)) {
+				/* alert("用户名必须是2-5位中文或者6-16位英文和数字等组合"); */
+				/* 应该清空这个元素之前的样式 */
+				/* $("#adminName_add_input").parent().addClass("has-error");
+				$("#adminName_add_input").next("span").text("用户名必须是2-5位中文或者6-16位英文和数字等组合"); */
+				show_validate_msg("#adminName_update_input", "error",
+						"姓名必须是2-5位中文或者6-16位英文和数字等组合");
+				return false;
+			} else {
+				/* $("#adminName_add_input").parent().addClass("has-success");
+				$("#adminName_add_input").next("span").text(""); */
+				show_validate_msg("#adminName_update_input", "success", "");
+			}
+			//校验密码
+			var adminPass = $("#adminPass_update_input").val();
+			var regPass = /^[a-zA-Z0-9_-]{6,18}$/;
+			if (!regPass.test(adminPass)) {
+				/* 应该清空这个元素之前的样式 */
+				show_validate_msg("#adminPass_update_input", "error",
+						"密码必须为6-18位的字母数字下划线组合");
+				return false;
+			} else {
+				show_validate_msg("#adminPass_update_input", "success", "");
+			}
+			//校验手机号
+			var adminpnum = $("#adminpnum_update_input").val();
+			var regPnum = /^[1][3,4,5,7,8][0-9]{9}$/;
+			if (!regPnum.test(adminpnum)) {
+				/* 应该清空这个元素之前的样式 */
+				show_validate_msg("#adminpnum_update_input", "error",
+						"请输入格式正确的11位手机号");
+				return false;
+			} else {
+				show_validate_msg("#adminpnum_update_input", "success", "");
+			}
+			return true;
+		}
+		
+		//普通点击更新，更新用户信息
+		$("#admin_update_btn")
+				.click(
+						function() {
+							//进行修改表单验证
+							if (validate_modify_form()) {
+								//验证成功发送ajax请求保存用户信息（更新）
+								$
+										.ajax({
+											url : "${APP_PATH }/admin/"
+													+ $(this).attr("modify_id"),
+											type : "POST",
+											data : $("#adminUpdateModal form")
+													.serialize()
+													+ "&_method=PUT",
+											success : function(result) {
+												/* alert(result.msg); */
+												if (result.code == 100) {
+													alert(result.msg);
+													//用户保存成功后需要完成2件事
+													//1，关闭模态框
+													$("#adminUpdateModal")
+															.modal('hide');
+													//2,回到本页面
+													to_page(currentCompany, currentRole, currentPage);
+												} else if (result.code == 200) {
+													//显示失败信息之前需要清除以前的样式
+													reset_formStyle("#adminUpdateModal form");
+													//显示失败信息
+													/*  console.log(result); */
+													//有那个字段的错误信息就显示那个字段的；
+													/* alert(result.extend.fieldErrors.userpass);
+													alert(result.extend.fieldErrors.userpnum);  */
+													//后台存在校验通过就不会传来校验信息的字段，所以通过未定义判断来判断每个字段的校验信息
+													if (undefined != result.extend.fieldErrors.username) {
+														//显示姓名错误信息
+														show_validate_msg(
+																"#adminName_update_input",
+																"error",
+																result.extend.fieldErrors.username);
+
+													}
+													if (undefined != result.extend.fieldErrors.userpass) {
+														//显示密码错误信息
+														show_validate_msg(
+																"#adminPass_update_input",
+																"error",
+																result.extend.fieldErrors.userpass);
+													}
+
+													if (undefined != result.extend.fieldErrors.userbirthday) {
+														//显示生日错误信息
+														show_validate_msg(
+																"#adminbirthday_update_input",
+																"error",
+																result.extend.fieldErrors.userbirthday);
+													}
+
+													if (undefined != result.extend.fieldErrors.userpnum) {
+														//显示手机号的错误信息
+														show_validate_msg(
+																"#adminpnum_update_input",
+																"error",
+																result.extend.fieldErrors.userpnum);
+													}
+													if (undefined != result.extend.fieldErrors.useraddress) {
+														//显示地址不为空的错误信息
+														show_validate_msg(
+																"#adminaddress_update_input",
+																"error",
+																result.extend.fieldErrors.useraddress);
+													}
+
+													if (undefined != result.extend.fieldErrors.useremail) {
+														//显示邮箱错误信息
+														show_validate_msg(
+																"#adminemail_update_input",
+																"error",
+																result.extend.fieldErrors.useremail);
+													}
+												}
+											}
+										});
+							}
+						});
+		
+		/*普通删除按钮点击事件*/
+		$(document).on("click", ".delete_btn", function() {
+			//1，弹出确认删除对话框
+			/* alert($(this).parents("tr").find("td:eq(8)").text()); */
+			var adminEmail = $(this).parents("tr").find("td:eq(8)").text();
+			var adminId = $(this).attr("delete_id");
+			/* alert(adminId); */
+			if (confirm("确认删除【" + adminEmail + "】吗？")) {
+				//确认删除，发送ajax请求删除
+				$.ajax({
+					url : "${APP_PATH }/admin/" + adminId,
+					type : "DELETE",
+					success : function(result) {
+						//状态码 100-成功 200-失败
+						if (result.code == 100) {
+							alert(result.msg);
+							to_page(currentCompany, currentRole, currentPage);
+						} else if (result.code == 200) {
+							alert(result.msg);
+						}
+					}
+				});
+			}
+		});
+		
+		/* 全选和全不选功能 */
+		$("#check_all").click(function() {
+			/*attr获取到的CheckBox属性为undefined,它可以获取自定义属性的值
+			prop修改和读取dom原生属性值
+			 */
+			//同步选中状态即全选
+			$(".check_item").prop("checked", $(this).prop("checked"));
+		});
+		
+		/*check_item点击事件*/
+		$(document)
+				.on(
+						"click",
+						".check_item",
+						function() {
+							//1,判断当前选中元素是否选满（20个）
+							var flag = $(".check_item:checked").length == $(".check_item").length;
+							$("#check_all").prop("checked", flag);
+						});
+		
+		//点击批量删除按钮事件
+		$("#admin_mutiDelete_btn").click(
+				function() {
+					var adminEmails = "";
+					var adminIds = "";
+					$.each($(".check_item:checked"), function() {
+						adminEmails += $(this).parents("tr").find("td:eq(8)")
+								.text()
+								+ ",";
+						adminIds += $(this).parents("tr").find("td:eq(1)")
+								.text()
+								+ ",";
+					});
+					//去除adminEmails多余的
+					adminEmails = adminEmails.substring(0,
+							adminEmails.length - 1);
+					//去除adminIds多余的
+					adminIds = adminIds.substring(0, adminIds.length - 1);
+					if (confirm("确认删除【" + adminEmails + "】吗？")) {
+						//发送ajax请求删除
+						$.ajax({
+							url : "${APP_PATH }/admin/" + adminIds,
+							type : "DELETE",
+							success : function(result) {
+								if (result.code == 100) {
+									alert(result.msg);
+									//回到当前页面
+									to_page(currentCompany, currentRole, currentPage);
+								} else if (result.code == 200) {
+									alert(result.msg);
+								}
+							}
+						});
+					}
 				});
 	</script>
 </body>
