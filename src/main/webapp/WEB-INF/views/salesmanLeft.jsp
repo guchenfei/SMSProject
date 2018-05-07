@@ -36,7 +36,7 @@
 <body style="background: #f0f9fd;">
 	<div class="lefttop">
 		<span></span>
-		某分公司业务员界面
+		${admin.getCompany().getCompanyname()}业务员界面
 	</div>
 
 	<dl class="leftmenu">
@@ -65,12 +65,7 @@
 			<ul class="menuson">
 				<li>
 					<cite></cite>
-					<a href="./massSMS" target="rightFrame">通知群发</a>
-					<i></i>
-				</li>
-				<li>
-					<cite></cite>
-					<a href="./massSMSFestival" target="rightFrame">节日慰问</a>
+					<a href="./bramassSMS" target="rightFrame">通知群发/节日慰问</a>
 					<i></i>
 				</li>
 			</ul>

@@ -81,12 +81,7 @@
 			<ul class="menuson">
 				<li>
 					<cite></cite>
-					<a href="./massSMS" target="rightFrame">通知群发</a>
-					<i></i>
-				</li>
-				<li>
-					<cite></cite>
-					<a href="./massSMSFestival" target="rightFrame">节日慰问</a>
+					<a href="./bramassSMS" target="rightFrame">通知群发/节日慰问</a>
 					<i></i>
 				</li>
 			</ul>
@@ -102,12 +97,7 @@
 			<ul class="menuson">
 				<li>
 					<cite></cite>
-					<a href="#">本子公司短信详情</a>
-					<i></i>
-				</li>
-				<li>
-					<cite></cite>
-					<a href="#">本子公司群发详情</a>
+					<a href="brastatisticalQuery" target="rightFrame">${admin.getCompany().getCompanyname()}群发详情</a>
 					<i></i>
 				</li>
 			</ul>

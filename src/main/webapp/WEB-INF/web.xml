@@ -167,4 +167,20 @@
 		<servlet-name>statisticalQuery</servlet-name>
 		<url-pattern>/statisticalQuery</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>bramassSMS</servlet-name>
+		<jsp-file>/WEB-INF/views/bramassSMS.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>bramassSMS</servlet-name>
+		<url-pattern>/bramassSMS</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>brastatisticalQuery</servlet-name>
+		<jsp-file>/WEB-INF/views/brastatisticalQuery.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>brastatisticalQuery</servlet-name>
+		<url-pattern>/brastatisticalQuery</url-pattern>
+	</servlet-mapping>
 </web-app>
