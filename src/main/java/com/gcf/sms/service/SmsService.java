@@ -18,12 +18,21 @@ public class SmsService {
 	SendedRecMapper sendedRecMapper;
 
 	/**
-	 * 保存统计信息
+	 * 插入统计信息
 	 * 
 	 * @param sendedRec2
 	 */
 	public void insertSendedRec(SendedRec sendedRec2) {
 		sendedRecMapper.insertSelective(sendedRec2);
+	}
+
+	/**
+	 * 更新统计信息
+	 * 
+	 * @param sendedRec2
+	 */
+	public void updateSendedRec(SendedRec sendedRec2) {
+		sendedRecMapper.updateByExampleSelective(sendedRec2, null);
 	}
 
 }

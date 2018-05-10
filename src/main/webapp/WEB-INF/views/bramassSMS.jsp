@@ -162,7 +162,7 @@
 				<div>&nbsp;</div>
 				<div>
 					<input type="text" id="reservetime"
-						onclick="WdatePicker({dateFmt:'yyyy年MM月dd日 HH时mm分ss秒'})"
+						onclick="WdatePicker({startDate:'%y-%M-01 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"
 						class="form-control" placeholder="点击预定发送时间(及时发送可为空)"
 						autocomplete="off" name="reservetime" />
 				</div>
