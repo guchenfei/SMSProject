@@ -40,7 +40,7 @@ public class QuartzLoad {
 		Trigger t = TriggerBuilder.newTrigger().withDescription("").withIdentity(triggerKey)
 				// .withSchedule(SimpleScheduleBuilder.simpleSchedule())
 				.startAt(statTime) // 默认当前时间启动
-				.withSchedule(CronScheduleBuilder.cronSchedule("0/30 * * * * ?")) // 30秒执行一次
+				.withSchedule(CronScheduleBuilder.cronSchedule("0/10 * * * * ?")) // 10秒执行一次
 				.build();
 
 		// 5.注册任务和定时器

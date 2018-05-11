@@ -32,7 +32,7 @@ public class SmsService {
 	 * @param sendedRec2
 	 */
 	public void updateSendedRec(SendedRec sendedRec2) {
-		sendedRecMapper.updateByExampleSelective(sendedRec2, null);
+		sendedRecMapper.updateByPrimaryKeySelective(sendedRec2);
 	}
 
 }

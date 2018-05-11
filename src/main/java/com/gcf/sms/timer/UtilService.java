@@ -58,11 +58,8 @@ public class UtilService {
 		utilService = this;
 		// 初使化时将已静态化的utilService实例化
 		utilService.statisticalQueryService = this.statisticalQueryService;
-		System.out.println(statisticalQueryService);
 		utilService.contactsService = this.contactsService;
-		System.out.println(contactsService);
 		utilService.smsService = this.smsService;
-		System.out.println(smsService);
 	}
 
 	public void getAllStatistical() throws ParseException, HttpException, IOException {
@@ -83,13 +80,13 @@ public class UtilService {
 		String dateNowStr = sdf.format(cal.getTime());
 		System.out.println("现在时间：" + dateNowStr);
 
-		cal.add(Calendar.MINUTE, -1);
+		cal.add(Calendar.SECOND, -5);
 		String datePre = sdf.format(cal.getTime());
-		System.out.println("一分钟前时间：" + datePre);
+		System.out.println("5秒前时间：" + datePre);
 		Date datePre1 = sdf.parse(datePre);
-		cal.add(Calendar.MINUTE, 2);
+		cal.add(Calendar.SECOND, 10);
 		String dateNext = sdf.format(cal.getTime());
-		System.out.println("一分钟后时间：" + dateNext);
+		System.out.println("5秒后时间：" + dateNext);
 		Date dateNext1 = sdf.parse(dateNext);
 
 		Calendar begin = Calendar.getInstance();
@@ -122,6 +119,7 @@ public class UtilService {
 	}
 
 	public void excuteTask() throws HttpException, IOException {
+		SendedRec sendedRec = new SendedRec();
 		for (SendedRec sendedRec2 : taskSendedRecs) {
 			if (sendedRec2 != null) {
 				System.out.println("执行定时任务：" + sendedRec2);
@@ -160,8 +158,9 @@ public class UtilService {
 				post.releaseConnection();
 
 				// 发送状态0:已发送，1:待发送
-				sendedRec2.setStatus(0);
-				utilService.smsService.updateSendedRec(sendedRec2);
+				sendedRec.setSrecordId(sendedRec2.getSrecordId());
+				sendedRec.setStatus(0);
+				utilService.smsService.updateSendedRec(sendedRec);
 			}
 		}
 	}

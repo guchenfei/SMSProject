@@ -137,6 +137,7 @@ public class MapperTest {
 		 * sendedRec:sendedrecs){ System.out.println(sendedRec.toString()); }
 		 */
 		// 3.删除
-		sendedRecMapper.deleteByPrimaryKey(2);
+		/* sendedRecMapper.deleteByPrimaryKey(2); */
+		// 测试更新
 	}
 }

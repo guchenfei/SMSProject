@@ -295,7 +295,7 @@
 										item.company.companyname);
 								/* 发送状态0:已发送，1:待发送 */
 								var statusTd = $("<td></td>").append(
-										item.masstype == "0" ? "已发送" : "待发送");
+										item.status == "0" ? "已发送" : "待发送");
 								var receDetails = $("<button></button>")
 										.addClass(
 												"btn-primary btn-xs view_btn_Details")
@@ -388,7 +388,7 @@
 										item.company.companyname);
 								/* 发送状态0:已发送，1:待发送 */
 								var statusTd = $("<td></td>").append(
-										item.masstype == "0" ? "已发送" : "待发送");
+										item.status == "0" ? "已发送" : "待发送");
 								var receDetails = $("<button></button>")
 										.addClass(
 												"btn-primary btn-xs view_btn_Details")
