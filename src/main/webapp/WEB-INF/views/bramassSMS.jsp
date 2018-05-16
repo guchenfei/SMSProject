@@ -176,11 +176,14 @@
 					<font style="font-size: 13px;">短信内容：</font>
 				</span>
 				<div>&nbsp;&nbsp;&nbsp;</div>
-                   <div style="position: absolute"><img src="${APP_PATH }/static/images/sms.jpg" style="width: 500px;height: 700px;"/><div style="position: absolute;left: 10px;top: 110px;"><textarea class="form-control" rows="20" cols="140" placeholder="请输入短信内容..."
-					id="smsContent" onkeyup="showcontent()" name="smscon">有过欢笑，有过泪水；有过争执，有过摩擦；有过精彩，有过失落；有过彷徨，有过喜悦。而这一切都将转瞬即逝，再见了我的大学时代！我会将这一切永远珍藏！在这离别之际，我想对帮助过我的老师，同学，家人说声：谢谢！感谢陪我走过的每一段特殊的路程，最后我真心得祝福你们，身体健康，工作顺利，财源广进，心想事成！【谷晨飞】</textarea></div></div>
-				<span>
-					<font id="word" style="color: red;">300</font> /300
-				</span>
+                   <div style="position: absolute">
+                           <img src="${APP_PATH }/static/images/sms.jpg" style="width: 500px;height: 700px;"/>
+                           <div style="position: absolute;left: 10px;top: 110px;"><textarea class="form-control" rows="20" cols="140" placeholder="请输入短信内容..."
+					id="smsContent" onkeyup="showcontent()" name="smscon">有过欢笑，有过泪水；有过争执，有过摩擦；有过精彩，有过失落；有过彷徨，有过喜悦。而这一切都将转瞬即逝，再见了我的大学时代！我会将这一切永远珍藏！在这离别之际，我想对帮助过我的老师，同学，家人说声：谢谢！感谢陪我走过的每一段特殊的路程，最后我真心得祝福你们，身体健康，工作顺利，财源广进，心想事成！【谷晨飞】</textarea></div>
+					       <div style="position: absolute;left: 450px;top: 550px;">
+					       <span><font id="word" style="color: red;">300</font> /300</span>
+					       </div>
+				   </div>
 			</div>
 			<div class="col-md-6">
 				<span class="label label-info">
