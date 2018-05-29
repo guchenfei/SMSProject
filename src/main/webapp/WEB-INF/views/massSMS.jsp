@@ -127,20 +127,6 @@
 			<div class="col-md-3">
 				<div>
 					<span class="label label-info">
-						<font style="font-size: 13px;">创建时间：</font>
-					</span>
-				</div>
-				<div>&nbsp;</div>
-				<div>
-					<input type="text" id="createtime"
-						onclick="WdatePicker({dateFmt:'yyyy年MM月dd日 HH时mm分ss秒'})"
-						class="form-control" placeholder="点击今天输入创建时间" autocomplete="off"
-						name="createtime" />
-				</div>
-			</div>
-			<div class="col-md-3">
-				<div>
-					<span class="label label-info">
 						<font style="font-size: 13px;">节日模板：</font>
 					</span>
 				</div>
@@ -162,6 +148,14 @@
 						onclick="WdatePicker({startDate:'%y-%M-01 00:00:00',dateFmt:'yyyy-MM-dd HH:mm:ss',alwaysUseStartDate:true})"
 						class="form-control" placeholder="点击预定发送时间(及时发送可为空)"
 						autocomplete="off" name="reservetime" />
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div>
+				</div>
+				<div>&nbsp;</div>
+				<div>
+					<input type="hidden" id="createtime" name="createtime" />
 				</div>
 			</div>
 		</div>

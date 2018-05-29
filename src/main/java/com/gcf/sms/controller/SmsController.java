@@ -2,7 +2,9 @@ package com.gcf.sms.controller;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.commons.httpclient.Header;
@@ -44,6 +46,13 @@ public class SmsController {
 			throws IllegalArgumentException, HttpException, UnsupportedEncodingException, IOException {
 		SendedRec sendedRec2 = sendedRec;
 		int massType = sendedRec2.getMasstype();
+		
+		Calendar cal = Calendar.getInstance();
+		System.out.println(cal);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+		String dateNowStr = sdf.format(cal.getTime());
+		System.out.println("现在时间：" + dateNowStr);
 		// value为0普通群发，1定时群发
 		if (massType == 0) {
 			// 0普通群发
@@ -51,12 +60,14 @@ public class SmsController {
 			smsSendMass(sendedRec2);
 			sendedRec2.setStatus(0);
 			sendedRec2.setReservetime("立即发送");
+			sendedRec2.setCreatetime(dateNowStr);
 			SmsService.insertSendedRec(sendedRec2);
 			return Msg.success().add("smsResult", "群发成功！");
 		} else {
 			// 1定时群发
 			// 发送状态0:已发送，1:待发送
 			sendedRec2.setStatus(1);
+			sendedRec2.setCreatetime(dateNowStr);
 			SmsService.insertSendedRec(sendedRec2);
 			return Msg.success().add("smsResult", "定时任务建立成功！");
 		}
