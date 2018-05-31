@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gcf.sms.dao.SendedRecMapper">
+	<resultMap id="BaseResultMap" type="com.gcf.sms.bean.SendedRec">
+		<id column="SRecord_id" jdbcType="INTEGER" property="srecordId" />
+		<result column="receCompanyId" jdbcType="INTEGER" property="rececompanyid" />
+		<result column="topic" jdbcType="VARCHAR" property="topic" />
+		<result column="describeTask" jdbcType="VARCHAR" property="describetask" />
+		<result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+		<result column="massType" jdbcType="INTEGER" property="masstype" />
+		<result column="createTime" jdbcType="VARCHAR" property="createtime" />
+		<result column="reserveTime" jdbcType="VARCHAR" property="reservetime" />
+		<result column="smsCon" jdbcType="VARCHAR" property="smscon" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+	</resultMap>
+
+	<!-- 指定联合查询出的用户和公司字段的封装 -->
+	<resultMap id="WithAdmCpyResultMap" type="com.gcf.sms.bean.SendedRec">
+		<id column="SRecord_id" jdbcType="INTEGER" property="srecordId" />
+		<result column="receCompanyId" jdbcType="INTEGER" property="rececompanyid" />
+		<result column="topic" jdbcType="VARCHAR" property="topic" />
+		<result column="describeTask" jdbcType="VARCHAR" property="describetask" />
+		<result column="creator_id" jdbcType="INTEGER" property="creatorId" />
+		<result column="massType" jdbcType="INTEGER" property="masstype" />
+		<result column="createTime" jdbcType="VARCHAR" property="createtime" />
+		<result column="reserveTime" jdbcType="VARCHAR" property="reservetime" />
+		<result column="smsCon" jdbcType="VARCHAR" property="smscon" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<association property="company" javaType="com.gcf.sms.bean.Company">
+			<id column="company_id" property="companyId" />
+			<result column="companyName" property="companyname" />
+		</association>
+		<association property="admin" javaType="com.gcf.sms.bean.Admin">
+			<id column="admin_id" property="adminId" />
+			<result column="userName" property="username" />
+		</association>
+	</resultMap>
+
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		SRecord_id, receCompanyId, topic, describeTask, creator_id,
+		massType, createTime,
+		reserveTime, smsCon, status
+	</sql>
+
+	<!-- 带创建人和公司的列 -->
+	<sql id="WithAdmCpy_Column_List">
+		s.SRecord_id, s.receCompanyId,
+		s.topic, s.describeTask,
+		s.creator_id,
+		s.massType, s.createTime,
+		s.reserveTime,
+		s.smsCon,s.status,a.admin_id,a.userName,c.company_id,c.companyName
+	</sql>
+
+	<select id="selectByExample" parameterType="com.gcf.sms.bean.SendedRecExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sendedrec
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<!-- 带有创建人(用户)和接收公司信息的联合查询 -->
+	<select id="selectByExampleWithAdmCom" parameterType="com.gcf.sms.bean.SendedRecExample"
+		resultMap="WithAdmCpyResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="WithAdmCpy_Column_List" />
+		FROM sendedrec s
+		LEFT JOIN admin a ON s.creator_id = a.admin_id
+		LEFT
+		JOIN company c ON s.receCompanyId = c.company_id
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sendedrec
+		where SRecord_id = #{srecordId,jdbcType=INTEGER}
+	</select>
+
+	<!-- 主键查询带用户和公司属性 -->
+	<select id="selectByPrimaryKeyWithAdmCom" parameterType="java.lang.Integer"
+		resultMap="WithAdmCpyResultMap">
+		select
+		<include refid="WithAdmCpy_Column_List" />
+		FROM sendedrec s
+		LEFT JOIN admin a ON s.creator_id = a.admin_id
+		LEFT
+		JOIN company c ON s.receCompanyId = c.company_id
+		where SRecord_id =
+		#{srecordId,jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		sendedrec
+		where SRecord_id = #{srecordId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.gcf.sms.bean.SendedRecExample">
+		delete from sendedrec
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.gcf.sms.bean.SendedRec">
+		insert into sendedrec
+		(SRecord_id, receCompanyId, topic,
+		describeTask, creator_id, massType,
+		createTime, reserveTime, smsCon,
+		status)
+		values
+		(#{srecordId,jdbcType=INTEGER}, #{rececompanyid,jdbcType=INTEGER},
+		#{topic,jdbcType=VARCHAR},
+		#{describetask,jdbcType=VARCHAR},
+		#{creatorId,jdbcType=INTEGER}, #{masstype,jdbcType=INTEGER},
+		#{createtime,jdbcType=VARCHAR}, #{reservetime,jdbcType=VARCHAR},
+		#{smscon,jdbcType=VARCHAR},
+		#{status,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" parameterType="com.gcf.sms.bean.SendedRec">
+		insert into sendedrec
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="srecordId != null">
+				SRecord_id,
+			</if>
+			<if test="rececompanyid != null">
+				receCompanyId,
+			</if>
+			<if test="topic != null">
+				topic,
+			</if>
+			<if test="describetask != null">
+				describeTask,
+			</if>
+			<if test="creatorId != null">
+				creator_id,
+			</if>
+			<if test="masstype != null">
+				massType,
+			</if>
+			<if test="createtime != null">
+				createTime,
+			</if>
+			<if test="reservetime != null">
+				reserveTime,
+			</if>
+			<if test="smscon != null">
+				smsCon,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="srecordId != null">
+				#{srecordId,jdbcType=INTEGER},
+			</if>
+			<if test="rececompanyid != null">
+				#{rececompanyid,jdbcType=INTEGER},
+			</if>
+			<if test="topic != null">
+				#{topic,jdbcType=VARCHAR},
+			</if>
+			<if test="describetask != null">
+				#{describetask,jdbcType=VARCHAR},
+			</if>
+			<if test="creatorId != null">
+				#{creatorId,jdbcType=INTEGER},
+			</if>
+			<if test="masstype != null">
+				#{masstype,jdbcType=INTEGER},
+			</if>
+			<if test="createtime != null">
+				#{createtime,jdbcType=VARCHAR},
+			</if>
+			<if test="reservetime != null">
+				#{reservetime,jdbcType=VARCHAR},
+			</if>
+			<if test="smscon != null">
+				#{smscon,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.gcf.sms.bean.SendedRecExample"
+		resultType="java.lang.Long">
+		select count(*) from sendedrec
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update sendedrec
+		<set>
+			<if test="record.srecordId != null">
+				SRecord_id = #{record.srecordId,jdbcType=INTEGER},
+			</if>
+			<if test="record.rececompanyid != null">
+				receCompanyId = #{record.rececompanyid,jdbcType=INTEGER},
+			</if>
+			<if test="record.topic != null">
+				topic = #{record.topic,jdbcType=VARCHAR},
+			</if>
+			<if test="record.describetask != null">
+				describeTask = #{record.describetask,jdbcType=VARCHAR},
+			</if>
+			<if test="record.creatorId != null">
+				creator_id = #{record.creatorId,jdbcType=INTEGER},
+			</if>
+			<if test="record.masstype != null">
+				massType = #{record.masstype,jdbcType=INTEGER},
+			</if>
+			<if test="record.createtime != null">
+				createTime = #{record.createtime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.reservetime != null">
+				reserveTime = #{record.reservetime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.smscon != null">
+				smsCon = #{record.smscon,jdbcType=VARCHAR},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=INTEGER},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update sendedrec
+		set SRecord_id = #{record.srecordId,jdbcType=INTEGER},
+		receCompanyId = #{record.rececompanyid,jdbcType=INTEGER},
+		topic =
+		#{record.topic,jdbcType=VARCHAR},
+		describeTask =
+		#{record.describetask,jdbcType=VARCHAR},
+		creator_id =
+		#{record.creatorId,jdbcType=INTEGER},
+		massType =
+		#{record.masstype,jdbcType=INTEGER},
+		createTime =
+		#{record.createtime,jdbcType=VARCHAR},
+		reserveTime =
+		#{record.reservetime,jdbcType=VARCHAR},
+		smsCon =
+		#{record.smscon,jdbcType=VARCHAR},
+		status =
+		#{record.status,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.gcf.sms.bean.SendedRec">
+		update sendedrec
+		<set>
+			<if test="rececompanyid != null">
+				receCompanyId = #{rececompanyid,jdbcType=INTEGER},
+			</if>
+			<if test="topic != null">
+				topic = #{topic,jdbcType=VARCHAR},
+			</if>
+			<if test="describetask != null">
+				describeTask = #{describetask,jdbcType=VARCHAR},
+			</if>
+			<if test="creatorId != null">
+				creator_id = #{creatorId,jdbcType=INTEGER},
+			</if>
+			<if test="masstype != null">
+				massType = #{masstype,jdbcType=INTEGER},
+			</if>
+			<if test="createtime != null">
+				createTime = #{createtime,jdbcType=VARCHAR},
+			</if>
+			<if test="reservetime != null">
+				reserveTime = #{reservetime,jdbcType=VARCHAR},
+			</if>
+			<if test="smscon != null">
+				smsCon = #{smscon,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+		</set>
+		where SRecord_id = #{srecordId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.gcf.sms.bean.SendedRec">
+		update sendedrec
+		set receCompanyId = #{rececompanyid,jdbcType=INTEGER},
+		topic =
+		#{topic,jdbcType=VARCHAR},
+		describeTask =
+		#{describetask,jdbcType=VARCHAR},
+		creator_id =
+		#{creatorId,jdbcType=INTEGER},
+		massType = #{masstype,jdbcType=INTEGER},
+		createTime = #{createtime,jdbcType=VARCHAR},
+		reserveTime =
+		#{reservetime,jdbcType=VARCHAR},
+		smsCon = #{smscon,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER}
+		where SRecord_id =
+		#{srecordId,jdbcType=INTEGER}
+	</update>
+</mapper>

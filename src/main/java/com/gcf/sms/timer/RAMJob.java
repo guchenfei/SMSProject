@@ -15,7 +15,6 @@ public class RAMJob implements Job {
 	private static Logger _log = LoggerFactory.getLogger(RAMJob.class);
 	UtilService UtilService = new UtilService();
 
-	@Override
 	public void execute(JobExecutionContext arg0) throws JobExecutionException {
 		_log.info("Say hello to Quartz" + new Date());
 		try {

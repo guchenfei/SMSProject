@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+
+	<!--1、启动Spring的容器 -->
+	<!-- needed for ContextLoaderListener -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+
+	<!-- Bootstraps the root web application context before servlet initialization -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+    
+    <!-- 定时器监控  -->
+	<listener>
+		<listener-class>com.gcf.sms.timer.TimingTaskSchedule</listener-class>
+	</listener>
+
+	<!--2、springmvc的前端控制器，拦截所有请求 -->
+	<!-- The front controller of this Spring Web application, responsible for 
+		handling all application requests -->
+	<servlet>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<!-- Map all requests to the DispatcherServlet for handling -->
+	<servlet-mapping>
+		<servlet-name>dispatcherServlet</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+	<!-- 3、字符编码过滤器，一定要放在所有过滤器之前 -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceRequestEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceResponseEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 4、使用Rest风格的URI，将页面普通的post请求转为指定的delete或者put请求 -->
+	<filter>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HiddenHttpMethodFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>HiddenHttpMethodFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>HttpPutFormContentFilter</filter-name>
+		<filter-class>org.springframework.web.filter.HttpPutFormContentFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>HttpPutFormContentFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<servlet>
+		<servlet-name>superTop</servlet-name>
+		<jsp-file>/WEB-INF/views/superTop.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>superTop</servlet-name>
+		<url-pattern>/superTop</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>superLeft</servlet-name>
+		<jsp-file>/WEB-INF/views/superLeft.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>superLeft</servlet-name>
+		<url-pattern>/superLeft</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>indexPanel</servlet-name>
+		<jsp-file>/WEB-INF/views/indexPanel.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>indexPanel</servlet-name>
+		<url-pattern>/indexPanel</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>braManMan</servlet-name>
+		<jsp-file>/WEB-INF/views/braManMan.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>braManMan</servlet-name>
+		<url-pattern>/braManMan</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>HQContacts</servlet-name>
+		<jsp-file>/WEB-INF/views/HQContacts.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HQContacts</servlet-name>
+		<url-pattern>/HQContacts</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>massSMS</servlet-name>
+		<jsp-file>/WEB-INF/views/massSMS.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>massSMS</servlet-name>
+		<url-pattern>/massSMS</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>superIndex</servlet-name>
+		<jsp-file>/WEB-INF/views/superIndex.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>superIndex</servlet-name>
+		<url-pattern>/superIndex</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>generalLeft</servlet-name>
+		<jsp-file>/WEB-INF/views/generalLeft.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>generalLeft</servlet-name>
+		<url-pattern>/generalLeft</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>braSalMan</servlet-name>
+		<jsp-file>/WEB-INF/views/braSalMan.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>braSalMan</servlet-name>
+		<url-pattern>/braSalMan</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>braContacts</servlet-name>
+		<jsp-file>/WEB-INF/views/braContacts.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>braContacts</servlet-name>
+		<url-pattern>/braContacts</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>salesmanLeft</servlet-name>
+		<jsp-file>/WEB-INF/views/salesmanLeft.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>salesmanLeft</servlet-name>
+		<url-pattern>/salesmanLeft</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>statisticalQuery</servlet-name>
+		<jsp-file>/WEB-INF/views/statisticalQuery.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>statisticalQuery</servlet-name>
+		<url-pattern>/statisticalQuery</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>bramassSMS</servlet-name>
+		<jsp-file>/WEB-INF/views/bramassSMS.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>bramassSMS</servlet-name>
+		<url-pattern>/bramassSMS</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>brastatisticalQuery</servlet-name>
+		<jsp-file>/WEB-INF/views/brastatisticalQuery.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>brastatisticalQuery</servlet-name>
+		<url-pattern>/brastatisticalQuery</url-pattern>
+	</servlet-mapping>
+</web-app>
